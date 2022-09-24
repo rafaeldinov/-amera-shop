@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import CatalogPage from '../../pages/catalog-page/catalog-page';
 import BasketPage from '../../pages/basket-page/basket-page';
-import CartPage from '../../pages/cart-page/cart-page';
+import CardPage from '../../pages/card-page/card-page';
 import PageNotFound from '../../pages/not-found-page/not-found-page';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
@@ -16,8 +16,12 @@ export default function App(): JSX.Element {
           element={<CatalogPage />}
         />
         <Route
+          path={AppRoute.Catalog}
+          element={<CatalogPage />}
+        />
+        <Route
           path={AppRoute.Item}
-          element={<CartPage />}
+          element={<CardPage />}
         />
         <Route
           path={AppRoute.Basket}

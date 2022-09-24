@@ -1,4 +1,4 @@
-export default function CartPage(): JSX.Element {
+export default function CardPage(): JSX.Element {
   return (
     <main>
       <div className="page-content">
