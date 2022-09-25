@@ -1733,6 +1733,7 @@ button,
 }
 
 .breadcrumbs__link {
+  white-space: nowrap;
   font-size: 14px;
   line-height: 20px;
   color: #7575e2;
@@ -1741,7 +1742,8 @@ button,
   transition: color 0.3s ease;
 }
 
-.breadcrumbs__link svg {
+.breadcrumbs__link img {
+  display: inline;
   width: 5px;
   height: 8px;
   margin-left: 20px;
@@ -2050,7 +2052,7 @@ button,
   /* Checked + Disabled */
 }
 
-.catalog-sort__btn--up svg {
+.catalog-sort__btn--up img {
   -webkit-transform: scale(-1, 1);
   -ms-transform: scale(-1, 1);
   transform: scale(-1, 1);

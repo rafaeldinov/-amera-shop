@@ -1,6 +1,7 @@
 export enum AppRoute {
   Root = '/',
-  Item = '/item',
+  Catalog = '/catalog/page_:number',
+  Item = '/cameras/:id',
   Basket = '/basket',
   NotFound = '*'
 }
@@ -12,3 +13,6 @@ export enum APIRoute {
   Reviews = '/reviews',
   Orders = '/orders',
 }
+
+export const SHOW_ITEMS_PER_PAGE_COUNT = 9;
+export const SHOW_ITEMS_PER_PAGE_BEGIN_COUNT = 0;
