@@ -1,34 +1,44 @@
-import { Link } from 'react-router-dom';
-// import { AppRoute } from '../../const';
+import { useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import { getCameras } from '../../store/camera-reducer/selectors';
-import { SHOW_ITEMS_PER_PAGE_COUNT } from '../../const';
-
-const getPaginationCount = (pageCount: number) => {
-  let count = 0;
-  const paginationPages = Array.from(Array(pageCount), () => {
-    count++;
-    return (
-      <li className="pagination__item" key={count}>
-        <Link className="pagination__link" to={`/catalog/page_${count}`}>{count}</Link>
-      </li>);
-  });
-  return paginationPages;
-};
+import { getPaginagionPageCount } from '../../const';
 
 export default function Pagination(): JSX.Element {
-  // const activePaginationPage = useAppSelector(getActivePageCameras);
+  const {number = 1} = useParams();
+  const [currentPage, setCurrentPage] = useState(Number(number));
   const cameras = useAppSelector(getCameras);
-  const pagePaginationCount = Math.ceil(cameras.length / SHOW_ITEMS_PER_PAGE_COUNT);
+  const pageCount = getPaginagionPageCount(cameras.length);
+
+  const handlerDecreasePaginationClick = () => {
+    setCurrentPage(currentPage - 1);
+  };
+
+  const handlerInreasePaginationClick = () => {
+    setCurrentPage(currentPage + 1);
+  };
 
   return (
     <div className="pagination">
       <ul className="pagination__list">
-        <li className="pagination__item"><Link className="pagination__link pagination__link--text" to="2">Назад</Link>
-        </li>
-        {getPaginationCount(pagePaginationCount)}
-        <li className="pagination__item"><Link className="pagination__link pagination__link--text" to="2">Далее</Link>
-        </li>
+        {(currentPage !== 1) ?
+          <li onClick={handlerDecreasePaginationClick} className="pagination__item">
+            <Link className="pagination__link pagination__link--text" to={`/catalog/page_${currentPage - 1}`}>Назад</Link>
+          </li> : ''}
+        {
+          Array.from(Array(pageCount), (_, index) => (
+            <li onClick={() => setCurrentPage(index + 1)} className="pagination__item" key={index}>
+              <Link className={(currentPage !== index + 1) ?
+                'pagination__link' : 'pagination__link pagination__link--active'} to={`/catalog/page_${index + 1}`}
+              >{index + 1}
+              </Link>
+            </li>)
+          )
+        }
+        {(pageCount !== currentPage) ?
+          <li onClick={handlerInreasePaginationClick} className="pagination__item">
+            <Link className="pagination__link pagination__link--text" to={`/catalog/page_${currentPage + 1}`}>Далее</Link>
+          </li> : ''}
       </ul>
     </div>
   );

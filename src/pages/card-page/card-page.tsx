@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function CardPage(): JSX.Element {
   return (
     <main>
@@ -134,8 +136,8 @@ export default function CardPage(): JSX.Element {
                     <div className="product-card__buttons">
                       <button className="btn btn--purple product-card__btn" type="button">Купить
                       </button>
-                      <a className="btn btn--transparent" href="#">Подробнее
-                      </a>
+                      <Link className="btn btn--transparent" to="#">Подробнее
+                      </Link>
                     </div>
                   </div>
                   <div className="product-card is-active">
@@ -172,8 +174,8 @@ export default function CardPage(): JSX.Element {
                     <div className="product-card__buttons">
                       <button className="btn btn--purple product-card__btn" type="button">Купить
                       </button>
-                      <a className="btn btn--transparent" href="#">Подробнее
-                      </a>
+                      <Link className="btn btn--transparent" to="#">Подробнее
+                      </Link>
                     </div>
                   </div>
                   <div className="product-card is-active">
@@ -210,8 +212,8 @@ export default function CardPage(): JSX.Element {
                     <div className="product-card__buttons">
                       <button className="btn btn--purple product-card__btn" type="button">Купить
                       </button>
-                      <a className="btn btn--transparent" href="#">Подробнее
-                      </a>
+                      <Link className="btn btn--transparent" to="#">Подробнее
+                      </Link>
                     </div>
                   </div>
                   <div className="product-card">
@@ -248,8 +250,8 @@ export default function CardPage(): JSX.Element {
                     <div className="product-card__buttons">
                       <button className="btn btn--purple product-card__btn" type="button">Купить
                       </button>
-                      <a className="btn btn--transparent" href="#">Подробнее
-                      </a>
+                      <Link className="btn btn--transparent" to="#">Подробнее
+                      </Link>
                     </div>
                   </div>
                   <div className="product-card">
@@ -286,8 +288,8 @@ export default function CardPage(): JSX.Element {
                     <div className="product-card__buttons">
                       <button className="btn btn--purple product-card__btn" type="button">Купить
                       </button>
-                      <a className="btn btn--transparent" href="#">Подробнее
-                      </a>
+                      <Link className="btn btn--transparent" to="#">Подробнее
+                      </Link>
                     </div>
                   </div>
                   <div className="product-card">
@@ -324,8 +326,8 @@ export default function CardPage(): JSX.Element {
                     <div className="product-card__buttons">
                       <button className="btn btn--purple product-card__btn" type="button">Купить
                       </button>
-                      <a className="btn btn--transparent" href="#">Подробнее
-                      </a>
+                      <Link className="btn btn--transparent" to='#'>Подробнее
+                      </Link>
                     </div>
                   </div>
                 </div>

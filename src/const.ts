@@ -14,5 +14,17 @@ export enum APIRoute {
   Orders = '/orders',
 }
 
-export const SHOW_ITEMS_PER_PAGE_COUNT = 9;
-export const SHOW_ITEMS_PER_PAGE_BEGIN_COUNT = 0;
+export const getPaginagionPageCount = (allCameras: number) => Math.ceil(allCameras / ITEMS_PER_PAGE_COUNT);
+
+export const getCamerasRangePerPage = (currentPage: number, allCameras: number) => {
+  const lastPageItemCount = allCameras % ITEMS_PER_PAGE_COUNT;
+  const start = ITEMS_PER_PAGE_COUNT * currentPage - ITEMS_PER_PAGE_COUNT;
+  let end = ITEMS_PER_PAGE_COUNT * currentPage;
+  if(currentPage === getPaginagionPageCount(allCameras)) {
+    end = ITEMS_PER_PAGE_COUNT * currentPage - lastPageItemCount - 1;
+  }
+  return {start, end};
+};
+
+export const ITEMS_PER_PAGE_COUNT = 9;
+export const ITEMS_PER_PAGE_BEGIN_COUNT = 0;

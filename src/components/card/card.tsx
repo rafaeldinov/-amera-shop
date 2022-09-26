@@ -7,32 +7,24 @@ type Prop = {
 
 const STARS_COUNT = 5;
 
-const getStarsRating = (rating: number) => {
-  let count = 0;
-  const allStars = Array.from(Array(STARS_COUNT), () => {
-    if(count < rating) {
-      count++;
-      return <img src="img/sprite/icon-full-star.svg" alt="star-rating icon" width="17" height="16" aria-hidden="true" key={count} />;
-    }else {
-      count++;
-      return <img src="img/sprite/icon-star.svg" alt="star-rating icon" width="17" height="16" aria-hidden="true" key={count} />;
-    }
-  });
-  return allStars;
-};
+const getStarRating = (rating: number) => (
+  Array.from(Array(STARS_COUNT), (_, index) => (
+    <img src={(index < rating) ? '/img/sprite/icon-full-star.svg' : '/img/sprite/icon-star.svg'} alt="star-rating icon" width="17" height="16" aria-hidden="true" key={index} />
+  ))
+);
 
 export default function Card({camera}: Prop): JSX.Element {
   return (
     <div className="product-card">
       <div className="product-card__img">
         <picture>
-          <source type="image/webp" srcSet={`${camera.previewImgWebp}, ${camera.previewImgWebp2x}`} />
-          <img src={camera.previewImg} srcSet={camera.previewImg2x} width="280" height="240" alt={camera.name}/>
+          <source type="image/webp" srcSet={`/${camera.previewImgWebp}, /${camera.previewImgWebp2x}`} />
+          <img src={`/${camera.previewImg}`} srcSet={`/${camera.previewImg2x}`} width="280" height="240" alt={camera.name}/>
         </picture>
       </div>
       <div className="product-card__info">
         <div className="rate product-card__rate">
-          {getStarsRating(camera.rating)}
+          {getStarRating(camera.rating)}
           <p className="visually-hidden">Рейтинг: {camera.rating}</p>
           <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{camera.reviewCount}</p>
         </div>

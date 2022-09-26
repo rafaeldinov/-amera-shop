@@ -12,7 +12,7 @@ export default function Breadcrumbs({pageName} : Props): JSX.Element {
         <ul className="breadcrumbs__list">
           <li className="breadcrumbs__item">
             <Link className="breadcrumbs__link" to={AppRoute.Root}>Главная
-              <img src="img/sprite/icon-arrow-mini.svg" alt="icon arrow" width="5" height="8" aria-hidden="true"/>
+              <img src="/img/sprite/icon-arrow-mini.svg" alt="icon arrow" width="5" height="8" aria-hidden="true"/>
             </Link>
           </li>
           {(pageName === 'catalogPage') &&
@@ -23,7 +23,7 @@ export default function Breadcrumbs({pageName} : Props): JSX.Element {
             <>
               <li className="breadcrumbs__item">
                 <Link className="breadcrumbs__link" to={AppRoute.Catalog}>Каталог
-                  <img src="img/sprite/icon-arrow-mini.svg" alt="icon arrow" width="5" height="8" aria-hidden="true"/>
+                  <img src="/img/sprite/icon-arrow-mini.svg" alt="icon arrow" width="5" height="8" aria-hidden="true"/>
                 </Link>
               </li>
               <li className="breadcrumbs__item">
