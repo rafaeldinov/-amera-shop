@@ -1,19 +1,29 @@
 import { useEffect } from 'react';
-import { useAppDispatch } from '../../hooks';
-import { fetchCamerasAction } from '../../store/api-action';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../hooks';
+import { getCameras } from '../../store/camera-reducer/selectors';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import Banner from '../../components/banner/banner';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Pagination from '../../components/pagination/pagination';
 import CardList from '../../components/card-list/card-list';
+import { AppRoute, getPaginagionPageCount } from '../../const';
 
 export default function CatalogPage(): JSX.Element {
-  const dispatch = useAppDispatch();
+  const {number = 1} = useParams();
+  const navigate = useNavigate();
+  const cameras = useAppSelector(getCameras);
+  const pageCount = getPaginagionPageCount(cameras.length);
 
   useEffect(() => {
-    dispatch(fetchCamerasAction());
-  }, [dispatch]);
+    if(pageCount !== 0) {
+      if( number > pageCount || number <= 0) {
+        navigate(AppRoute.NotFound);
+      }
+    }
+  }, [navigate, number, pageCount]);
+
 
   return (
     <>
@@ -123,20 +133,20 @@ export default function CatalogPage(): JSX.Element {
                           <div className="catalog-sort__btn catalog-sort__btn--up">
                             <input type="radio" id="up" name="sort-icon" defaultChecked aria-label="По возрастанию" />
                             <label htmlFor="up">
-                              <img src="img/sprite/icon-sort.svg" alt="icon sort" width="16" height="14" aria-hidden="true"/>
+                              <img src="/img/sprite/icon-sort.svg" alt="icon sort" width="16" height="14" aria-hidden="true"/>
                             </label>
                           </div>
                           <div className="catalog-sort__btn catalog-sort__btn--down">
                             <input type="radio" id="down" name="sort-icon" aria-label="По убыванию" />
                             <label htmlFor="down">
-                              <img src="img/sprite/icon-sort.svg" alt="icon sort" width="16" height="14" aria-hidden="true"/>
+                              <img src="/img/sprite/icon-sort.svg" alt="icon sort" width="16" height="14" aria-hidden="true"/>
                             </label>
                           </div>
                         </div>
                       </div>
                     </form>
                   </div>
-                  <CardList />
+                  <CardList pageNumber={Number(number)} />
                   <Pagination />
                 </div>
               </div>

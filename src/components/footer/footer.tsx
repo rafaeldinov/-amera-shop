@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function Footer(): JSX.Element {
   return (
     <footer className="footer">
@@ -11,25 +13,19 @@ export default function Footer(): JSX.Element {
           <p className="footer__description">Интернет-магазин фото- и видеотехники</p>
           <ul className="social">
             <li className="social__item">
-              <a className="link" href="#" aria-label="Переход на страницу вконтатке">
-                <svg width="20" height="20" aria-hidden="true">
-                  <use xlinkHref="#icon-vk"></use>
-                </svg>
-              </a>
+              <Link className="link" to="#" aria-label="Переход на страницу вконтатке">
+                <img src="/img/sprite/icon-vk.svg" alt="icon vkontakte" width="20" height="20" aria-hidden="true"/>
+              </Link>
             </li>
             <li className="social__item">
-              <a className="link" href="#" aria-label="Переход на страницу pinterest">
-                <svg width="20" height="20" aria-hidden="true">
-                  <use xlinkHref="#icon-pinterest"></use>
-                </svg>
-              </a>
+              <Link className="link" to="#" aria-label="Переход на страницу pinterest">
+                <img src="/img/sprite/icon-pinterest.svg" alt="icon pinterest" width="20" height="20" aria-hidden="true"/>
+              </Link>
             </li>
             <li className="social__item">
-              <a className="link" href="#" aria-label="Переход на страницу reddit">
-                <svg width="20" height="20" aria-hidden="true">
-                  <use xlinkHref="#icon-reddit"></use>
-                </svg>
-              </a>
+              <Link className="link" to="#" aria-label="Переход на страницу reddit">
+                <img src="/img/sprite/icon-reddit.svg" alt="icon reddit" width="20" height="20" aria-hidden="true"/>
+              </Link>
             </li>
           </ul>
         </div>
@@ -38,20 +34,16 @@ export default function Footer(): JSX.Element {
             <p className="footer__title">Навигация</p>
             <ul className="footer__list">
               <li className="footer__item">
-                <a className="link" href="#">Каталог
-                </a>
+                <Link className="link" to="#">Каталог</Link>
               </li>
               <li className="footer__item">
-                <a className="link" href="#">Гарантии
-                </a>
+                <Link className="link" to="#">Гарантии</Link>
               </li>
               <li className="footer__item">
-                <a className="link" href="#">Доставка
-                </a>
+                <Link className="link" to="#">Доставка</Link>
               </li>
               <li className="footer__item">
-                <a className="link" href="#">О компании
-                </a>
+                <Link className="link" to="#">О компании</Link>
               </li>
             </ul>
           </li>
@@ -59,16 +51,13 @@ export default function Footer(): JSX.Element {
             <p className="footer__title">Ресурсы</p>
             <ul className="footer__list">
               <li className="footer__item">
-                <a className="link" href="#">Курсы операторов
-                </a>
+                <Link className="link" to="#">Курсы операторов</Link>
               </li>
               <li className="footer__item">
-                <a className="link" href="#">Блог
-                </a>
+                <Link className="link" to="#">Блог</Link>
               </li>
               <li className="footer__item">
-                <a className="link" href="#">Сообщество
-                </a>
+                <Link className="link" to="#">Сообщество</Link>
               </li>
             </ul>
           </li>
@@ -76,12 +65,10 @@ export default function Footer(): JSX.Element {
             <p className="footer__title">Поддержка</p>
             <ul className="footer__list">
               <li className="footer__item">
-                <a className="link" href="#">FAQ
-                </a>
+                <Link className="link" to="#">FAQ</Link>
               </li>
               <li className="footer__item">
-                <a className="link" href="#">Задать вопрос
-                </a>
+                <Link className="link" to="#">Задать вопрос</Link>
               </li>
             </ul>
           </li>

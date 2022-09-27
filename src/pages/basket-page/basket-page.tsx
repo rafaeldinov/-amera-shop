@@ -30,7 +30,7 @@ export default function BasketPage(): JSX.Element {
                     <form onSubmit={handleFormSubmit} action="#">
                       <div className="custom-input">
                         <label><span className="custom-input__label">Промокод</span>
-                          <input ref={promoRef} type="text" name="promo" placeholder="Введите промокод" />
+                          <input ref={promoRef} type="text" name="promo" placeholder="Введите промокод" defaultValue='' />
                         </label>
                         <p className="custom-input__error">Промокод неверный</p>
                         <p className="custom-input__success">Промокод принят!</p>

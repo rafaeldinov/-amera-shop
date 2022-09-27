@@ -1,20 +1,23 @@
-import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeActivePaginationPage } from '../../store/camera-reducer/camera-reducer';
-import { getActivePageCameras } from '../../store/camera-reducer/selectors';
+import { useAppSelector, useAppDispatch } from '../../hooks';
+import { fetchPageCamerasAction, fetchCamerasAction } from '../../store/api-action';
+import { getPageCameras, getCameras } from '../../store/camera-reducer/selectors';
 import Card from '../../components/card/card';
+import { getCamerasRangePerPage } from '../../const';
 
-export default function CardList(): JSX.Element {
+
+type Props = {
+  pageNumber: number;
+}
+export default function CardList({pageNumber}: Props): JSX.Element {
   const dispatch = useAppDispatch();
-  const {number} = useParams();
-  const camerasPerPage = useAppSelector(getActivePageCameras);
+  const camerasPerPage = useAppSelector(getPageCameras);
+  const cameras = useAppSelector(getCameras);
 
   useEffect(() => {
-    if(number) {
-      dispatch(changeActivePaginationPage(number));
-    }
-  }, [dispatch, number]);
+    dispatch(fetchCamerasAction());
+    dispatch(fetchPageCamerasAction(getCamerasRangePerPage(pageNumber, cameras.length)));
+  }, [dispatch, pageNumber, cameras.length]);
 
   return (
     <div className="cards catalog__cards">
