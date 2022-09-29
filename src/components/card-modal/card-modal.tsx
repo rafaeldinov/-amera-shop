@@ -1,4 +1,4 @@
-export default function CartModal(): JSX.Element {
+export default function CardModal(): JSX.Element {
   return (
     <div className="modal is-active">
       <div className="modal__wrapper">

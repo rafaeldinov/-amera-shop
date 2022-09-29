@@ -3,9 +3,10 @@ import { AppRoute } from '../../const';
 
 type Props = {
   pageName: string;
+  cameraName?: string;
 }
 
-export default function Breadcrumbs({pageName} : Props): JSX.Element {
+export default function Breadcrumbs({pageName, cameraName} : Props): JSX.Element {
   return (
     <div className="breadcrumbs">
       <div className="container">
@@ -19,6 +20,17 @@ export default function Breadcrumbs({pageName} : Props): JSX.Element {
             <li className="breadcrumbs__item">
               <span className="breadcrumbs__link breadcrumbs__link--active">Каталог</span>
             </li>}
+          {(pageName === 'cardPage') &&
+          <>
+            <li className="breadcrumbs__item">
+              <Link className="breadcrumbs__link" to={AppRoute.Root}>Каталог
+                <img src="/img/sprite/icon-arrow-mini.svg" alt="icon arrow" width="5" height="8" aria-hidden="true"/>
+              </Link>
+            </li>
+            <li className="breadcrumbs__item">
+              <span className="breadcrumbs__link breadcrumbs__link--active">{cameraName}</span>
+            </li>
+          </>}
           {(pageName === 'basketPage') &&
             <>
               <li className="breadcrumbs__item">
