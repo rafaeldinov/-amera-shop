@@ -847,7 +847,7 @@ button,
   -webkit-column-gap: 162px;
   -moz-column-gap: 162px;
   column-gap: 162px;
-  -ms-grid-columns: (150px)[3];
+  /* -ms-grid-columns: (150px)[3]; */
   grid-template-columns: repeat(3, 150px);
   grid-row-gap: 40px;
 }
@@ -1058,7 +1058,7 @@ button,
   transition: background-color 0.3s ease;
 }
 
-.btn svg {
+.btn img {
   width: 24px;
   height: 16px;
   margin-right: 8px;
@@ -2204,7 +2204,7 @@ button,
   -moz-column-gap: 32px;
   column-gap: 32px;
   row-gap: 40px;
-  -ms-grid-columns: (1fr)[3];
+  /* -ms-grid-columns: (1fr)[3]; */
   grid-template-columns: repeat(3, 1fr);
 }
 
@@ -3135,7 +3135,7 @@ button,
   transition: opacity 0.3s ease;
 }
 
-.slider-controls svg {
+.slider-controls img {
   width: 7px;
   height: 12px;
 }
@@ -3157,7 +3157,7 @@ button,
   margin-right: 16px;
 }
 
-.slider-controls--prev svg {
+.slider-controls--prev img {
   -webkit-transform: rotate(180deg);
   -ms-transform: rotate(180deg);
   transform: rotate(180deg);
@@ -3482,17 +3482,17 @@ button,
 
 .tabs__control:disabled {
   color: #dddddd;
-  pointer-events: none;
+  /* pointer-events: none; */
 }
 
 .tabs__control.disabled {
   color: #dddddd;
-  pointer-events: none;
+  /* pointer-events: none; */
 }
 
 .tabs__control.is-active {
   background-color: #e8e8fa;
-  pointer-events: none;
+  /* pointer-events: none; */
   outline: none;
 }
 
@@ -3503,13 +3503,13 @@ button,
 .tabs__control:disabled.is-active {
   color: #dddddd;
   background-color: #f8f8f8;
-  pointer-events: none;
+  /* pointer-events: none; */
 }
 
 .tabs__control.disabled.is-active {
   color: #dddddd;
   background-color: #f8f8f8;
-  pointer-events: none;
+  /* pointer-events: none; */
 }
 
 .tabs__content {
@@ -3539,12 +3539,12 @@ button,
   opacity: 1;
 }
 
-/* @media (hover: hover), screen and (min-width: 0\0) {
+@media (hover: hover), screen and (min-width: 0\0) {
   &:hover,
   &:focus {
     color: $color-default-white;
   }
-} */
+}
 
 @media (hover: hover), screen and (min-width: 0\0) {
   .header__basket-link:hover,
@@ -3626,7 +3626,7 @@ button,
   .slider-controls:active {
     color: #7575e2;
     background-color: #a2a2ff;
-    pointer-events: none;
+    /* pointer-events: none; */
   }
 
   .link:hover,
@@ -3659,6 +3659,6 @@ button,
 
   .tabs__control:active {
     background-color: #f4f4fc;
-    pointer-events: none;
+    /* pointer-events: none; */
   }
 }

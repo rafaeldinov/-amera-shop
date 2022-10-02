@@ -1,21 +1,15 @@
 import { Link } from 'react-router-dom';
 import { Camera } from '../../types/camera';
+import StarRating from '../star-rating/star-rating';
 
 type Prop = {
-  camera: Camera
+  camera: Camera;
+  isActive?: boolean | undefined;
 }
 
-const STARS_COUNT = 5;
-
-const getStarRating = (rating: number) => (
-  Array.from(Array(STARS_COUNT), (_, index) => (
-    <img src={(index < rating) ? '/img/sprite/icon-full-star.svg' : '/img/sprite/icon-star.svg'} alt="star-rating icon" width="17" height="16" aria-hidden="true" key={index} />
-  ))
-);
-
-export default function Card({camera}: Prop): JSX.Element {
+export default function Card({camera, isActive}: Prop): JSX.Element {
   return (
-    <div className="product-card">
+    <div className={isActive ? 'product-card is-active' : 'product-card'}>
       <div className="product-card__img">
         <picture>
           <source type="image/webp" srcSet={`/${camera.previewImgWebp}, /${camera.previewImgWebp2x}`} />
@@ -24,7 +18,7 @@ export default function Card({camera}: Prop): JSX.Element {
       </div>
       <div className="product-card__info">
         <div className="rate product-card__rate">
-          {getStarRating(camera.rating)}
+          <StarRating rating={camera.rating} />
           <p className="visually-hidden">Рейтинг: {camera.rating}</p>
           <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{camera.reviewCount}</p>
         </div>
@@ -35,7 +29,7 @@ export default function Card({camera}: Prop): JSX.Element {
       <div className="product-card__buttons">
         <button className="btn btn--purple product-card__btn" type="button">Купить
         </button>
-        <Link className="btn btn--transparent" to={`/cameras/${camera.id}`}>Подробнее</Link>
+        <Link className="btn btn--transparent" to={`/camera/${camera.id}`}>Подробнее</Link>
       </div>
     </div>
   );

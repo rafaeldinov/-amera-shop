@@ -15,10 +15,20 @@ export const fetchCamerasAction = createAsyncThunk<Camera[], undefined, {
   },
 );
 
+export const fetchCameraAction = createAsyncThunk<Camera, string, {
+  extra: AxiosInstance
+}>(
+  'fetchCamera',
+  async (id, {extra: api}) => {
+    const {data} = await api.get<Camera>(`${APIRoute.Cameras}/${id}`);
+    return data;
+  },
+);
+
 export const fetchPageCamerasAction = createAsyncThunk<Camera[], PageCameraData, {
   extra: AxiosInstance
 }>(
-  'fetchPageCamerasAction',
+  'fetchPageCameras',
   async ({start, end}, {dispatch, extra: api}) => {
     const {data} = await api.get<Camera[]>(`${APIRoute.Cameras}?_start=${start}&_end=${end}`);
     return data;
@@ -28,9 +38,19 @@ export const fetchPageCamerasAction = createAsyncThunk<Camera[], PageCameraData,
 export const fetchPromoAction = createAsyncThunk<Promo, undefined, {
   extra: AxiosInstance
 }>(
-  'fetchPromoAction',
+  'fetchPromo',
   async (_arg, {extra: api}) => {
     const {data} = await api.get<Promo>(APIRoute.PromoOffer);
+    return data;
+  },
+);
+
+export const fetchSimilarAction = createAsyncThunk<Camera[], string, {
+  extra: AxiosInstance
+}>(
+  'fetchSimilar',
+  async (id, {extra: api}) => {
+    const {data} = await api.get<Camera[]>(`${APIRoute.Cameras}/${id}/similar`);
     return data;
   },
 );
