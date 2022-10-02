@@ -1,8 +1,7 @@
 export enum AppRoute {
   Root = '/',
   Catalog = '/catalog/page_:number',
-  Item = '/camera/:id',
-  Tab = '/camera/:id/:tab',
+  Item = '/camera/:id/:tab',
   Basket = '/basket',
   NotFound = '*'
 }
@@ -11,7 +10,7 @@ export enum APIRoute {
   Cameras = '/cameras',
   PromoOffer = '/promo',
   Coupons = '/coupons',
-  Reviews = '/reviews',
+  ReviewPost = '/reviews',
   Orders = '/orders',
 }
 

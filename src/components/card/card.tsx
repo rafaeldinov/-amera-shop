@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Camera } from '../../types/camera';
-import StarRating from '../star-rating/star-rating';
+import RatingStars from '../rating-stars/rating-stars';
 
 type Prop = {
   camera: Camera;
@@ -18,7 +18,7 @@ export default function Card({camera, isActive}: Prop): JSX.Element {
       </div>
       <div className="product-card__info">
         <div className="rate product-card__rate">
-          <StarRating rating={camera.rating} />
+          <RatingStars rating={camera.rating} />
           <p className="visually-hidden">Рейтинг: {camera.rating}</p>
           <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{camera.reviewCount}</p>
         </div>
@@ -29,7 +29,7 @@ export default function Card({camera, isActive}: Prop): JSX.Element {
       <div className="product-card__buttons">
         <button className="btn btn--purple product-card__btn" type="button">Купить
         </button>
-        <Link className="btn btn--transparent" to={`/camera/${camera.id}`}>Подробнее</Link>
+        <Link className="btn btn--transparent" to={`/camera/${camera.id}/review`}>Подробнее</Link>
       </div>
     </div>
   );

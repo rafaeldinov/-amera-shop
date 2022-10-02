@@ -24,10 +24,6 @@ export default function App(): JSX.Element {
           element={<CardPage />}
         />
         <Route
-          path={AppRoute.Tab}
-          element={<CardPage />}
-        />
-        <Route
           path={AppRoute.Basket}
           element={<BasketPage />}
         />

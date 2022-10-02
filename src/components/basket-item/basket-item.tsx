@@ -21,7 +21,7 @@ export default function BasketItem(): JSX.Element {
           <img src="img/sprite/icon-arrow.svg" alt="icon arrow" width="7" height="12" aria-hidden="true"/>
         </button>
         <label className="visually-hidden" htmlFor="counter1"></label>
-        <input type="number" id="counter1" value="2" min="1" max="99" aria-label="количество товара" defaultValue='' />
+        <input type="number" id="counter1" defaultValue="2" min="1" max="99" aria-label="количество товара"/>
         <button className="btn-icon btn-icon--next" aria-label="увеличить количество товара">
           <img src="img/sprite/icon-arrow.svg" alt="icon arrow" width="7" height="12" aria-hidden="true"/>
         </button>
