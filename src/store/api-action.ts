@@ -1,11 +1,12 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { APIRoute } from '../const';
+import { APIRoute, AppRoute } from '../const';
 import { Camera } from '../types/camera';
 import { CameraData } from '../types/camera-data';
 import { Promo } from '../types/promo';
 import { Review } from '../types/review';
 import { ReviewPost } from '../types/review-post';
+import { redirectToRoute } from './action';
 
 export const fetchCamerasAction = createAsyncThunk<Camera[], undefined, {
   extra: AxiosInstance
@@ -17,13 +18,17 @@ export const fetchCamerasAction = createAsyncThunk<Camera[], undefined, {
   },
 );
 
-export const fetchCameraAction = createAsyncThunk<Camera, string, {
+export const fetchCameraAction = createAsyncThunk<Camera | undefined, string, {
   extra: AxiosInstance
 }>(
   'fetchCamera',
-  async (id, {extra: api}) => {
-    const {data} = await api.get<Camera>(`${APIRoute.Cameras}/${id}`);
-    return data;
+  async (id, {dispatch, extra: api}) => {
+    try {
+      const {data} = await api.get<Camera>(`${APIRoute.Cameras}/${id}`);
+      return data;
+    }catch {
+      dispatch(redirectToRoute(AppRoute.NotFound));
+    }
   },
 );
 
@@ -31,7 +36,7 @@ export const fetchPageCamerasAction = createAsyncThunk<Camera[], CameraData, {
   extra: AxiosInstance
 }>(
   'fetchPageCameras',
-  async ({start, end}, {dispatch, extra: api}) => {
+  async ({start, end}, {extra: api}) => {
     const {data} = await api.get<Camera[]>(`${APIRoute.Cameras}?_start=${start}&_end=${end}`);
     return data;
   },
@@ -67,11 +72,12 @@ export const fetchReviewsAction = createAsyncThunk<Review[], string, {
   },
 );
 
-export const sendProductReviewAction = createAsyncThunk<void, ReviewPost, {
+export const sendProductReviewAction = createAsyncThunk<Review, ReviewPost, {
   extra: AxiosInstance
 }>(
   'sendProductReview',
   async ({cameraId, userName, advantage, disadvantage, review, rating}, {extra: api}) => {
-    await api.post(APIRoute.ReviewPost, {cameraId, userName, advantage, disadvantage, review, rating});
+    const {data} = await api.post<Review>(APIRoute.ReviewPost, {cameraId, userName, advantage, disadvantage, review, rating});
+    return data;
   },
 );

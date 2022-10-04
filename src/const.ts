@@ -23,3 +23,4 @@ export const getCamerasRangePerPage = (currentPage: number, allCameras: number) 
 };
 
 export const ITEMS_PER_PAGE_COUNT = 9;
+export const REVIEWS_PER_STEP = 3;
