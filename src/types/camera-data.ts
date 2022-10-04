@@ -1,4 +1,4 @@
-export type PageCameraData = {
+export type CameraData = {
   start: number;
   end: number;
 }
