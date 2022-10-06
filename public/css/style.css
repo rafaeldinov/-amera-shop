@@ -2046,12 +2046,6 @@ button,
   background-color: #e8e8fa;
 }
 
-.catalog-sort__btn {
-  /* Checked */
-  /* Disabled */
-  /* Checked + Disabled */
-}
-
 .catalog-sort__btn--up img {
   -webkit-transform: scale(-1, 1);
   -ms-transform: scale(-1, 1);
@@ -2204,7 +2198,6 @@ button,
   -moz-column-gap: 32px;
   column-gap: 32px;
   row-gap: 40px;
-  /* -ms-grid-columns: (1fr)[3]; */
   grid-template-columns: repeat(3, 1fr);
 }
 
@@ -3482,17 +3475,17 @@ button,
 
 .tabs__control:disabled {
   color: #dddddd;
-  /* pointer-events: none; */
+  pointer-events: none;
 }
 
 .tabs__control.disabled {
   color: #dddddd;
-  /* pointer-events: none; */
+  pointer-events: none;
 }
 
 .tabs__control.is-active {
   background-color: #e8e8fa;
-  /* pointer-events: none; */
+  pointer-events: none;
   outline: none;
 }
 
@@ -3503,13 +3496,13 @@ button,
 .tabs__control:disabled.is-active {
   color: #dddddd;
   background-color: #f8f8f8;
-  /* pointer-events: none; */
+  pointer-events: none;
 }
 
 .tabs__control.disabled.is-active {
   color: #dddddd;
   background-color: #f8f8f8;
-  /* pointer-events: none; */
+  pointer-events: none;
 }
 
 .tabs__content {
@@ -3538,13 +3531,6 @@ button,
   visibility: visible;
   opacity: 1;
 }
-/*
-@media (hover: hover), screen and (min-width: 0\0) {
-  &:hover,
-  &:focus {
-    color: $color-default-white;
-  }
-} */
 
 @media (hover: hover), screen and (min-width: 0\0) {
   .header__basket-link:hover,
@@ -3626,7 +3612,6 @@ button,
   .slider-controls:active {
     color: #7575e2;
     background-color: #a2a2ff;
-    /* pointer-events: none; */
   }
 
   .link:hover,
@@ -3659,6 +3644,5 @@ button,
 
   .tabs__control:active {
     background-color: #f4f4fc;
-    /* pointer-events: none; */
   }
 }

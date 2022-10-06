@@ -18,12 +18,11 @@ export default function CatalogPage(): JSX.Element {
 
   useEffect(() => {
     if(pageCount !== 0) {
-      if( number > pageCount || number <= 0) {
+      if(number > pageCount || number <= 0) {
         navigate(AppRoute.NotFound);
       }
     }
   }, [navigate, number, pageCount]);
-
 
   return (
     <>

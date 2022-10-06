@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchCamerasAction, fetchPageCamerasAction, fetchCameraAction, fetchPromoAction, fetchSimilarAction, fetchReviewsAction } from '../api-action';
+import { fetchCamerasAction, fetchPageCamerasAction, fetchCameraAction, fetchPromoAction, fetchSimilarAction, fetchReviewsAction, sendProductReviewAction } from '../api-action';
 import { Camera } from '../../types/camera';
 import { Promo } from '../../types/promo';
 import { Review } from '../../types/review';
@@ -12,7 +12,8 @@ type InitialState = {
   reviews: Review[];
   paginationPage: number;
   promoOffer: Promo | undefined;
-  isActiveProductReviewModal: boolean;
+  isActiveReviewModal: boolean;
+  isActiveSuccessReviewModal: boolean;
 }
 
 const initialState: InitialState = {
@@ -23,16 +24,20 @@ const initialState: InitialState = {
   reviews: [],
   paginationPage: 1,
   promoOffer: undefined,
-  isActiveProductReviewModal: false
+  isActiveReviewModal: false,
+  isActiveSuccessReviewModal: false
 };
 
 export const cameraSlice = createSlice({
   name: 'camera',
   initialState,
   reducers: {
-    setIsActiveProductReviewModal(state, action) {
-      state.isActiveProductReviewModal = action.payload;
-    }
+    setIsActiveReviewModal(state, action) {
+      state.isActiveReviewModal = action.payload;
+    },
+    setIsActiveSuccessReviewModal(state, action) {
+      state.isActiveSuccessReviewModal = action.payload;
+    },
   },
   extraReducers(builder) {
     builder
@@ -53,8 +58,12 @@ export const cameraSlice = createSlice({
       })
       .addCase(fetchReviewsAction.fulfilled, (state, action) => {
         state.reviews = action.payload;
+      })
+      .addCase(sendProductReviewAction.fulfilled, (state, action) => {
+        state.isActiveSuccessReviewModal = true;
+        state.reviews.unshift(action.payload);
       });
   }
 });
 
-export const { setIsActiveProductReviewModal } = cameraSlice.actions;
+export const { setIsActiveReviewModal, setIsActiveSuccessReviewModal } = cameraSlice.actions;

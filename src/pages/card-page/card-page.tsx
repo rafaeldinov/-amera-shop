@@ -6,21 +6,24 @@ import Header from '../../components/header/header';
 import RatingStars from '../../components/rating-stars/rating-stars';
 import Card from '../../components/card/card';
 import Reviews from '../../components/reviews/reviews';
+import ProductReviewModal from '../../components/product-review-modal/product-review-modal';
+import SuccessModal from '../../components/success-modal/success-modal';
 import Preloader from '../../components/preloader/preloader';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import { fetchCameraAction, fetchSimilarAction } from '../../store/api-action';
-import { getCamera, getSimilarCameras, getIsActiveProductReviewModal } from '../../store/camera-reducer/selectors';
+import { fetchCameraAction, fetchCamerasAction, fetchSimilarAction } from '../../store/api-action';
+import { getCamera, getSimilarCameras, getIsActiveReviewModal, getIsActiveSuccessReviewModal, getCameras } from '../../store/camera-reducer/selectors';
 import { AppRoute } from '../../const';
-import ProductReviewModal from '../../components/product-review-modal/product-review-modal';
 
 export default function CardPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const {id} = useParams();
   const {tab = 'review'} = useParams();
   const navigate = useNavigate();
+  const cameras = useAppSelector(getCameras);
   const camera = useAppSelector(getCamera);
   const similarCameras = useAppSelector(getSimilarCameras);
-  const isActiveModal = useAppSelector(getIsActiveProductReviewModal);
+  const isActiveReviewModal = useAppSelector(getIsActiveReviewModal);
+  const isActiveSuccessReviewModal = useAppSelector(getIsActiveSuccessReviewModal);
 
   const [startCount, setStartCount] = useState(0);
   const [endCount, setEndCount] = useState(3);
@@ -28,15 +31,20 @@ export default function CardPage(): JSX.Element {
 
   useEffect(() => {
     if(id) {
+      dispatch(fetchCamerasAction());
       dispatch(fetchCameraAction(id));
       dispatch(fetchSimilarAction(id));
     }
-  }, [dispatch, id]);
+    if(Number(id) <= 0 || Number(id) > cameras.length) {
+      navigate(AppRoute.NotFound);
+    }
+  }, [dispatch, navigate, id, cameras.length]);
 
   const handleItemСharacteristicsClick = () => {
     setActiveTab('info');
     navigate(`/camera/${id}/info`);
   };
+
   const handleItemReviewClick = () => {
     setActiveTab('review');
     navigate(`/camera/${id}/review`);
@@ -123,31 +131,37 @@ export default function CardPage(): JSX.Element {
               </div>
             </section>
           </div>
-          <div className="page-content__section">
-            <section className="product-similar">
-              <div className="container">
-                <h2 className="title title--h3">Похожие товары</h2>
-                <div className="product-similar__slider">
-                  <div className="product-similar__slider-list">
-                    {similarCameras.slice(startCount, endCount).map((item) => (
-                      <Card key={item.id} camera={item} isActive />
-                    ))}
+          {
+            (similarCameras.length > 0) &&
+              <div className="page-content__section">
+                <section className="product-similar">
+                  <div className="container">
+                    <h2 className="title title--h3">Похожие товары</h2>
+                    <div className="product-similar__slider">
+                      <div className="product-similar__slider-list">
+                        {
+                          similarCameras.slice(startCount, endCount).map((item) => (
+                            <Card key={item.id} camera={item} isActive />
+                          ))
+                        }
+                      </div>
+                      <button onClick={handlePreviousButtonClick} className="slider-controls slider-controls--prev" type="button" aria-label="Предыдущий слайд" disabled={startCount === 0}>
+                        <img src="/img/sprite/icon-arrow.svg" alt="icon arrow" width="7" height="12" aria-hidden="true" />
+                      </button>
+                      <button onClick={handleNextButtonClick} className="slider-controls slider-controls--next" type="button" aria-label="Следующий слайд" disabled={endCount >= similarCameras.length}>
+                        <img src="/img/sprite/icon-arrow.svg" alt="icon arrow" width="7" height="12" aria-hidden="true" />
+                      </button>
+                    </div>
                   </div>
-                  <button onClick={handlePreviousButtonClick} className="slider-controls slider-controls--prev" type="button" aria-label="Предыдущий слайд" disabled={startCount === 0}>
-                    <img src="/img/sprite/icon-arrow.svg" alt="icon arrow" width="7" height="12" aria-hidden="true" />
-                  </button>
-                  <button onClick={handleNextButtonClick} className="slider-controls slider-controls--next" type="button" aria-label="Следующий слайд" disabled={endCount >= similarCameras.length}>
-                    <img src="/img/sprite/icon-arrow.svg" alt="icon arrow" width="7" height="12" aria-hidden="true" />
-                  </button>
-                </div>
+                </section>
               </div>
-            </section>
-          </div>
+          }
           <div className="page-content__section">
             <Reviews id={id} key={id} />
           </div>
         </div>
-        {isActiveModal && <ProductReviewModal />}
+        {isActiveReviewModal && <ProductReviewModal />}
+        {isActiveSuccessReviewModal && <SuccessModal />}
       </main>
       <Footer />
     </>
