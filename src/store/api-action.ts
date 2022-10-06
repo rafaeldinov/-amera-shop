@@ -27,7 +27,7 @@ export const fetchCameraAction = createAsyncThunk<Camera | undefined, string, {
       const {data} = await api.get<Camera>(`${APIRoute.Cameras}/${id}`);
       return data;
     }catch {
-      dispatch(redirectToRoute(AppRoute.NotFound));
+      dispatch(redirectToRoute(AppRoute.Root));
     }
   },
 );
