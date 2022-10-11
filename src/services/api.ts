@@ -1,14 +1,4 @@
-import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
-import { StatusCodes } from 'http-status-codes';
-import { toast } from 'react-toastify';
-
-const StatusCodeMapping: Record<number, boolean> = {
-  [StatusCodes.BAD_REQUEST]: true,
-  [StatusCodes.UNAUTHORIZED]: true,
-  [StatusCodes.NOT_FOUND]: true
-};
-
-const shouldDisplayError = (response: AxiosResponse) => !!StatusCodeMapping[response.status];
+import axios, { AxiosInstance } from 'axios';
 
 const BACKEND_URL = 'https://camera-shop.accelerator.pages.academy';
 const REQUEST_TIMEOUT = 5000;
@@ -19,14 +9,5 @@ export const createAPI = (): AxiosInstance => {
     timeout: REQUEST_TIMEOUT,
   });
 
-  api.interceptors.response.use(
-    (response) => response,
-    (error: AxiosError) => {
-      if (error.response && shouldDisplayError(error.response)) {
-        toast.warn(error.response.data.error);
-      }
-      throw error;
-    }
-  );
   return api;
 };

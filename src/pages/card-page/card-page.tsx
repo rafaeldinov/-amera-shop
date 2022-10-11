@@ -4,30 +4,27 @@ import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import RatingStars from '../../components/rating-stars/rating-stars';
-import Card from '../../components/card/card';
 import Reviews from '../../components/reviews/reviews';
-import ProductReviewModal from '../../components/product-review-modal/product-review-modal';
+import ReviewModal from '../../components/review-modal/review-modal';
 import SuccessModal from '../../components/success-modal/success-modal';
 import Preloader from '../../components/preloader/preloader';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { fetchCameraAction, fetchCamerasAction, fetchSimilarAction } from '../../store/api-action';
-import { getCamera, getSimilarCameras, getIsActiveReviewModal, getIsActiveSuccessReviewModal, getCameras } from '../../store/camera-reducer/selectors';
+import { getCamera, getSimilarCameras, getIsActiveReviewModal, getIsActiveSuccessReviewModal } from '../../store/camera-reducer/selectors';
 import { AppRoute } from '../../const';
+import SimilarItems from '../../components/similar-items/similar-items';
 
 export default function CardPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const {id} = useParams();
-  const {tab = 'review'} = useParams();
+  const {tab} = useParams();
   const navigate = useNavigate();
-  const cameras = useAppSelector(getCameras);
   const camera = useAppSelector(getCamera);
   const similarCameras = useAppSelector(getSimilarCameras);
   const isActiveReviewModal = useAppSelector(getIsActiveReviewModal);
   const isActiveSuccessReviewModal = useAppSelector(getIsActiveSuccessReviewModal);
 
-  const [startCount, setStartCount] = useState(0);
-  const [endCount, setEndCount] = useState(3);
-  const [activeTab, setActiveTab] = useState(tab);
+  const [activeTab, setActiveTab] = useState<string | undefined>();
 
   useEffect(() => {
     if(id) {
@@ -35,32 +32,17 @@ export default function CardPage(): JSX.Element {
       dispatch(fetchCameraAction(id));
       dispatch(fetchSimilarAction(id));
     }
-    if(Number(id) <= 0 || Number(id) > cameras.length) {
-      navigate(AppRoute.NotFound);
-    }
-  }, [dispatch, navigate, id, cameras.length]);
+    setActiveTab(tab);
+  }, [dispatch, navigate, id, tab]);
 
-  const handleItemСharacteristicsClick = () => {
+  const handleСharacteristicsClick = () => {
     setActiveTab('info');
     navigate(`/camera/${id}/info`);
   };
 
-  const handleItemReviewClick = () => {
+  const handleReviewClick = () => {
     setActiveTab('review');
     navigate(`/camera/${id}/review`);
-  };
-
-  const handlePreviousButtonClick = () => {
-    if(startCount > 0) {
-      setStartCount(startCount - 3);
-      setEndCount(endCount - 3);
-    }
-  };
-  const handleNextButtonClick = () => {
-    if(endCount < similarCameras.length) {
-      setStartCount(startCount + 3);
-      setEndCount(endCount + 3);
-    }
   };
 
   if(!camera) {
@@ -100,8 +82,8 @@ export default function CardPage(): JSX.Element {
                   </button>
                   <div className="tabs product__tabs">
                     <div className="tabs__controls product__tabs-controls">
-                      <button onClick={handleItemСharacteristicsClick} className={(activeTab === 'info') ? 'tabs__control is-active' : 'tabs__control'} type="button">Характеристики</button>
-                      <button onClick={handleItemReviewClick} className={(activeTab === 'review') ? 'tabs__control is-active' : 'tabs__control'} type="button">Описание</button>
+                      <button onClick={handleСharacteristicsClick} className={(activeTab === 'info') ? 'tabs__control is-active' : 'tabs__control'} type="button">Характеристики</button>
+                      <button onClick={handleReviewClick} className={(activeTab === 'review') ? 'tabs__control is-active' : 'tabs__control'} type="button">Описание</button>
                     </div>
                     <div className="tabs__content">
                       <div className={(activeTab === 'info') ? 'tabs__element is-active' : 'tabs__element'}>
@@ -134,33 +116,14 @@ export default function CardPage(): JSX.Element {
           {
             (similarCameras.length > 0) &&
               <div className="page-content__section">
-                <section className="product-similar">
-                  <div className="container">
-                    <h2 className="title title--h3">Похожие товары</h2>
-                    <div className="product-similar__slider">
-                      <div className="product-similar__slider-list">
-                        {
-                          similarCameras.slice(startCount, endCount).map((item) => (
-                            <Card key={item.id} camera={item} isActive />
-                          ))
-                        }
-                      </div>
-                      <button onClick={handlePreviousButtonClick} className="slider-controls slider-controls--prev" type="button" aria-label="Предыдущий слайд" disabled={startCount === 0}>
-                        <img src="/img/sprite/icon-arrow.svg" alt="icon arrow" width="7" height="12" aria-hidden="true" />
-                      </button>
-                      <button onClick={handleNextButtonClick} className="slider-controls slider-controls--next" type="button" aria-label="Следующий слайд" disabled={endCount >= similarCameras.length}>
-                        <img src="/img/sprite/icon-arrow.svg" alt="icon arrow" width="7" height="12" aria-hidden="true" />
-                      </button>
-                    </div>
-                  </div>
-                </section>
+                <SimilarItems similarCameras={similarCameras} />
               </div>
           }
           <div className="page-content__section">
             <Reviews id={id} key={id} />
           </div>
         </div>
-        {isActiveReviewModal && <ProductReviewModal />}
+        {isActiveReviewModal && <ReviewModal />}
         {isActiveSuccessReviewModal && <SuccessModal />}
       </main>
       <Footer />
