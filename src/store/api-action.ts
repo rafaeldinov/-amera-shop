@@ -7,6 +7,7 @@ import { Promo } from '../types/promo';
 import { Review } from '../types/review';
 import { ReviewPost } from '../types/review-post';
 import { redirectToRoute } from './action';
+import { AppDispatch } from '../types/state';
 
 export const fetchCamerasAction = createAsyncThunk<Camera[], undefined, {
   extra: AxiosInstance
@@ -19,6 +20,7 @@ export const fetchCamerasAction = createAsyncThunk<Camera[], undefined, {
 );
 
 export const fetchCameraAction = createAsyncThunk<Camera | undefined, string, {
+  dispatch: AppDispatch,
   extra: AxiosInstance
 }>(
   'fetchCamera',
@@ -27,7 +29,7 @@ export const fetchCameraAction = createAsyncThunk<Camera | undefined, string, {
       const {data} = await api.get<Camera>(`${APIRoute.Cameras}/${id}`);
       return data;
     }catch {
-      dispatch(redirectToRoute(AppRoute.Root));
+      dispatch(redirectToRoute(AppRoute.NotFound));
     }
   },
 );

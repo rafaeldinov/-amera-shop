@@ -41,8 +41,6 @@ export default function ReviewModal(): JSX.Element {
     evt.preventDefault();
     if (Object.values(formData).every((item) => !!item)) {
       dispatch(sendProductReviewAction(formData));
-    }else {
-      console.log(!!formData);
     }
     handleCloseModalClick();
     evt.currentTarget.reset();
