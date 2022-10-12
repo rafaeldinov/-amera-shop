@@ -9,7 +9,7 @@ import ReviewModal from '../../components/review-modal/review-modal';
 import SuccessModal from '../../components/success-modal/success-modal';
 import Preloader from '../../components/preloader/preloader';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import { fetchCameraAction, fetchCamerasAction, fetchSimilarAction } from '../../store/api-action';
+import { fetchCameraAction, fetchSimilarAction } from '../../store/api-action';
 import { getCamera, getSimilarCameras, getIsActiveReviewModal, getIsActiveSuccessReviewModal } from '../../store/camera-reducer/selectors';
 import { AppRoute, CameraTabs } from '../../const';
 import SimilarItems from '../../components/similar-items/similar-items';
@@ -28,7 +28,6 @@ export default function CardPage(): JSX.Element {
 
   useEffect(() => {
     if(id) {
-      dispatch(fetchCamerasAction());
       dispatch(fetchCameraAction(id));
       dispatch(fetchSimilarAction(id));
     }

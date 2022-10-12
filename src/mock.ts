@@ -1,10 +1,11 @@
 import { commerce, database, datatype, internet, image, random, lorem } from 'faker';
 import { Camera } from './types/camera';
+import { Promo } from './types/promo';
 import { Review } from './types/review';
-import { ReviewPost } from './types/review-post';
 
-export const CAMERAS = 25;
-const REVIEWS_COUNT = 10;
+export const CAMERAS_COUNT = 40;
+export const SIMILARS_ITEMS_COUNT = 9;
+export const REVIEWS_COUNT = 10;
 
 const MIN_ID = 1;
 const VENDOR_CODE_COUNT = 7;
@@ -41,20 +42,17 @@ export const makeFakeReview = (): Review => ({
   cameraId: datatype.number({ min: MIN_ID }),
 } as Review);
 
-export const makeFakeComment = (): ReviewPost => ({
-  cameraId: datatype.number({ min: MIN_ID }),
-  userName: internet.userName(),
-  advantage: lorem.sentence(),
-  disadvantage: lorem.sentence(),
-  review: lorem.sentence(300, 50),
-  rating: datatype.number({ min: 0, max: MAX_RATING }),
-} as ReviewPost);
+export const makeFakePromo = (): Promo => ({
+  id: datatype.number({ min: MIN_ID }),
+  name: lorem.word(),
+  previewImg: image.image(),
+  previewImg2x: image.image(),
+  previewImgWebp: image.image(),
+  previewImgWebp2x: image.image()
+} as Promo);
 
-export const makeFakeGuitars = (quantity: number): Camera[] => (
+export const makeFakeCameras = (quantity: number): Camera[] => (
   new Array(quantity).fill(null).map(makeFakeCamera) as Camera[]);
 
 export const makeFakeReviews = (quantity: number): Review[] => (
   new Array(quantity).fill(null).map(makeFakeReview) as Review[]);
-
-export const makeFakeComments = (quantity: number): ReviewPost[] => (
-  new Array(quantity).fill(null).map(makeFakeComment) as ReviewPost[]);
