@@ -21,7 +21,7 @@ export default function CardList({pageNumber}: Props): JSX.Element {
 
   return (
     <div className="cards catalog__cards">
-      {camerasPerPage.map((item) => (
+      {camerasPerPage?.map((item) => (
         <Card key={item.id} camera={item} />
       ))}
     </div>

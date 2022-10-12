@@ -11,7 +11,7 @@ import Preloader from '../../components/preloader/preloader';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { fetchCameraAction, fetchCamerasAction, fetchSimilarAction } from '../../store/api-action';
 import { getCamera, getSimilarCameras, getIsActiveReviewModal, getIsActiveSuccessReviewModal } from '../../store/camera-reducer/selectors';
-import { AppRoute } from '../../const';
+import { AppRoute, CameraTabs } from '../../const';
 import SimilarItems from '../../components/similar-items/similar-items';
 
 export default function CardPage(): JSX.Element {
@@ -24,7 +24,7 @@ export default function CardPage(): JSX.Element {
   const isActiveReviewModal = useAppSelector(getIsActiveReviewModal);
   const isActiveSuccessReviewModal = useAppSelector(getIsActiveSuccessReviewModal);
 
-  const [activeTab, setActiveTab] = useState<string | undefined>();
+  const [activeTab, setActiveTab] = useState<string | undefined>(tab);
 
   useEffect(() => {
     if(id) {
@@ -32,24 +32,23 @@ export default function CardPage(): JSX.Element {
       dispatch(fetchCameraAction(id));
       dispatch(fetchSimilarAction(id));
     }
-    setActiveTab(tab);
-  }, [dispatch, navigate, id, tab]);
+  }, [dispatch, id]);
 
-  const handleСharacteristicsClick = () => {
-    setActiveTab('info');
-    navigate(`/camera/${id}/info`);
+  const handleCharacteristicsClick = () => {
+    setActiveTab(CameraTabs.Info);
+    navigate(`/camera/${id}/${CameraTabs.Info}`);
   };
 
   const handleReviewClick = () => {
-    setActiveTab('review');
-    navigate(`/camera/${id}/review`);
+    setActiveTab(CameraTabs.Review);
+    navigate(`/camera/${id}/${CameraTabs.Review}`);
   };
 
   if(!camera) {
     return <Preloader />;
   }
 
-  if(tab !== undefined && tab !== 'info' && tab !== 'review') {
+  if(tab !== undefined && tab !== CameraTabs.Info && tab !== CameraTabs.Review) {
     navigate(`${AppRoute.NotFound}`);
   }
 
@@ -82,11 +81,11 @@ export default function CardPage(): JSX.Element {
                   </button>
                   <div className="tabs product__tabs">
                     <div className="tabs__controls product__tabs-controls">
-                      <button onClick={handleСharacteristicsClick} className={(activeTab === 'info') ? 'tabs__control is-active' : 'tabs__control'} type="button">Характеристики</button>
-                      <button onClick={handleReviewClick} className={(activeTab === 'review') ? 'tabs__control is-active' : 'tabs__control'} type="button">Описание</button>
+                      <button onClick={handleCharacteristicsClick} className={(activeTab === CameraTabs.Info) ? 'tabs__control is-active' : 'tabs__control'} type="button">Характеристики</button>
+                      <button onClick={handleReviewClick} className={(activeTab === CameraTabs.Review) ? 'tabs__control is-active' : 'tabs__control'} type="button">Описание</button>
                     </div>
                     <div className="tabs__content">
-                      <div className={(activeTab === 'info') ? 'tabs__element is-active' : 'tabs__element'}>
+                      <div className={(activeTab === CameraTabs.Info) ? 'tabs__element is-active' : 'tabs__element'}>
                         <ul className="product__tabs-list">
                           <li className="item-list"><span className="item-list__title">Артикул:</span>
                             <p className="item-list__text"> {camera.vendorCode}</p>
@@ -102,7 +101,7 @@ export default function CardPage(): JSX.Element {
                           </li>
                         </ul>
                       </div>
-                      <div className={(activeTab === 'review') ? 'tabs__element is-active' : 'tabs__element'}>
+                      <div className={(activeTab === CameraTabs.Review) ? 'tabs__element is-active' : 'tabs__element'}>
                         <div className="product__tabs-text">
                           <p>{camera.description}</p>
                         </div>

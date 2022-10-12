@@ -3,7 +3,7 @@ export enum AppRoute {
   Catalog = '/catalog/page_:number',
   Item = '/camera/:id/:tab',
   Basket = '/basket',
-  NotFound = '*'
+  NotFound = '/not-found'
 }
 
 export enum APIRoute {
@@ -12,6 +12,11 @@ export enum APIRoute {
   Coupons = '/coupons',
   ReviewPost = '/reviews',
   Orders = '/orders',
+}
+
+export enum CameraTabs {
+  Info = 'info',
+  Review = 'review'
 }
 
 export const getPaginagionPageCount = (allCameras: number) => Math.ceil(allCameras / ITEMS_PER_PAGE_COUNT);
