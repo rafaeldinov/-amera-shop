@@ -2,6 +2,7 @@ import { commerce, database, datatype, internet, image, random, lorem } from 'fa
 import { Camera } from './types/camera';
 import { Promo } from './types/promo';
 import { Review } from './types/review';
+import { ReviewPost } from './types/review-post';
 
 export const CAMERAS_COUNT = 40;
 export const SIMILARS_ITEMS_COUNT = 9;
@@ -30,6 +31,15 @@ export const makeFakeCamera = (): Camera => ({
   previewImgWebp2x: image.image(),
   reviewCount: REVIEWS_COUNT
 } as Camera);
+
+export const makeFakeSendReview = (): ReviewPost => ({
+  cameraId: datatype.number({ min: 0, max: CAMERAS_COUNT }),
+  userName: internet.userName(),
+  advantage: lorem.sentence(),
+  disadvantage: lorem.sentence(),
+  review: lorem.sentence(300, 50),
+  rating: datatype.number({ min: 0, max: MAX_RATING }),
+} as ReviewPost);
 
 export const makeFakeReview = (): Review => ({
   id: lorem.sentence(),

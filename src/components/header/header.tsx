@@ -3,7 +3,7 @@ import { AppRoute } from '../../const';
 
 export default function Header(): JSX.Element {
   return (
-    <header className="header" id="header">
+    <header className="header" id="header" data-testid="header">
       <div className="container">
         <Link className="header__logo" to={AppRoute.Root} aria-label="Переход на главную">
           <img src="/img/sprite/icon-logo.svg" alt="icon logo" width="100" height="36" aria-hidden="true"/>

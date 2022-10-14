@@ -1,4 +1,5 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import * as Redux from 'react-redux';
 import { Provider } from 'react-redux';
 import { createMemoryHistory } from 'history';
 import { configureMockStore } from '@jedmao/redux-mock-store';
@@ -10,20 +11,21 @@ import { makeFakeCamera, makeFakeCameras, SIMILARS_ITEMS_COUNT } from '../../moc
 const mockStore = configureMockStore();
 
 const store = mockStore({
-  'camera': {
-    camera: makeFakeCamera(),
-    similarCameras: makeFakeCameras(SIMILARS_ITEMS_COUNT),
-    pageCameras: [],
-    reviews: [],
-    isActiveReviewModal: false,
-    isActiveSuccessReviewModal: false
-  }
+  camera: makeFakeCamera(),
+  similarCameras: makeFakeCameras(SIMILARS_ITEMS_COUNT),
+  pageCameras: [],
+  reviews: [],
+  isActiveReviewModal: false,
+  isActiveSuccessReviewModal: false
 });
 
 describe('Component: CardPage', () => {
-  it('should render component CardPage when user navigate to "/camera/:id/:tab" url', () => {
+  it('should render correctly', () => {
     const history = createMemoryHistory();
-    history.push('/camera/1/review');
+    const dispatch = jest.fn();
+    const useDispatch = jest.spyOn(Redux, 'useDispatch');
+    useDispatch.mockReturnValue(dispatch);
+
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
@@ -31,5 +33,7 @@ describe('Component: CardPage', () => {
         </HistoryRouter>
       </Provider>
     );
+
+    expect(screen.getByTestId(/card-page/i)).toBeInTheDocument();
   });
 });

@@ -15,6 +15,6 @@ export default function ModalOverlay(): JSX.Element {
   };
 
   return (
-    <div onClick={handleCloseModalClick} className="modal__overlay" />
+    <div onClick={handleCloseModalClick} className="modal__overlay" data-testid="overlay" />
   );
 }

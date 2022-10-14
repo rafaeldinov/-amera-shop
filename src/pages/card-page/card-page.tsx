@@ -55,7 +55,7 @@ export default function CardPage(): JSX.Element {
     <>
       <Header />
       <main>
-        <div className="page-content">
+        <div className="page-content" data-testid="card-page">
           <Breadcrumbs pageName='cardPage' cameraName={camera.name} />
           <div className="page-content__section">
             <section className="product">
