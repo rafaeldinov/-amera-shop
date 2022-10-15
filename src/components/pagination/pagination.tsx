@@ -1,13 +1,18 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import { getCameras } from '../../store/camera-reducer/selectors';
-import { getPaginagionPageCount } from '../../const';
+import { AppRoute, getPaginagionPageCount } from '../../const';
 
 export default function Pagination(): JSX.Element {
   let {page = 1} = useParams();
+  const navigate = useNavigate();
   const cameras = useAppSelector(getCameras);
   const pageCount = getPaginagionPageCount(cameras.length);
   page = Number(page);
+
+  if(cameras.some((_, index) => index + 1 > page && index + 1 < page)) {
+    navigate(`${AppRoute.NotFound}`);
+  }
 
   return (
     <div className="pagination" data-testid="pagination">

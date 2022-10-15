@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import * as Redux from 'react-redux';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
@@ -13,15 +12,21 @@ const mockStore = configureMockStore();
 const history = createMemoryHistory();
 
 const store = mockStore({
-  promoOffer: makeFakePromo(),
+  camera: {
+    promoOffer: makeFakePromo(),
+  }
 });
 
+const mockDispatch = jest.fn();
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useDispatch: () => mockDispatch,
+}));
+
+jest.mock('../../store/camera-reducer/camera-reducer');
 
 describe('Component: Banner', () => {
   it('should render correctly', () => {
-    const dispatch = jest.fn();
-    const useDispatch = jest.spyOn(Redux, 'useDispatch');
-    useDispatch.mockReturnValue(dispatch);
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
@@ -35,6 +40,6 @@ describe('Component: Banner', () => {
       </Provider>,
     );
 
-    expect(screen.getByRole('button', { name: /Подробнее/i })).toBeInTheDocument();
+    expect(screen.getByText(/Подробнее/i)).toBeInTheDocument();
   });
 });

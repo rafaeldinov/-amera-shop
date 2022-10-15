@@ -14,11 +14,11 @@ history.push(AppRoute.Root);
 
 const store = mockStore({});
 
-const pageName = PageName.CardPage;
-const cameraName = makeFakeCamera().name;
-
 describe('Component: Breadcrumbs', () => {
   it('should render correctly', () => {
+    const pageName = PageName.CardPage;
+    const cameraName = makeFakeCamera().name;
+
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
