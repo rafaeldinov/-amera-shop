@@ -16,7 +16,7 @@ const getReviewDate = (date: string, format: string)=> {
 
 export default function ReviewItem({review}: Props): JSX.Element {
   return (
-    <li className="review-card">
+    <li className="review-card" data-testid="review">
       <div className="review-card__head">
         <p className="title title--h4">{review.userName}</p>
         <time className="review-card__data" dateTime={getReviewDate(review.createAt, 'dateTime')}>{getReviewDate(review.createAt, 'date')}</time>

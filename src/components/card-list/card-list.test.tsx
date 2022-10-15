@@ -4,37 +4,37 @@ import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import HistoryRouter from '../history-route/history-route';
-import { AppRoute } from '../../const';
-import Banner from './banner';
-import { Routes, Route } from 'react-router-dom';
-import { makeFakePromo } from '../../mock';
+import { AppRoute, ITEMS_PER_PAGE_COUNT } from '../../const';
+import CardList from './card-list';
+import { CAMERAS_COUNT, makeFakeCameras } from '../../mock';
 
 const mockStore = configureMockStore();
-const history = createMemoryHistory();
+
+const fakeCameras = makeFakeCameras(CAMERAS_COUNT);
+const fakePageCameras = makeFakeCameras(ITEMS_PER_PAGE_COUNT);
 
 const store = mockStore({
-  promoOffer: makeFakePromo(),
+  cameras: fakeCameras,
+  pageCameras: fakePageCameras,
 });
 
+describe('Component: CardList', () => {
+  it('should render correctly', async() => {
+    const history = createMemoryHistory();
+    history.push(AppRoute.Root);
 
-describe('Component: Banner', () => {
-  it('should render correctly', () => {
+    const pageNumber = 1;
     const dispatch = jest.fn();
     const useDispatch = jest.spyOn(Redux, 'useDispatch');
     useDispatch.mockReturnValue(dispatch);
+
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <Routes>
-            <Route
-              path={AppRoute.Root}
-              element={<Banner />}
-            />
-          </Routes>
+          <CardList pageNumber={pageNumber} />
         </HistoryRouter>,
       </Provider>,
     );
-
-    expect(screen.getByRole('button', { name: /Подробнее/i })).toBeInTheDocument();
+    expect(screen.getByTestId('div-id')).toHaveClass('product-card is-active');
   });
 });

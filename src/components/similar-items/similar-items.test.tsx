@@ -2,29 +2,31 @@ import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../../components/history-route/history-route';
 import { AppRoute } from '../../const';
-import Basket from './basket-item';
-import { makeFakePromo } from '../../mock';
+import SimilarItems from './similar-items';
+import { makeFakeCameras, SIMILARS_ITEMS_COUNT } from '../../mock';
 
 const mockStore = configureMockStore();
 const history = createMemoryHistory();
 history.push(AppRoute.Root);
 
 const store = mockStore({
-  promoOffer: makeFakePromo(),
+  isActiveReviewModal: true
 });
 
-describe('Component: BasketItem', () => {
+describe('Component: SimilarItems', () => {
   it('should render correctly', () => {
+    const similarCameras = makeFakeCameras(SIMILARS_ITEMS_COUNT);
+
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <Basket />
+          <SimilarItems similarCameras={similarCameras} />
         </HistoryRouter>,
       </Provider>,
     );
 
-    expect(screen.getByText(/Общая цена/i)).toBeInTheDocument();
+    expect(screen.getByText(/Похожие товары/i)).toBeInTheDocument();
   });
 });

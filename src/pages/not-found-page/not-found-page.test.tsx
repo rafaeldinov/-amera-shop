@@ -11,6 +11,7 @@ describe('Component: NotFoundPage', () => {
         <NotFoundPage />
       </HistoryRouter>,
     );
+
     expect(screen.getByText(/404. Page not found/i)).toBeInTheDocument();
     expect(screen.getByText(/Back to main page/i)).toBeInTheDocument();
   });

@@ -5,19 +5,26 @@ import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import HistoryRouter from '../history-route/history-route';
 import App from './app';
-import { AppRoute } from '../../const';
-import { makeFakeCamera } from '../../mock';
+import { AppRoute, ITEMS_PER_PAGE_COUNT } from '../../const';
+import { CAMERAS_COUNT, makeFakeCamera, makeFakeCameras, makeFakePromo, makeFakeReviews, REVIEWS_COUNT, SIMILARS_ITEMS_COUNT } from '../../mock';
 
 const mockStore = configureMockStore();
 
+const fakeCameras = makeFakeCameras(CAMERAS_COUNT);
+const fakeCamera = makeFakeCamera();
+const fakeSimilarCameras = makeFakeCameras(SIMILARS_ITEMS_COUNT);
+const fakePageCameras = makeFakeCameras(ITEMS_PER_PAGE_COUNT);
+const fakeReviews = makeFakeReviews(REVIEWS_COUNT);
+const fakePromoOffer = makeFakePromo();
+
 const store = mockStore({
-  cameras: [],
-  camera: undefined,
-  similarCameras: [],
-  pageCameras: [],
-  reviews: [],
+  cameras: fakeCameras,
+  camera: fakeCamera,
+  similarCameras: fakeSimilarCameras,
+  pageCameras: fakePageCameras,
+  reviews: fakeReviews,
   paginationPage: 1,
-  promoOffer: undefined,
+  promoOffer: fakePromoOffer,
   isActiveReviewModal: false,
   isActiveSuccessReviewModal: false
 });
@@ -32,7 +39,7 @@ const fakeApp = (
   </Provider>
 );
 
-describe('Application Routing', () => {
+describe('App Routing', () => {
 
   it('should render "Root" when user navigate to "/"', () => {
     const dispatch = jest.fn();

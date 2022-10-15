@@ -35,7 +35,7 @@ export default function CatalogPage(): JSX.Element {
         <Banner />
         <div className="page-content">
           <Breadcrumbs pageName='catalogPage' />
-          <section className="catalog">
+          <section className="catalog" data-testid="catalog-page">
             <div className="container">
               <h1 className="title title--h2">Каталог фото- и видеотехники</h1>
               <div className="page-content__columns">

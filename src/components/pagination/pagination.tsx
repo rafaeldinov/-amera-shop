@@ -4,18 +4,18 @@ import { getCameras } from '../../store/camera-reducer/selectors';
 import { getPaginagionPageCount } from '../../const';
 
 export default function Pagination(): JSX.Element {
-  let {number = 1} = useParams();
+  let {page = 1} = useParams();
   const cameras = useAppSelector(getCameras);
   const pageCount = getPaginagionPageCount(cameras.length);
-  number = Number(number);
+  page = Number(page);
 
   return (
-    <div className="pagination">
+    <div className="pagination" data-testid="pagination">
       <ul className="pagination__list">
         {
-          number !== 1 && pageCount ?
+          page !== 1 && pageCount ?
             <li className="pagination__item">
-              <Link className="pagination__link pagination__link--text" to={`/catalog/page_${Number(number) - 1}`}>
+              <Link className="pagination__link pagination__link--text" to={`/catalog/${Number(page) - 1}`}>
                 Назад
               </Link>
             </li> : ''
@@ -23,17 +23,17 @@ export default function Pagination(): JSX.Element {
         {
           Array.from(Array(pageCount), (_, index) => (
             <li className="pagination__item" key={index}>
-              <Link className={number !== index + 1 ?
-                'pagination__link' : 'pagination__link pagination__link--active'} to={`/catalog/page_${index + 1}`}
+              <Link className={page !== index + 1 ?
+                'pagination__link' : 'pagination__link pagination__link--active'} to={`/catalog/${index + 1}`}
               >{index + 1}
               </Link>
             </li>)
           )
         }
         {
-          (pageCount !== number && pageCount) ?
+          (pageCount !== page && pageCount) ?
             <li className="pagination__item">
-              <Link className="pagination__link pagination__link--text" to={`/catalog/page_${Number(number) + 1}`}>Далее</Link>
+              <Link className="pagination__link pagination__link--text" to={`/catalog/${Number(page) + 1}`}>Далее</Link>
             </li> :
             <div style={{width: '83px', height: '36px', marginLeft:'16px'}} />
         }

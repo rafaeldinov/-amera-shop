@@ -1,30 +1,35 @@
 import { render, screen } from '@testing-library/react';
+import * as Redux from 'react-redux';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../../components/history-route/history-route';
 import { AppRoute } from '../../const';
-import Basket from './basket-item';
-import { makeFakePromo } from '../../mock';
+import SuccessModal from './success-modal';
 
 const mockStore = configureMockStore();
 const history = createMemoryHistory();
 history.push(AppRoute.Root);
 
 const store = mockStore({
-  promoOffer: makeFakePromo(),
+  isActiveReviewModal: false,
+  isActiveSuccessReviewModal: true
 });
 
-describe('Component: BasketItem', () => {
+describe('Component: SuccessModal', () => {
   it('should render correctly', () => {
+    const dispatch = jest.fn();
+    const useDispatch = jest.spyOn(Redux, 'useDispatch');
+    useDispatch.mockReturnValue(dispatch);
+
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <Basket />
+          <SuccessModal />
         </HistoryRouter>,
       </Provider>,
     );
 
-    expect(screen.getByText(/Общая цена/i)).toBeInTheDocument();
+    expect(screen.getByText(/Спасибо за отзыв/i)).toBeInTheDocument();
   });
 });

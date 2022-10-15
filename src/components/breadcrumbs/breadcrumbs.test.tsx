@@ -1,40 +1,37 @@
 import { render, screen } from '@testing-library/react';
-import * as Redux from 'react-redux';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import HistoryRouter from '../history-route/history-route';
-import { AppRoute } from '../../const';
-import Banner from './banner';
+import { AppRoute, PageName } from '../../const';
+import Breadcrumbs from './breadcrumbs';
 import { Routes, Route } from 'react-router-dom';
-import { makeFakePromo } from '../../mock';
+import { makeFakeCamera } from '../../mock';
 
 const mockStore = configureMockStore();
 const history = createMemoryHistory();
+history.push(AppRoute.Root);
 
-const store = mockStore({
-  promoOffer: makeFakePromo(),
-});
+const store = mockStore({});
 
+const pageName = PageName.CardPage;
+const cameraName = makeFakeCamera().name;
 
-describe('Component: Banner', () => {
+describe('Component: Breadcrumbs', () => {
   it('should render correctly', () => {
-    const dispatch = jest.fn();
-    const useDispatch = jest.spyOn(Redux, 'useDispatch');
-    useDispatch.mockReturnValue(dispatch);
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
           <Routes>
             <Route
               path={AppRoute.Root}
-              element={<Banner />}
+              element={<Breadcrumbs pageName={pageName} cameraName={cameraName}/>}
             />
           </Routes>
         </HistoryRouter>,
       </Provider>,
     );
 
-    expect(screen.getByRole('button', { name: /Подробнее/i })).toBeInTheDocument();
+    expect(screen.getByText(/Главная/i)).toBeInTheDocument();
   });
 });

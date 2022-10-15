@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, PageName } from '../../const';
 
 type Props = {
   pageName: string;
@@ -16,11 +16,11 @@ export default function Breadcrumbs({pageName, cameraName} : Props): JSX.Element
               <img src="/img/sprite/icon-arrow-mini.svg" alt="icon arrow" width="5" height="8" aria-hidden="true"/>
             </Link>
           </li>
-          {(pageName === 'catalogPage') &&
+          {(pageName === PageName.CatalogPage) &&
             <li className="breadcrumbs__item">
               <span className="breadcrumbs__link breadcrumbs__link--active">Каталог</span>
             </li>}
-          {(pageName === 'cardPage') &&
+          {(pageName === PageName.CardPage) &&
           <>
             <li className="breadcrumbs__item">
               <Link className="breadcrumbs__link" to={AppRoute.Root}>Каталог
@@ -31,7 +31,7 @@ export default function Breadcrumbs({pageName, cameraName} : Props): JSX.Element
               <span className="breadcrumbs__link breadcrumbs__link--active">{cameraName}</span>
             </li>
           </>}
-          {(pageName === 'basketPage') &&
+          {(pageName === PageName.BasketPage) &&
             <>
               <li className="breadcrumbs__item">
                 <Link className="breadcrumbs__link" to={AppRoute.Catalog}>Каталог

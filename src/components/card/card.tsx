@@ -1,15 +1,16 @@
 import { Link } from 'react-router-dom';
+import { CameraTabs } from '../../const';
 import { Camera } from '../../types/camera';
 import RatingStars from '../rating-stars/rating-stars';
 
 type Prop = {
   camera: Camera;
-  isActive?: boolean | undefined;
+  isActive?: boolean;
 }
 
 export default function Card({camera, isActive}: Prop): JSX.Element {
   return (
-    <div className={isActive ? 'product-card is-active' : 'product-card'}>
+    <div className={isActive ? 'product-card is-active' : 'product-card'} data-testid="div-id">
       <div className="product-card__img">
         <picture>
           <source type="image/webp" srcSet={`/${camera.previewImgWebp}, /${camera.previewImgWebp2x}`} />
@@ -29,7 +30,7 @@ export default function Card({camera, isActive}: Prop): JSX.Element {
       <div className="product-card__buttons">
         <button className="btn btn--purple product-card__btn" type="button">Купить
         </button>
-        <Link className="btn btn--transparent" to={`/camera/${camera.id}/review`}>Подробнее</Link>
+        <Link className="btn btn--transparent" to={`/camera/${camera.id}/${CameraTabs.Review}`}>Подробнее</Link>
       </div>
     </div>
   );

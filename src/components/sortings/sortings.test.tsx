@@ -2,29 +2,26 @@ import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../../components/history-route/history-route';
 import { AppRoute } from '../../const';
-import Basket from './basket-item';
-import { makeFakePromo } from '../../mock';
+import Sortings from './sortings';
 
 const mockStore = configureMockStore();
 const history = createMemoryHistory();
 history.push(AppRoute.Root);
 
-const store = mockStore({
-  promoOffer: makeFakePromo(),
-});
+const store = mockStore({});
 
-describe('Component: BasketItem', () => {
+describe('Component: Sortings', () => {
   it('should render correctly', () => {
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <Basket />
+          <Sortings />
         </HistoryRouter>,
       </Provider>,
     );
 
-    expect(screen.getByText(/Общая цена/i)).toBeInTheDocument();
+    expect(screen.getByText(/Сортировать:/i)).toBeInTheDocument();
   });
 });
