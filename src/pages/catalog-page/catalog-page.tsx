@@ -10,13 +10,13 @@ import Pagination from '../../components/pagination/pagination';
 import CardList from '../../components/card-list/card-list';
 import Sortings from '../../components/sortings/sortings';
 import Filters from '../../components/filters/filters';
-import { AppRoute, getPaginagionPageCount } from '../../const';
+import { AppRoute, getPaginationPageCount } from '../../const';
 
 export default function CatalogPage(): JSX.Element {
   const {page = 1} = useParams();
   const navigate = useNavigate();
   const cameras = useAppSelector(getCameras);
-  const pageCount = getPaginagionPageCount(cameras.length);
+  const pageCount = getPaginationPageCount(cameras.length);
   const pages = Array.from({length: pageCount}, (_, i) => i + 1);
 
   useEffect(() => {
