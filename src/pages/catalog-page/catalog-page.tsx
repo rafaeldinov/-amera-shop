@@ -13,7 +13,7 @@ import Filters from '../../components/filters/filters';
 import { AppRoute, getPaginagionPageCount } from '../../const';
 
 export default function CatalogPage(): JSX.Element {
-  const {number = 1} = useParams();
+  const {page = 1} = useParams();
   const navigate = useNavigate();
   const cameras = useAppSelector(getCameras);
   const pageCount = getPaginagionPageCount(cameras.length);
@@ -21,12 +21,11 @@ export default function CatalogPage(): JSX.Element {
 
   useEffect(() => {
     if(cameras.length) {
-      if(!pages.some((item) => Number(number) === item)) {
+      if(!pages.some((item) => Number(page) === item)) {
         navigate(AppRoute.NotFound);
       }
     }
-  }, [navigate, number, pageCount, pages, cameras]);
-
+  }, [navigate, page, pageCount, pages, cameras]);
 
   return (
     <>
@@ -44,7 +43,7 @@ export default function CatalogPage(): JSX.Element {
                 </div>
                 <div className="catalog__content">
                   <Sortings />
-                  <CardList pageNumber={Number(number)} />
+                  <CardList pageNumber={Number(page)} />
                   <Pagination />
                 </div>
               </div>

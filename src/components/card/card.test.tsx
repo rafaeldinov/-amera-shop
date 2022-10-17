@@ -19,6 +19,7 @@ describe('Component: Card', () => {
   it('should render correctly', () => {
     const isActive = true;
     const camera = fakeCamera;
+
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>

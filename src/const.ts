@@ -3,7 +3,7 @@ export enum AppRoute {
   Catalog = '/catalog/:page',
   Item = '/camera/:id/:tab',
   Basket = '/basket',
-  NotFound = '*'
+  NotFound = '/*'
 }
 
 export enum APIRoute {

@@ -5,15 +5,12 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import HistoryRouter from '../history-route/history-route';
 import { AppRoute } from '../../const';
 import Basket from './basket-item';
-import { makeFakePromo } from '../../mock';
 
 const mockStore = configureMockStore();
 const history = createMemoryHistory();
 history.push(AppRoute.Root);
 
-const store = mockStore({
-  promoOffer: makeFakePromo(),
-});
+const store = mockStore({});
 
 describe('Component: BasketItem', () => {
   it('should render correctly', () => {

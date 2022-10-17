@@ -3,5 +3,5 @@ import { cameraSlice } from './camera-reducer/camera-reducer';
 
 
 export const rootReducer = combineReducers({
-  'camera': cameraSlice.reducer
+  camera: cameraSlice.reducer
 });

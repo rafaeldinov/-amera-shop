@@ -49,7 +49,10 @@ export default function ReviewModal(): JSX.Element {
   const handleButtonSubmit = () => setIsEmpty(false);
 
   return (
-    <FocusTrap>
+    <FocusTrap focusTrapOptions={{
+      fallbackFocus: '#stars-rate'
+    }}
+    >
       <div className='modal is-active'>
         <div className="modal__wrapper">
           <ModalOverlay />
@@ -62,17 +65,17 @@ export default function ReviewModal(): JSX.Element {
                     <legend className="rate__caption">Рейтинг
                       <img src="/img/sprite/icon-snowflake.svg" alt="icon snowflake" width="9" height="9" aria-hidden="true"/>
                     </legend>
-                    <div className="rate__bar">
+                    <div className="rate__bar" id="stars-rate" tabIndex={0}>
                       <div onClick={handleGetRatingClick} className="rate__group">
-                        <input className="visually-hidden" id="star-5" name="rate" type="radio" value="5" required />
-                        <label className="rate__label" htmlFor="star-5" title="Отлично"/>
-                        <input className="visually-hidden" id="star-4" name="rate" type="radio" value="4"/>
+                        <input className="visually-hidden" id="star-5" name="rate" type="radio" value="5" required tabIndex={-1}/>
+                        <label className="rate__label" htmlFor="star-5" title="Отлично" />
+                        <input className="visually-hidden" id="star-4" name="rate" type="radio" value="4" tabIndex={-1}/>
                         <label className="rate__label" htmlFor="star-4" title="Хорошо"/>
-                        <input className="visually-hidden" id="star-3" name="rate" type="radio" value="3"/>
+                        <input className="visually-hidden" id="star-3" name="rate" type="radio" value="3" tabIndex={-1}/>
                         <label className="rate__label" htmlFor="star-3" title="Нормально"/>
-                        <input className="visually-hidden" id="star-2" name="rate" type="radio" value="2"/>
+                        <input className="visually-hidden" id="star-2" name="rate" type="radio" value="2" tabIndex={-1}/>
                         <label className="rate__label" htmlFor="star-2" title="Плохо"/>
-                        <input className="visually-hidden" id="star-1" name="rate" type="radio" value="1" />
+                        <input className="visually-hidden" id="star-1" name="rate" type="radio" value="1" tabIndex={-1}/>
                         <label className="rate__label" htmlFor="star-1" title="Ужасно"/>
                       </div>
                       <div className="rate__progress">

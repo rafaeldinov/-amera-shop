@@ -11,9 +11,7 @@ const mockStore = configureMockStore();
 const history = createMemoryHistory();
 history.push(AppRoute.Root);
 
-const store = mockStore({
-  isActiveReviewModal: true
-});
+const store = mockStore({});
 
 describe('Component: SimilarItems', () => {
   it('should render correctly', () => {
