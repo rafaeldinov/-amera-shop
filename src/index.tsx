@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import { store } from './store';
+import { store } from './store/store';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HistoryRouter from './components/history-route/history-route';
