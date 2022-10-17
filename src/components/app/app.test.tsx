@@ -43,7 +43,7 @@ const fakeApp = (
 
 describe('App Routing', () => {
   it('should render "Root" when user navigate to /', () => {
-    history.push(AppRoute.Catalog);
+    history.push(AppRoute.Root);
     render(fakeApp);
 
     expect(screen.getAllByText('Каталог').length).toBe(3);

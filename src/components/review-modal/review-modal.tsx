@@ -53,7 +53,7 @@ export default function ReviewModal(): JSX.Element {
       fallbackFocus: '#stars-rate'
     }}
     >
-      <div className='modal is-active'>
+      <div className="modal is-active">
         <div className="modal__wrapper">
           <ModalOverlay />
           <div className="modal__content">
