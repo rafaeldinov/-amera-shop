@@ -11,10 +11,10 @@ export default function SuccessModal(): JSX.Element {
   const closeSuccessModal = () => {
     dispatch(setIsActiveSuccessReviewModal(false));
     document.body.classList.remove('scroll-lock');
-    document.removeEventListener('keydown', onCloseModalEscKeydown);
+    document.removeEventListener('keydown', handleModalEscKeydown);
   };
 
-  const onCloseModalEscKeydown = (evt: KeyboardEvent) => {
+  const handleModalEscKeydown = (evt: KeyboardEvent) => {
     if (evt.key === 'Escape') {
       evt.preventDefault();
       closeSuccessModal();
@@ -24,7 +24,7 @@ export default function SuccessModal(): JSX.Element {
   const handleClosePopupClick = () => closeSuccessModal();
 
   if(isActiveSuccessReviewModal) {
-    document.addEventListener('keydown', onCloseModalEscKeydown);
+    document.addEventListener('keydown', handleModalEscKeydown);
   }
 
   return (

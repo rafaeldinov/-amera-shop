@@ -27,10 +27,10 @@ export default function Reviews({id}: Props): JSX.Element {
   const closeReviewModal = () => {
     dispatch(setIsActiveReviewModal(false));
     document.body.classList.remove('scroll-lock');
-    document.removeEventListener('keydown', onCloseModalEscKeydown);
+    document.removeEventListener('keydown', handleModalEscKeydown);
   };
 
-  const onCloseModalEscKeydown = (evt: KeyboardEvent) => {
+  const handleModalEscKeydown = (evt: KeyboardEvent) => {
     if (evt.key === 'Escape') {
       evt.preventDefault();
       closeReviewModal();
@@ -38,7 +38,7 @@ export default function Reviews({id}: Props): JSX.Element {
   };
 
   const handleOpenModalReviewClick = () => {
-    document.addEventListener('keydown', onCloseModalEscKeydown);
+    document.addEventListener('keydown', handleModalEscKeydown);
     dispatch(setIsActiveReviewModal(true));
     document.body.classList.add('scroll-lock');
   };
