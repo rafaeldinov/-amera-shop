@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import Search from '../search/search';
 
 export default function Header(): JSX.Element {
   return (
@@ -20,25 +21,7 @@ export default function Header(): JSX.Element {
             </li>
           </ul>
         </nav>
-        <div className="form-search">
-          <form>
-            <label>
-              <img className="form-search__icon" src="/img/sprite/icon-lens.svg" alt="icon lens" width="16" height="16" aria-hidden="true"/>
-              <input className="form-search__input" type="text" autoComplete="off" placeholder="Поиск по сайту"/>
-            </label>
-            <ul className="form-search__select-list">
-              <li className="form-search__select-item" tabIndex={0}>Cannonball Pro MX 8i</li>
-              <li className="form-search__select-item" tabIndex={0}>Cannonball Pro MX 7i</li>
-              <li className="form-search__select-item" tabIndex={0}>Cannonball Pro MX 6i</li>
-              <li className="form-search__select-item" tabIndex={0}>Cannonball Pro MX 5i</li>
-              <li className="form-search__select-item" tabIndex={0}>Cannonball Pro MX 4i</li>
-            </ul>
-          </form>
-          <button className="form-search__reset" type="reset">
-            <img src="/img/sprite/icon-close.svg" alt="icon close" width="10" height="10" aria-hidden="true"/>
-            <span className="visually-hidden">Сбросить поиск</span>
-          </button>
-        </div>
+        <Search />
         <Link className="header__basket-link" to={AppRoute.Basket}>
           <img src="/img/sprite/icon-basket.svg" alt="icon basket" width="16" height="16" aria-hidden="true"/>
           <span className="header__basket-count">3</span>
