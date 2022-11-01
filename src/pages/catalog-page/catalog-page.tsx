@@ -10,14 +10,14 @@ import Pagination from '../../components/pagination/pagination';
 import CardList from '../../components/card-list/card-list';
 import Sortings from '../../components/sortings/sortings';
 import Filters from '../../components/filters/filters';
-import { AppRoute, getPaginationPageCount } from '../../const';
+import { AppRoute, getPaginationPageCount, START_PAGE_COUNT } from '../../const';
 
 export default function CatalogPage(): JSX.Element {
-  const {page = 1} = useParams();
+  const {page = START_PAGE_COUNT} = useParams();
   const navigate = useNavigate();
   const cameras = useAppSelector(getCameras);
   const pageCount = getPaginationPageCount(cameras.length);
-  const pages = Array.from({length: pageCount}, (_, i) => i + 1);
+  const pages = Array.from({length: pageCount}, (_, i) => i + START_PAGE_COUNT);
 
   useEffect(() => {
     if(cameras.length) {
@@ -42,7 +42,7 @@ export default function CatalogPage(): JSX.Element {
                   <Filters />
                 </div>
                 <div className="catalog__content">
-                  <Sortings />
+                  <Sortings page={page} />
                   <CardList pageNumber={Number(page)} />
                   <Pagination />
                 </div>

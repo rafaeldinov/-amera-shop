@@ -15,6 +15,7 @@ describe('Reducer: cameraSlice', () => {
 
   const initialState = {
     cameras: [],
+    sorting: '',
     camera: undefined,
     similarCameras: [],
     pageCameras: [],

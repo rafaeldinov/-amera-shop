@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { fetchPageCamerasAction, fetchCamerasAction } from '../../store/api-action';
-import { getPageCameras, getCameras } from '../../store/camera-reducer/selectors';
+import { getSortedCameras, getCameras } from '../../store/camera-reducer/selectors';
 import Card from '../../components/card/card';
 import { getCamerasRangePerPage } from '../../const';
 
@@ -11,7 +11,7 @@ type Props = {
 }
 export default function CardList({pageNumber}: Props): JSX.Element {
   const dispatch = useAppDispatch();
-  const camerasPerPage = useAppSelector(getPageCameras);
+  const camerasPerPage = useAppSelector(getSortedCameras);
   const cameras = useAppSelector(getCameras);
 
   useEffect(() => {
