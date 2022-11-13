@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
@@ -11,44 +11,43 @@ import Preloader from '../../components/preloader/preloader';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { fetchCameraAction, fetchSimilarAction } from '../../store/api-action';
 import { getCamera, getSimilarCameras, getIsActiveReviewModal, getIsActiveSuccessReviewModal } from '../../store/camera-reducer/selectors';
-import { AppRoute, CameraTabs } from '../../const';
+import { CameraTabs } from '../../const';
 import SimilarItems from '../../components/similar-items/similar-items';
 
 export default function CardPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const {id} = useParams();
-  const {tab} = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const camera = useAppSelector(getCamera);
   const similarCameras = useAppSelector(getSimilarCameras);
   const isActiveReviewModal = useAppSelector(getIsActiveReviewModal);
   const isActiveSuccessReviewModal = useAppSelector(getIsActiveSuccessReviewModal);
 
-  const [activeTab, setActiveTab] = useState<string | undefined>(tab);
+  const [activeTab, setActiveTab] = useState<string>(CameraTabs.Info);
 
   useEffect(() => {
     if(id) {
       dispatch(fetchCameraAction(id));
       dispatch(fetchSimilarAction(id));
     }
-  }, [dispatch, id]);
+    if(!location.hash) {
+      navigate(`/camera/${id}${CameraTabs.Info}`);
+    }
+  }, [dispatch, id, location, navigate]);
 
   const handleCharacteristicsClick = () => {
     setActiveTab(CameraTabs.Info);
-    navigate(`/camera/${id}/${CameraTabs.Info}`);
+    navigate(`/camera/${id}${CameraTabs.Info}`);
   };
 
   const handleReviewClick = () => {
     setActiveTab(CameraTabs.Review);
-    navigate(`/camera/${id}/${CameraTabs.Review}`);
+    navigate(`/camera/${id}${CameraTabs.Review}`);
   };
 
   if(!camera) {
     return <Preloader />;
-  }
-
-  if(tab !== undefined && tab !== CameraTabs.Info && tab !== CameraTabs.Review) {
-    navigate(`${AppRoute.NotFound}`);
   }
 
   return (

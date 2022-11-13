@@ -30,7 +30,7 @@ export default function Card({camera, isActive}: Prop): JSX.Element {
       <div className="product-card__buttons">
         <button className="btn btn--purple product-card__btn" type="button">Купить
         </button>
-        <Link className="btn btn--transparent" to={`/camera/${camera.id}/${CameraTabs.Review}`}>Подробнее</Link>
+        <Link className="btn btn--transparent" to={`/camera/${camera.id}${CameraTabs.Info}`}>Подробнее</Link>
       </div>
     </div>
   );

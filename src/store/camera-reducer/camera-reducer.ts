@@ -1,40 +1,76 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchCamerasAction, fetchPageCamerasAction, fetchCameraAction, fetchPromoAction, fetchSimilarAction, fetchReviewsAction, sendProductReviewAction } from '../api-action';
+import { fetchPageCamerasAction, fetchCameraAction, fetchCamerasAction, fetchPromoAction, fetchSimilarAction, fetchReviewsAction, sendProductReviewAction, fetchFilteredCamerasAction } from '../api-action';
 import { Camera } from '../../types/camera';
 import { Promo } from '../../types/promo';
 import { Review } from '../../types/review';
-import { SortingMode, START_PAGE_COUNT } from '../../const';
+import { START_PAGE_COUNT } from '../../const';
+import { Filters } from '../../types/filters';
 
 type InitialState = {
   cameras: Camera[];
-  sorting: string;
+  filteredCameras: Camera[];
+  allCamerasCount: number;
   camera: Camera | undefined;
   similarCameras: Camera[];
   pageCameras: Camera[];
+  filteredCamerasLoading: boolean;
   reviews: Review[];
-  paginationPage: number;
+  currentPage: number;
   promoOffer: Promo | undefined;
   isActiveReviewModal: boolean;
   isActiveSuccessReviewModal: boolean;
+  filters?: Filters;
+  sorting?: {
+    sortType: string;
+    sortOrder: string;
+  };
 }
 
 const initialState: InitialState = {
   cameras: [],
-  sorting: SortingMode.Default,
+  filteredCameras: [],
+  allCamerasCount: 0,
   camera: undefined,
   similarCameras: [],
   pageCameras: [],
+  filteredCamerasLoading: false,
   reviews: [],
-  paginationPage: START_PAGE_COUNT,
+  currentPage: START_PAGE_COUNT,
   promoOffer: undefined,
   isActiveReviewModal: false,
-  isActiveSuccessReviewModal: false
+  isActiveSuccessReviewModal: false,
+  filters: {
+    category: {
+      photoCamera: false,
+      videoCamera: false,
+    },
+    type: {
+      digital: false,
+      film: false,
+      snapshot: false,
+      collection: false,
+    },
+    level: {
+      zero: false,
+      amateur: false,
+      professional: false,
+    },
+    minPrice: undefined,
+    maxPrice: undefined,
+  },
+  sorting: {
+    sortType: '',
+    sortOrder: '',
+  }
 };
 
 export const cameraSlice = createSlice({
   name: 'camera',
   initialState,
   reducers: {
+    setCurrentPage(state, action) {
+      state.currentPage = action.payload;
+    },
     setIsActiveReviewModal(state, action) {
       state.isActiveReviewModal = action.payload;
     },
@@ -43,6 +79,12 @@ export const cameraSlice = createSlice({
     },
     setSorting(state, action) {
       state.sorting = action.payload;
+    },
+    setDefaultFilters(state, action) {
+      state.filters = action.payload;
+    },
+    setAllCamerasCount(state, action) {
+      state.allCamerasCount = action.payload;
     }
   },
   extraReducers(builder) {
@@ -50,11 +92,20 @@ export const cameraSlice = createSlice({
       .addCase(fetchCamerasAction.fulfilled, (state, action) => {
         state.cameras = action.payload;
       })
+      .addCase(fetchFilteredCamerasAction.pending, (state) => {
+        state.filteredCamerasLoading = true;
+      })
+      .addCase(fetchFilteredCamerasAction.fulfilled, (state, action) => {
+        state.filteredCameras = action.payload;
+        state.filteredCamerasLoading = false;
+      })
       .addCase(fetchCameraAction.fulfilled, (state, action) => {
         state.camera = action.payload;
       })
       .addCase(fetchPageCamerasAction.fulfilled, (state, action) => {
-        state.pageCameras = action.payload;
+        const {data, camerasCount} = action.payload;
+        state.pageCameras = data;
+        state.allCamerasCount = camerasCount;
       })
       .addCase(fetchPromoAction.fulfilled, (state, action) => {
         state.promoOffer = action.payload;
@@ -72,4 +123,4 @@ export const cameraSlice = createSlice({
   }
 });
 
-export const { setIsActiveReviewModal, setIsActiveSuccessReviewModal, setSorting } = cameraSlice.actions;
+export const { setIsActiveReviewModal, setIsActiveSuccessReviewModal, setSorting, setDefaultFilters, setCurrentPage, setAllCamerasCount } = cameraSlice.actions;

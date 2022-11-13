@@ -1,7 +1,5 @@
-import { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
-import { getCameras } from '../../store/camera-reducer/selectors';
+import { getFilteredCameras, getIsfilteredCamerasLoading } from '../../store/camera-reducer/selectors';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import Banner from '../../components/banner/banner';
@@ -10,22 +8,11 @@ import Pagination from '../../components/pagination/pagination';
 import CardList from '../../components/card-list/card-list';
 import Sortings from '../../components/sortings/sortings';
 import Filters from '../../components/filters/filters';
-import { AppRoute, getPaginationPageCount, START_PAGE_COUNT } from '../../const';
+import Preloader from '../../components/preloader/preloader';
 
 export default function CatalogPage(): JSX.Element {
-  const {page = START_PAGE_COUNT} = useParams();
-  const navigate = useNavigate();
-  const cameras = useAppSelector(getCameras);
-  const pageCount = getPaginationPageCount(cameras.length);
-  const pages = Array.from({length: pageCount}, (_, i) => i + START_PAGE_COUNT);
-
-  useEffect(() => {
-    if(cameras.length) {
-      if(!pages.some((item) => Number(page) === item)) {
-        navigate(AppRoute.NotFound);
-      }
-    }
-  }, [navigate, page, pageCount, pages, cameras]);
+  const cameras = useAppSelector(getFilteredCameras);
+  const isFilteredCamerasLoading = useAppSelector(getIsfilteredCamerasLoading);
 
   return (
     <>
@@ -42,9 +29,10 @@ export default function CatalogPage(): JSX.Element {
                   <Filters />
                 </div>
                 <div className="catalog__content">
-                  <Sortings page={page} />
-                  <CardList pageNumber={Number(page)} />
-                  <Pagination />
+                  <Sortings />
+                  {(isFilteredCamerasLoading) ? <Preloader /> : <CardList />}
+                  {(cameras.length === 0) && <div>По вашему запросу ничего не найдено</div>}
+                  {(cameras.length > 0) && <Pagination />}
                 </div>
               </div>
             </div>

@@ -1,5 +1,5 @@
 import { cameraSlice, setIsActiveReviewModal, setIsActiveSuccessReviewModal } from './camera-reducer';
-import { fetchCamerasAction, fetchCameraAction, fetchPageCamerasAction, fetchReviewsAction, fetchPromoAction, fetchSimilarAction, } from '../api-action';
+import { fetchFilteredCamerasAction, fetchCameraAction, fetchPageCamerasAction, fetchReviewsAction, fetchPromoAction, fetchSimilarAction, } from '../api-action';
 import { CAMERAS_COUNT, makeFakeCamera, makeFakeCameras, makeFakePromo, makeFakeReviews, REVIEWS_COUNT, SIMILARS_ITEMS_COUNT } from '../../mock';
 import { ITEMS_PER_PAGE_COUNT } from '../../const';
 
@@ -15,20 +15,45 @@ describe('Reducer: cameraSlice', () => {
 
   const initialState = {
     cameras: [],
-    sorting: '',
+    filteredCameras: [],
+    allCamerasCount: CAMERAS_COUNT,
     camera: undefined,
     similarCameras: [],
     pageCameras: [],
+    filteredCamerasLoading: false,
     reviews: [],
-    paginationPage: 1,
+    currentPage: 1,
     promoOffer: undefined,
     isActiveReviewModal: false,
-    isActiveSuccessReviewModal: false
+    isActiveSuccessReviewModal: false,
+    filters: {
+      minPrice: 1,
+      maxPrice: 1000,
+      type: {
+        digital: false,
+        film: false,
+        snapshot: false,
+        collection: false,
+      },
+      category: {
+        photoCamera: false,
+        videoCamera: false,
+      },
+      level: {
+        zero: false,
+        amateur: false,
+        professional: false,
+      },
+    },
+    sorting: {
+      sortType: '',
+      sortOrder: '',
+    },
   };
 
   it('should be update cameras when fetch type fulfilled', () => {
     const action = {
-      type: fetchCamerasAction.fulfilled.type,
+      type: fetchFilteredCamerasAction.fulfilled.type,
       payload: fakeCameras,
     };
     const state = reducer(initialState, action);
