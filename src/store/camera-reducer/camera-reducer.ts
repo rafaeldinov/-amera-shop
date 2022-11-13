@@ -3,9 +3,11 @@ import { fetchCamerasAction, fetchPageCamerasAction, fetchCameraAction, fetchPro
 import { Camera } from '../../types/camera';
 import { Promo } from '../../types/promo';
 import { Review } from '../../types/review';
+import { SortingMode, START_PAGE_COUNT } from '../../const';
 
 type InitialState = {
   cameras: Camera[];
+  sorting: string;
   camera: Camera | undefined;
   similarCameras: Camera[];
   pageCameras: Camera[];
@@ -18,11 +20,12 @@ type InitialState = {
 
 const initialState: InitialState = {
   cameras: [],
+  sorting: SortingMode.Default,
   camera: undefined,
   similarCameras: [],
   pageCameras: [],
   reviews: [],
-  paginationPage: 1,
+  paginationPage: START_PAGE_COUNT,
   promoOffer: undefined,
   isActiveReviewModal: false,
   isActiveSuccessReviewModal: false
@@ -38,6 +41,9 @@ export const cameraSlice = createSlice({
     setIsActiveSuccessReviewModal(state, action) {
       state.isActiveSuccessReviewModal = action.payload;
     },
+    setSorting(state, action) {
+      state.sorting = action.payload;
+    }
   },
   extraReducers(builder) {
     builder
@@ -66,4 +72,4 @@ export const cameraSlice = createSlice({
   }
 });
 
-export const { setIsActiveReviewModal, setIsActiveSuccessReviewModal } = cameraSlice.actions;
+export const { setIsActiveReviewModal, setIsActiveSuccessReviewModal, setSorting } = cameraSlice.actions;

@@ -1,6 +1,7 @@
 export enum AppRoute {
   Root = '/',
   Catalog = '/catalog/:page',
+  Sorted = ':sorted',
   Item = '/camera/:id/:tab',
   Basket = '/basket',
   NotFound = '/*'
@@ -25,6 +26,14 @@ export enum PageName {
   BasketPage = 'basketPage'
 }
 
+export enum SortingMode {
+  Default = 'default',
+  PriceAscending = 'price_ascending',
+  PriceDescending = 'price_descending',
+  RatingAscending = 'rating_ascending',
+  RatingDescending = 'rating_descending'
+}
+
 export const getPaginationPageCount = (allCameras: number) => Math.ceil(allCameras / ITEMS_PER_PAGE_COUNT);
 
 export const getCamerasRangePerPage = (currentPage: number, allCameras: number) => {
@@ -36,3 +45,4 @@ export const getCamerasRangePerPage = (currentPage: number, allCameras: number) 
 export const ITEMS_PER_PAGE_COUNT = 9;
 export const REVIEWS_PER_STEP = 3;
 export const SIMILAR_ITEMS_PER_STEP = 3;
+export const START_PAGE_COUNT = 1;

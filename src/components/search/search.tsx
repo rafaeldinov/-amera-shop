@@ -26,7 +26,7 @@ export default function Search(): JSX.Element {
     }
   };
 
-  const handleResetButtonClick = () => {
+  const resetSearch = () => {
     setSearchText('');
     if(inputRef.current !== null) {
       inputRef.current.value = '';
@@ -43,13 +43,13 @@ export default function Search(): JSX.Element {
         {
           searchCameras.length > 0 && searchText &&
           <ul className="form-search__select-list">
-            {searchCameras?.map((item) => <SearchItem key={item.id} camera={item} handleResetButtonClick={handleResetButtonClick} />)}
+            {searchCameras?.map((item) => <SearchItem key={item.id} camera={item} onResetSearch={resetSearch} />)}
           </ul>
         }
       </form>
       {
         searchText &&
-          <button onClick={handleResetButtonClick} className="form-search__reset" type="reset">
+          <button onClick={resetSearch} className="form-search__reset" type="reset">
             <img src="/img/sprite/icon-close.svg" alt="icon close" width="10" height="10" aria-hidden="true"/>
             <span className="visually-hidden">Сбросить поиск</span>
           </button>
