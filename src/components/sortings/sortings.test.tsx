@@ -14,11 +14,10 @@ const store = mockStore({});
 
 describe('Component: Sortings', () => {
   it('should render correctly', () => {
-    const page = 1;
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <Sortings page={page} />
+          <Sortings />
         </HistoryRouter>,
       </Provider>,
     );

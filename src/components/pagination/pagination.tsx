@@ -1,26 +1,24 @@
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../hooks';
-import { getCameras } from '../../store/camera-reducer/selectors';
-import { AppRoute, getPaginationPageCount } from '../../const';
+import { Link } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getAllCamerasCount, getCurrentPage } from '../../store/camera-reducer/selectors';
+import { ITEMS_PER_PAGE_COUNT } from '../../const';
+import { setCurrentPage } from '../../store/camera-reducer/camera-reducer';
 
 export default function Pagination(): JSX.Element {
-  let {page = 1} = useParams();
-  const navigate = useNavigate();
-  const cameras = useAppSelector(getCameras);
-  const pageCount = getPaginationPageCount(cameras.length);
-  page = Number(page);
+  const dispatch = useAppDispatch();
+  const camerasCount = useAppSelector(getAllCamerasCount);
+  const pageCount = Math.ceil(camerasCount / ITEMS_PER_PAGE_COUNT);
+  const currentPage = useAppSelector(getCurrentPage);
 
-  if(cameras.some((_, index) => index + 1 > page && index + 1 < page)) {
-    navigate(`${AppRoute.NotFound}`);
-  }
+  const handlePageClick = (page: number) => dispatch(setCurrentPage(page));
 
   return (
     <div className="pagination" data-testid="pagination">
       <ul className="pagination__list">
         {
-          page !== 1 && pageCount ?
+          currentPage !== 1 && pageCount ?
             <li className="pagination__item">
-              <Link className="pagination__link pagination__link--text" to={`/catalog/${Number(page) - 1}`}>
+              <Link onClick={() => handlePageClick(currentPage - 1)} className="pagination__link pagination__link--text" to={'#'}>
                 Назад
               </Link>
             </li> : ''
@@ -28,17 +26,17 @@ export default function Pagination(): JSX.Element {
         {
           Array.from(Array(pageCount), (_, index) => (
             <li className="pagination__item" key={index}>
-              <Link className={page !== index + 1 ?
-                'pagination__link' : 'pagination__link pagination__link--active'} to={`/catalog/${index + 1}`}
+              <Link onClick={() => handlePageClick(index + 1)} className={currentPage !== index + 1 ?
+                'pagination__link' : 'pagination__link pagination__link--active'} to={'#'}
               >{index + 1}
               </Link>
             </li>)
           )
         }
         {
-          (pageCount !== page && pageCount) ?
+          (pageCount !== currentPage && pageCount) ?
             <li className="pagination__item">
-              <Link className="pagination__link pagination__link--text" to={`/catalog/${Number(page) + 1}`}>Далее</Link>
+              <Link onClick={() => handlePageClick(currentPage + 1)} className="pagination__link pagination__link--text" to={'#'}>Далее</Link>
             </li> :
             <div style={{width: '83px', height: '36px', marginLeft:'16px'}} />
         }

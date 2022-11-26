@@ -31,12 +31,10 @@ jest.mock('../../store/camera-reducer/camera-reducer');
 
 describe('Component: CardList', () => {
   it('should render correctly', async() => {
-    const pageNumber = 1;
-
     render (
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <CardList pageNumber={pageNumber} />
+          <CardList />
         </HistoryRouter>,
       </Provider>,
     );

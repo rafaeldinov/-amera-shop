@@ -15,12 +15,7 @@ export default function App(): JSX.Element {
       <Route
         path={AppRoute.Catalog}
         element={<CatalogPage />}
-      >
-        <Route
-          path={AppRoute.Sorted}
-          element={<CatalogPage />}
-        />
-      </Route>
+      />
       <Route
         path={AppRoute.Item}
         element={<CardPage />}

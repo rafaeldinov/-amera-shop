@@ -1,5 +1,6 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { AppDispatch, State } from '../types/state.js';
 import { APIRoute, AppRoute } from '../const';
 import { Camera } from '../types/camera';
 import { CameraData } from '../types/camera-data';
@@ -7,7 +8,8 @@ import { Promo } from '../types/promo';
 import { Review } from '../types/review';
 import { ReviewPost } from '../types/review-post';
 import { redirectToRoute } from './action';
-import { AppDispatch } from '../types/state';
+import { getFilters, getSorting } from './camera-reducer/selectors';
+import { getQueryFilters, getQuerySort } from '../util';
 
 export const fetchCamerasAction = createAsyncThunk<Camera[], undefined, {
   extra: AxiosInstance
@@ -16,6 +18,37 @@ export const fetchCamerasAction = createAsyncThunk<Camera[], undefined, {
   async (_arg, {extra: api}) => {
     const {data} = await api.get<Camera[]>(APIRoute.Cameras);
     return data;
+  },
+);
+
+export const fetchFilteredCamerasAction = createAsyncThunk<Camera[], undefined, {
+  state: State,
+  extra: AxiosInstance
+}>(
+  'camera/fetchFilteredCamerasAction',
+  async (_arg, {getState, extra: api}) => {
+    const state = getState();
+    const sort = getSorting(state);
+    const filters = getFilters(state);
+
+    const {data} = await api.get<Camera[]>(`${APIRoute.Cameras}?${getQueryFilters(filters)}&_${getQuerySort(sort)}`);
+    return data;
+  },
+);
+
+export const fetchPageCamerasAction = createAsyncThunk<{data: Camera[], camerasCount: number}, CameraData, {
+  state: State,
+  extra: AxiosInstance
+}>(
+  'camera/fetchPageCameras',
+  async ({start, end}, {getState, extra: api}) => {
+    const state = getState();
+    const sort = getSorting(state);
+    const filters = getFilters(state);
+    console.log();
+    const {data, headers} = await api.get<Camera[]>(`${APIRoute.Cameras}?${getQueryFilters(filters)}&_${getQuerySort(sort)}&_start=${start}&_end=${end}`);
+    const camerasCount = headers['x-total-count'];
+    return {data, camerasCount};
   },
 );
 
@@ -31,16 +64,6 @@ export const fetchCameraAction = createAsyncThunk<Camera | undefined, string, {
     }catch {
       dispatch(redirectToRoute(AppRoute.NotFound));
     }
-  },
-);
-
-export const fetchPageCamerasAction = createAsyncThunk<Camera[], CameraData, {
-  extra: AxiosInstance
-}>(
-  'camera/fetchPageCameras',
-  async ({start, end}, {extra: api}) => {
-    const {data} = await api.get<Camera[]>(`${APIRoute.Cameras}?_start=${start}&_end=${end}`);
-    return data;
   },
 );
 
