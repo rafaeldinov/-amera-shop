@@ -35,6 +35,26 @@ export enum SortOrder {
   Desc = 'desc',
 }
 
+export const DEFAULT_FILTERS = {
+  category: {
+    photoCamera: false,
+    videoCamera: false,
+  },
+  type: {
+    digital: false,
+    film: false,
+    snapshot: false,
+    collection: false,
+  },
+  level: {
+    zero: false,
+    amateur: false,
+    professional: false,
+  },
+  minPrice: undefined,
+  maxPrice: undefined,
+};
+
 export const positiveIntegers = /^[0-9\b]+$/;
 export const ITEMS_PER_PAGE_COUNT = 9;
 export const REVIEWS_PER_STEP = 3;

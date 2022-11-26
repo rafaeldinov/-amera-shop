@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import HistoryRouter from '../../components/history-route/history-route';
-import { AppRoute } from '../../const';
+import { AppRoute, START_PAGE_COUNT } from '../../const';
 import Pagination from './pagination';
 import { makeFakeCameras, CAMERAS_COUNT } from '../../mock';
 
@@ -16,6 +16,8 @@ const fakeCameras = makeFakeCameras(CAMERAS_COUNT);
 const store = mockStore({
   camera: {
     cameras: fakeCameras,
+    allCamerasCount: CAMERAS_COUNT,
+    currentPage: START_PAGE_COUNT,
   }
 });
 
@@ -27,7 +29,7 @@ jest.mock('react-redux', () => ({
 
 jest.mock('../../store/camera-reducer/camera-reducer');
 
-describe('Component: ModalOverlay', () => {
+describe('Component: Pagination', () => {
   it('should render correctly', () => {
     render(
       <Provider store={store}>

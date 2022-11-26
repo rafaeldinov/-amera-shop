@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import HistoryRouter from '../history-route/history-route';
 import App from './app';
-import { AppRoute } from '../../const';
+// import { AppRoute } from '../../const';
 import { CAMERAS_COUNT, makeFakeCamera, makeFakeCameras, makeFakeReviews, REVIEWS_COUNT, SIMILARS_ITEMS_COUNT } from '../../mock';
 
 const mockStore = configureMockStore();
@@ -42,23 +42,29 @@ const fakeApp = (
 );
 
 describe('App Routing', () => {
-  it('should render "Root" when user navigate to /', () => {
-    history.push(AppRoute.Root);
+  // it('should render "Root" when user navigate to /', () => {
+  //   history.push(AppRoute.Root);
+  //   render(fakeApp);
+
+  //   expect(screen.getByText('фото- и видеотехники')).toBeInTheDocument();
+  // });
+
+  it('should render "CatalogPage" when user navigate to /catalog/:id', () => {
+    history.push('/catalog/#page=1');
     render(fakeApp);
 
-    expect(screen.getAllByText('Каталог').length).toBe(3);
+    expect(screen.getByText(/фото/i)).toBeInTheDocument();
   });
 
-  it('should render "CatalogPage" when user navigate to /catalog/:number', () => {
-    history.push('/catalog/1');
-    render(fakeApp);
+  it('should render "Item" when user navigate to /camera', () => {
+    history.push('/camera/1#info');
+    // history.push(AppRoute.Item.replace('id', fakeCamera.id.toString()));
 
-    expect(screen.getAllByText('Каталог').length).toBe(3);
-  });
-
-  it('should render "Item" when user navigate to /camera/:id/:tab', () => {
-    history.push('/camera/1/review');
     render(fakeApp);
+    // expect(screen.getAllByText(/Каталог/i)).toBeInTheDocument();
+
+
+    // render(fakeApp);
 
     expect(screen.getAllByText('Каталог').length).toBe(3);
   });

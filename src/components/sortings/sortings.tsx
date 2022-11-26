@@ -8,15 +8,15 @@ export default function Sortings(): JSX.Element {
   const [sortType, setSortType] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('');
 
-  const handlePriceChange = () => {
+  const handleSortByPriceClick = () => {
     setSortType(SortType.Price);
   };
 
-  const handleRatingClick = () => {
+  const handleSortByRatingClick = () => {
     setSortType(SortType.Rate);
   };
 
-  const handleAscendingClick = () => {
+  const handleAscendingSortClick = () => {
     if (!sortType) {
       setSortType(SortType.Price);
       setSortOrder(SortOrder.Asc);
@@ -25,7 +25,7 @@ export default function Sortings(): JSX.Element {
     }
   };
 
-  const handleDescendingClick = () => {
+  const handleDescendingSortClick = () => {
     if (!sortType) {
       setSortType(SortType.Price);
       setSortOrder(SortOrder.Desc);
@@ -45,23 +45,23 @@ export default function Sortings(): JSX.Element {
           <p className="title title--h5">Сортировать:</p>
           <div className="catalog-sort__type">
             <div className="catalog-sort__btn-text">
-              <input onChange={handlePriceChange} type="radio" id="sortPrice" name="sort" defaultChecked={sortType === SortType.Price} />
+              <input onChange={handleSortByPriceClick} type="radio" id="sortPrice" name="sort" defaultChecked={sortType === SortType.Price} />
               <label htmlFor="sortPrice">по цене</label>
             </div>
             <div className="catalog-sort__btn-text">
-              <input onClick={handleRatingClick} type="radio" id="sortPopular" name="sort" defaultChecked={sortType === SortType.Rate} />
+              <input onClick={handleSortByRatingClick} type="radio" id="sortPopular" name="sort" defaultChecked={sortType === SortType.Rate} />
               <label htmlFor="sortPopular">по популярности</label>
             </div>
           </div>
           <div className="catalog-sort__order">
             <div className="catalog-sort__btn catalog-sort__btn--up">
-              <input onClick={handleAscendingClick} type="radio" id="up" name="sort-icon" aria-label="По возрастанию" defaultChecked={sortOrder === SortOrder.Asc} />
+              <input onClick={handleAscendingSortClick} type="radio" id="up" name="sort-icon" aria-label="По возрастанию" defaultChecked={sortOrder === SortOrder.Asc} />
               <label htmlFor="up">
                 <img src="/img/sprite/icon-sort.svg" alt="icon sort" width="16" height="14" aria-hidden="true"/>
               </label>
             </div>
             <div className="catalog-sort__btn catalog-sort__btn--down">
-              <input onClick={handleDescendingClick} type="radio" id="down" name="sort-icon" aria-label="По убыванию" defaultChecked={sortOrder === SortOrder.Desc} />
+              <input onClick={handleDescendingSortClick} type="radio" id="down" name="sort-icon" aria-label="По убыванию" defaultChecked={sortOrder === SortOrder.Desc} />
               <label htmlFor="down">
                 <img src="/img/sprite/icon-sort.svg" alt="icon sort" width="16" height="14" aria-hidden="true"/>
               </label>

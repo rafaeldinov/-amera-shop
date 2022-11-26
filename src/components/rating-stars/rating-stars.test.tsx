@@ -15,8 +15,8 @@ describe('Component: RatingStar', () => {
     expect(screen.getAllByAltText('star-rating icon').length).toBe(MAX_RATING);
     expect(screen.getAllByAltText('star-rating icon')[0]).toHaveAttribute('src', '/img/sprite/icon-full-star.svg');
     expect(screen.getAllByAltText('star-rating icon')[1]).toHaveAttribute('src', '/img/sprite/icon-full-star.svg');
-    expect(screen.getAllByAltText('star-rating icon')[2]).toHaveAttribute('src', '/img/sprite/icon-star.svg');
-    expect(screen.getAllByAltText('star-rating icon')[3]).toHaveAttribute('src', '/img/sprite/icon-star.svg');
-    expect(screen.getAllByAltText('star-rating icon')[4]).toHaveAttribute('src', '/img/sprite/icon-star.svg');
+    expect(screen.getAllByAltText('star-rating icon')[2]).toHaveAttribute('src', '/img/svg/star-disabled.svg');
+    expect(screen.getAllByAltText('star-rating icon')[3]).toHaveAttribute('src', '/img/svg/star-disabled.svg');
+    expect(screen.getAllByAltText('star-rating icon')[4]).toHaveAttribute('src', '/img/svg/star-disabled.svg');
   });
 });

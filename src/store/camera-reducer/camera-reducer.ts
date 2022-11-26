@@ -3,7 +3,7 @@ import { fetchPageCamerasAction, fetchCameraAction, fetchCamerasAction, fetchPro
 import { Camera } from '../../types/camera';
 import { Promo } from '../../types/promo';
 import { Review } from '../../types/review';
-import { START_PAGE_COUNT } from '../../const';
+import { DEFAULT_FILTERS, START_PAGE_COUNT } from '../../const';
 import { Filters } from '../../types/filters';
 
 type InitialState = {
@@ -39,25 +39,7 @@ const initialState: InitialState = {
   promoOffer: undefined,
   isActiveReviewModal: false,
   isActiveSuccessReviewModal: false,
-  filters: {
-    category: {
-      photoCamera: false,
-      videoCamera: false,
-    },
-    type: {
-      digital: false,
-      film: false,
-      snapshot: false,
-      collection: false,
-    },
-    level: {
-      zero: false,
-      amateur: false,
-      professional: false,
-    },
-    minPrice: undefined,
-    maxPrice: undefined,
-  },
+  filters: DEFAULT_FILTERS,
   sorting: {
     sortType: '',
     sortOrder: '',
@@ -80,7 +62,7 @@ export const cameraSlice = createSlice({
     setSorting(state, action) {
       state.sorting = action.payload;
     },
-    setDefaultFilters(state, action) {
+    setFilters(state, action) {
       state.filters = action.payload;
     },
     setAllCamerasCount(state, action) {
@@ -123,4 +105,4 @@ export const cameraSlice = createSlice({
   }
 });
 
-export const { setIsActiveReviewModal, setIsActiveSuccessReviewModal, setSorting, setDefaultFilters, setCurrentPage, setAllCamerasCount } = cameraSlice.actions;
+export const { setIsActiveReviewModal, setIsActiveSuccessReviewModal, setSorting, setFilters, setCurrentPage, setAllCamerasCount } = cameraSlice.actions;

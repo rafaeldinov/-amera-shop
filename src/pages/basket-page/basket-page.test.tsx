@@ -5,12 +5,27 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import HistoryRouter from '../../components/history-route/history-route';
 import { AppRoute } from '../../const';
 import Basket from './basket-page';
+import { makeFakeCameras, CAMERAS_COUNT } from '../../mock';
 
 const mockStore = configureMockStore();
 const history = createMemoryHistory();
 history.push(AppRoute.Basket);
 
-const store = mockStore({});
+const fakeCameras = makeFakeCameras(CAMERAS_COUNT);
+
+const store = mockStore({
+  camera: {
+    cameras: fakeCameras,
+  }
+});
+
+const mockDispatch = jest.fn();
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useDispatch: () => mockDispatch,
+}));
+
+jest.mock('../../store/camera-reducer/camera-reducer');
 
 describe('Component: BasketPage', () => {
   it('should render correctly', () => {
