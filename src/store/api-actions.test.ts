@@ -56,7 +56,7 @@ describe('Async actions', () => {
 
     mockAPI
       .onGet(`${APIRoute.Cameras}?_start=${start}&_end=${end}`)
-      .reply(200, fakeCamerasPerPage);
+      .reply(200, {fakeCamerasPerPage, CAMERAS_COUNT});
 
     const store = mockStore();
     await store.dispatch(fetchPageCamerasAction({start, end}));

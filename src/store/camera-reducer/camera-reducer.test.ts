@@ -16,7 +16,7 @@ describe('Reducer: cameraSlice', () => {
   const initialState = {
     cameras: [],
     filteredCameras: [],
-    allCamerasCount: CAMERAS_COUNT,
+    allCamerasCount: 0,
     camera: undefined,
     similarCameras: [],
     pageCameras: [],
@@ -27,8 +27,8 @@ describe('Reducer: cameraSlice', () => {
     isActiveReviewModal: false,
     isActiveSuccessReviewModal: false,
     filters: {
-      minPrice: 1,
-      maxPrice: 1000,
+      minPrice: undefined,
+      maxPrice: undefined,
       type: {
         digital: false,
         film: false,
@@ -61,6 +61,7 @@ describe('Reducer: cameraSlice', () => {
       .toEqual({
         ...initialState,
         cameras: fakeCameras,
+        filteredCameras: fakeCameras,
       });
   });
   it('should be update camera when fetch type fulfilled', () => {
@@ -90,13 +91,14 @@ describe('Reducer: cameraSlice', () => {
   it('should be update pageCameras when fetch type fulfilled', () => {
     const action = {
       type: fetchPageCamerasAction.fulfilled.type,
-      payload: fakePageCameras,
+      payload: {fakePageCameras, CAMERAS_COUNT},
     };
     const state = reducer(initialState, action);
     expect(state)
       .toEqual({
         ...initialState,
         pageCameras: fakePageCameras,
+        allCamerasCount: CAMERAS_COUNT,
       });
   });
   it('should be update reviews when fetch type fulfilled', () => {

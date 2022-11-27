@@ -45,7 +45,7 @@ export const fetchPageCamerasAction = createAsyncThunk<{data: Camera[], camerasC
     const state = getState();
     const sort = getSorting(state);
     const filters = getFilters(state);
-    console.log();
+
     const {data, headers} = await api.get<Camera[]>(`${APIRoute.Cameras}?${getQueryFilters(filters)}&_${getQuerySort(sort)}&_start=${start}&_end=${end}`);
     const camerasCount = headers['x-total-count'];
     return {data, camerasCount};

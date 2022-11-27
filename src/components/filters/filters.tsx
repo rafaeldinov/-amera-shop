@@ -1,7 +1,8 @@
 import { ChangeEvent, KeyboardEvent, SyntheticEvent, useState, useEffect, useRef } from 'react';
+import { DEFAULT_FILTERS } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchFilteredCamerasAction } from '../../store/api-action';
-import { setDefaultFilters } from '../../store/camera-reducer/camera-reducer';
+import { setFilters } from '../../store/camera-reducer/camera-reducer';
 import { getCameras, getFilters } from '../../store/camera-reducer/selectors';
 
 export default function Filters(): JSX.Element {
@@ -16,9 +17,9 @@ export default function Filters(): JSX.Element {
 
   const filters = useAppSelector(getFilters);
   const cameras = useAppSelector(getCameras);
-  const sortedCameras = [...cameras].sort((a, b) => a.price - b.price);
-  const minPrice = sortedCameras[0]?.price;
-  const maxPrice = sortedCameras[sortedCameras.length - 1]?.price;
+  const cameraPrices = cameras.map((item) => item.price);
+  const minPrice = Math.min(...cameraPrices);
+  const maxPrice = Math.max(...cameraPrices);
 
   useEffect(() => {
     dispatch(fetchFilteredCamerasAction());
@@ -30,32 +31,32 @@ export default function Filters(): JSX.Element {
   const handleMinPriceBlur = () => {
     if(!minPriceValue || Number(minPriceValue) < minPrice || Number(minPriceValue) > maxPrice) {
       setMinPriceValue(minPrice.toString());
-      return dispatch(setDefaultFilters({...filters, minPrice}));
+      return dispatch(setFilters({...filters, minPrice}));
     }
     if(cameras.some((item) => item.price === Number(minPriceValue))) {
       setMinPriceValue(minPriceValue);
-      dispatch(setDefaultFilters({...filters, minPrice: minPriceValue}));
+      dispatch(setFilters({...filters, minPrice: minPriceValue}));
     }else {
       const minPrices = [...cameras].filter((item) => item.price < Number(minPriceValue));
       const closestCamera = [...minPrices].reduce((prev, curr) => (Math.abs(curr.price - Number(minPriceValue)) < Math.abs(prev.price - Number(minPriceValue)) ? curr : prev));
       setMinPriceValue(closestCamera.price.toString());
-      dispatch(setDefaultFilters({...filters, minPrice: closestCamera.price}));
+      dispatch(setFilters({...filters, minPrice: closestCamera.price}));
     }
   };
 
   const handleMaxPriceBlur = () => {
     if(!maxPriceValue || Number(maxPriceValue) > maxPrice || Number(maxPriceValue) < minPrice) {
       setMaxPriceValue(maxPrice.toString());
-      return dispatch(setDefaultFilters({...filters, maxPrice}));
+      return dispatch(setFilters({...filters, maxPrice}));
     }
     if(cameras.some((item) => item.price === Number(maxPriceValue))) {
       setMaxPriceValue(maxPriceValue);
-      dispatch(setDefaultFilters({...filters, maxPrice: maxPriceValue}));
+      dispatch(setFilters({...filters, maxPrice: maxPriceValue}));
     }else {
       const maxPrices = [...cameras].filter((item) => item.price > Number(maxPriceValue));
       const closestCamera = [...maxPrices].reduce((prev, curr) => (Math.abs(curr.price - Number(maxPriceValue)) < Math.abs(prev.price - Number(maxPriceValue)) ? curr : prev));
       setMaxPriceValue(closestCamera.price.toString());
-      dispatch(setDefaultFilters({...filters, maxPrice: closestCamera.price}));
+      dispatch(setFilters({...filters, maxPrice: closestCamera.price}));
     }
   };
 
@@ -73,14 +74,14 @@ export default function Filters(): JSX.Element {
 
   const handleCategoryChange = (evt: ChangeEvent<HTMLInputElement>) => {
     if(evt.currentTarget.name === 'photocamera') {
-      dispatch(setDefaultFilters({
+      dispatch(setFilters({
         ...filters,
         category: {...filters?.category, photoCamera: !filters?.category.photoCamera},
       }));
     }
     if(evt.currentTarget.name === 'videocamera') {
       setIsVideoCamera(!isVideoCamera);
-      dispatch(setDefaultFilters({
+      dispatch(setFilters({
         ...filters,
         category: {...filters?.category, videoCamera: !filters?.category.videoCamera},
         type: {
@@ -95,24 +96,24 @@ export default function Filters(): JSX.Element {
   const handleTypeChange = (evt: SyntheticEvent<HTMLFieldSetElement>) => {
     switch((evt.target as HTMLInputElement).name) {
       case 'digital':
-        dispatch(setDefaultFilters({
+        dispatch(setFilters({
           ...filters,
           type: {...filters?.type, digital: !filters?.type.digital},
         }));
         break;
       case 'film':
-        dispatch(setDefaultFilters({
+        dispatch(setFilters({
           ...filters,
           type: {...filters?.type, film: !filters?.type.film},
         }));
         break;
       case 'snapshot':
-        dispatch(setDefaultFilters({...filters,
+        dispatch(setFilters({...filters,
           type: {...filters?.type, snapshot: !filters?.type.snapshot},
         }));
         break;
       case 'collection':
-        dispatch(setDefaultFilters({...filters,
+        dispatch(setFilters({...filters,
           type: {...filters?.type, collection: !filters?.type.collection},
         }));
         break;
@@ -122,18 +123,18 @@ export default function Filters(): JSX.Element {
   const handleLevelChange = (evt: SyntheticEvent<HTMLFieldSetElement>) => {
     switch((evt.target as HTMLInputElement).name) {
       case 'zero':
-        dispatch(setDefaultFilters({
+        dispatch(setFilters({
           ...filters,
           level: {...filters?.level, zero: !filters?.level.zero},
         }));
         break;
       case 'non-professional':
-        dispatch(setDefaultFilters({...filters,
+        dispatch(setFilters({...filters,
           level: {...filters?.level, amateur: !filters?.level.amateur},
         }));
         break;
       case 'professional':
-        dispatch(setDefaultFilters({...filters,
+        dispatch(setFilters({...filters,
           level: {...filters?.level, professional: !filters?.level.professional},
         }));
         break;
@@ -141,25 +142,7 @@ export default function Filters(): JSX.Element {
   };
 
   const handleClearFilterClick = () => {
-    dispatch(setDefaultFilters({
-      category: {
-        photoCamera: false,
-        videoCamera: false,
-      },
-      type: {
-        digital: false,
-        film: false,
-        snapshot: false,
-        collection: false,
-      },
-      level: {
-        zero: false,
-        amateur: false,
-        professional: false,
-      },
-      minPrice: undefined,
-      maxPrice: undefined,
-    }));
+    dispatch(setFilters(DEFAULT_FILTERS));
     setMinPriceValue('');
     setMaxPriceValue('');
     setIsVideoCamera(false);
@@ -178,7 +161,7 @@ export default function Filters(): JSX.Element {
                   onKeyDown={handlePriceKeyDown}
                   onBlur={handleMinPriceBlur}
                   onChange={handleMinPriceChange}
-                  value={minPriceValue} type="number" name="price" min="0" placeholder={(minPrice) ? String(minPrice) : 'от'}
+                  value={minPriceValue} type="number" name="price" min="0" placeholder={(minPrice && minPrice !== Infinity) ? String(minPrice) : 'от'}
                 />
               </label>
             </div>
@@ -188,7 +171,7 @@ export default function Filters(): JSX.Element {
                   onKeyDown={handlePriceKeyDown}
                   onBlur={handleMaxPriceBlur}
                   onChange={handleMaxPriceChange}
-                  value={maxPriceValue} type="number" name="priceUp" min="0" placeholder={(maxPrice) ? String(maxPrice) : 'до'}
+                  value={maxPriceValue} type="number" name="priceUp" min="0" placeholder={(maxPrice && maxPrice !== -Infinity) ? String(maxPrice) : 'до'}
                 />
               </label>
             </div>

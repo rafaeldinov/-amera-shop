@@ -9,6 +9,7 @@ import CardList from '../../components/card-list/card-list';
 import Sortings from '../../components/sortings/sortings';
 import Filters from '../../components/filters/filters';
 import Preloader from '../../components/preloader/preloader';
+import { PageName } from '../../const';
 
 export default function CatalogPage(): JSX.Element {
   const cameras = useAppSelector(getFilteredCameras);
@@ -20,7 +21,7 @@ export default function CatalogPage(): JSX.Element {
       <main>
         <Banner />
         <div className="page-content">
-          <Breadcrumbs pageName='catalogPage' />
+          <Breadcrumbs pageName={PageName.CatalogPage} />
           <section className="catalog" data-testid="catalog-page">
             <div className="container">
               <h1 className="title title--h2">Каталог фото- и видеотехники</h1>
