@@ -205,14 +205,14 @@ export default function Filters(): JSX.Element {
           </div>
           <div className="custom-checkbox catalog-filter__item">
             <label>
-              <input ref={filmRef} type="checkbox" name="film" defaultChecked={filters?.type.film} disabled={isVideoCamera} />
+              <input ref={filmRef} type="checkbox" name="film" defaultChecked={filters?.type.film} disabled={filters?.category.videoCamera} />
               <span className="custom-checkbox__icon"></span>
               <span className="custom-checkbox__label">Плёночная</span>
             </label>
           </div>
           <div className="custom-checkbox catalog-filter__item">
             <label>
-              <input ref={snapshotRef} type="checkbox" name="snapshot" defaultChecked={filters?.type.snapshot} disabled={isVideoCamera} />
+              <input ref={snapshotRef} type="checkbox" name="snapshot" defaultChecked={filters?.type.snapshot} disabled={filters?.category.videoCamera} />
               <span className="custom-checkbox__icon"></span>
               <span className="custom-checkbox__label">Моментальная</span>
             </label>

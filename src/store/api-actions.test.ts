@@ -4,7 +4,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { createAPI } from '../services/api';
 import { fetchCameraAction, fetchPageCamerasAction, fetchReviewsAction, sendProductReviewAction, fetchPromoAction, fetchSimilarAction, fetchCamerasAction, } from './api-action';
-import { APIRoute, ITEMS_PER_PAGE_COUNT } from '../const';
+import { APIRoute, DEFAULT_FILTERS, ITEMS_PER_PAGE_COUNT } from '../const';
 import { State } from '../types/state';
 import { CAMERAS_COUNT, makeFakeCamera, makeFakeCameras, makeFakeReviews, makeFakeSendReview, REVIEWS_COUNT } from '../mock';
 
@@ -55,10 +55,24 @@ describe('Async actions', () => {
     const end = ITEMS_PER_PAGE_COUNT;
 
     mockAPI
-      .onGet(`${APIRoute.Cameras}?_start=${start}&_end=${end}`)
-      .reply(200, {fakeCamerasPerPage, CAMERAS_COUNT});
+      .onGet(`${APIRoute.Cameras}?&_&_start=${start}&_end=${end}`)
+      .reply(200, {
+        pageCameras: fakeCamerasPerPage
+      },
+      {
+        'x-total-count': CAMERAS_COUNT,
+      }
+      );
 
-    const store = mockStore();
+    const store = mockStore({
+      camera: {
+        filters: DEFAULT_FILTERS,
+        sorting: {
+          sortType: '',
+          sortOrder: '',
+        }
+      }
+    });
     await store.dispatch(fetchPageCamerasAction({start, end}));
     const actions = store.getActions().map(({ type }) => type);
     expect(actions).toContain(fetchPageCamerasAction.pending.type);
