@@ -16,6 +16,7 @@ const fakeReviews = makeFakeReviews(REVIEWS_COUNT);
 
 const store = mockStore({
   camera: {
+    filteredCameras: CAMERAS_COUNT,
     cameras: fakeCameras,
     camera: fakeCamera,
     similarCameras: fakeSimilarCameras,
@@ -42,29 +43,16 @@ const fakeApp = (
 );
 
 describe('App Routing', () => {
-  // it('should render "Root" when user navigate to /', () => {
-  //   history.push(AppRoute.Root);
-  //   render(fakeApp);
-
-  //   expect(screen.getByText('фото- и видеотехники')).toBeInTheDocument();
-  // });
-
-  it('should render "CatalogPage" when user navigate to /catalog/:id', () => {
+  it('should render "CatalogPage" when user navigate to /catalog/page', () => {
     history.push('/catalog/#page=1');
     render(fakeApp);
 
-    expect(screen.getByText(/фото/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/фото/i)).toHaveLength(3);
   });
 
   it('should render "Item" when user navigate to /camera', () => {
     history.push('/camera/1#info');
-    // history.push(AppRoute.Item.replace('id', fakeCamera.id.toString()));
-
     render(fakeApp);
-    // expect(screen.getAllByText(/Каталог/i)).toBeInTheDocument();
-
-
-    // render(fakeApp);
 
     expect(screen.getAllByText('Каталог').length).toBe(3);
   });

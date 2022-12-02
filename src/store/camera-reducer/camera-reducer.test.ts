@@ -60,7 +60,6 @@ describe('Reducer: cameraSlice', () => {
     expect(state)
       .toEqual({
         ...initialState,
-        cameras: fakeCameras,
         filteredCameras: fakeCameras,
       });
   });
@@ -91,7 +90,10 @@ describe('Reducer: cameraSlice', () => {
   it('should be update pageCameras when fetch type fulfilled', () => {
     const action = {
       type: fetchPageCamerasAction.fulfilled.type,
-      payload: {fakePageCameras, CAMERAS_COUNT},
+      payload: {
+        data: fakePageCameras,
+        camerasCount: CAMERAS_COUNT,
+      }
     };
     const state = reducer(initialState, action);
     expect(state)

@@ -13,6 +13,7 @@ const fakeCameras = makeFakeCameras(CAMERAS_COUNT);
 
 const store = mockStore({
   camera: {
+    allCamerasCount: CAMERAS_COUNT,
     cameras: fakeCameras,
     filteredCamerasLoading: false,
     filteredCameras: fakeCameras,
