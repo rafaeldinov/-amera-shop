@@ -1,20 +1,28 @@
 import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { fetchPageCamerasAction } from '../../store/api-action';
-import { getAllCamerasCount, getCurrentPage, getFilters, getPageCameras, getSorting } from '../../store/camera-reducer/selectors';
+import { getAllCamerasCount, getCurrentPage, getFilteredCameras, getFilters, getPageCameras, getSorting } from '../../store/camera-reducer/selectors';
 import Card from '../../components/card/card';
 import { AppRoute, ITEMS_PER_PAGE_COUNT } from '../../const';
 import { useNavigate } from 'react-router-dom';
 import { getQueryFilters, getQuerySort } from '../../util';
+import { setCurrentPage } from '../../store/camera-reducer/camera-reducer';
 
 export default function CardList(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const camerasPerPage = useAppSelector(getPageCameras);
+  const filteredCameras = useAppSelector(getFilteredCameras);
   const camerasCount = useAppSelector(getAllCamerasCount);
   const page = useAppSelector(getCurrentPage);
   const sorting = useAppSelector(getSorting);
   const filters = useAppSelector(getFilters);
+
+  useEffect(() => {
+    if(page > Math.ceil(filteredCameras.length / ITEMS_PER_PAGE_COUNT)) {
+      dispatch(setCurrentPage(1));
+    }
+  });
 
   useEffect(() => {
     dispatch(fetchPageCamerasAction({start: page * ITEMS_PER_PAGE_COUNT - ITEMS_PER_PAGE_COUNT, end: page * ITEMS_PER_PAGE_COUNT}));
@@ -22,7 +30,7 @@ export default function CardList(): JSX.Element {
 
   useEffect(() => {
     navigate(`${AppRoute.Catalog}/#page=${page}${getQueryFilters(filters)}${getQuerySort(sorting)}`);
-  }, [navigate, sorting, filters, page]);
+  }, [dispatch, navigate, sorting, filters, page, filteredCameras]);
 
   return (
     <div className="cards catalog__cards">
