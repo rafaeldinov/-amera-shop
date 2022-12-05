@@ -3,7 +3,7 @@ import { fetchPageCamerasAction, fetchCameraAction, fetchCamerasAction, fetchPro
 import { Camera } from '../../types/camera';
 import { Promo } from '../../types/promo';
 import { Review } from '../../types/review';
-import { DEFAULT_FILTERS, START_PAGE_COUNT } from '../../const';
+import { DefaultFiters, START_PAGE_COUNT } from '../../const';
 import { Filters } from '../../types/filters';
 
 type InitialState = {
@@ -39,7 +39,7 @@ const initialState: InitialState = {
   promoOffer: undefined,
   isActiveReviewModal: false,
   isActiveSuccessReviewModal: false,
-  filters: DEFAULT_FILTERS,
+  filters: DefaultFiters,
   sorting: {
     sortType: '',
     sortOrder: '',

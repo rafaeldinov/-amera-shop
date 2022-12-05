@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { REVIEWS_PER_STEP } from '../../const';
+import { ESCAPE_KEY, REVIEWS_PER_STEP } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchReviewsAction } from '../../store/api-action';
 import { setIsActiveReviewModal } from '../../store/camera-reducer/camera-reducer';
@@ -31,7 +31,7 @@ export default function Reviews({id}: Props): JSX.Element {
   };
 
   const handleModalEscKeydown = (evt: KeyboardEvent) => {
-    if (evt.key === 'Escape') {
+    if (evt.key === ESCAPE_KEY) {
       evt.preventDefault();
       closeReviewModal();
     }

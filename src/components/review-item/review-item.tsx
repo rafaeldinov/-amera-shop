@@ -1,12 +1,13 @@
 import RatingStars from '../rating-stars/rating-stars';
 import { Review } from '../../types/review';
+import { DateFormat } from '../../const';
 
 type Props = {
   review: Review
 }
 
 const getReviewDate = (date: string, format: string)=> {
-  if(format === 'dateTime') {
+  if(format === DateFormat.DateTime) {
     const [day, month, year] = new Date(date).toLocaleDateString().split('/');
     return `${year}-${month}-${day}`;
   }
@@ -19,7 +20,7 @@ export default function ReviewItem({review}: Props): JSX.Element {
     <li className="review-card" data-testid="review">
       <div className="review-card__head">
         <p className="title title--h4">{review.userName}</p>
-        <time className="review-card__data" dateTime={getReviewDate(review.createAt, 'dateTime')}>{getReviewDate(review.createAt, 'date')}</time>
+        <time className="review-card__data" dateTime={getReviewDate(review.createAt, DateFormat.DateTime)}>{getReviewDate(review.createAt, DateFormat.Date)}</time>
       </div>
       <div className="rate review-card__rate">
         <RatingStars rating={review.rating} />

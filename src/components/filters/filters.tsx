@@ -1,5 +1,5 @@
 import { ChangeEvent, KeyboardEvent, SyntheticEvent, useState, useEffect, useRef } from 'react';
-import { DEFAULT_FILTERS } from '../../const';
+import { CameraCategory, CameraLevel, CameraType, DefaultFiters, ENTER_KEY, InputPriceName } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchFilteredCamerasAction } from '../../store/api-action';
 import { setFilters } from '../../store/camera-reducer/camera-reducer';
@@ -64,22 +64,22 @@ export default function Filters(): JSX.Element {
     if (/[+-]/.test(evt.key)) {
       evt.preventDefault();
     }
-    if (evt.key === 'Enter' && evt.currentTarget.name === 'price') {
+    if (evt.key === ENTER_KEY && evt.currentTarget.name === InputPriceName.Price) {
       handleMinPriceBlur();
     }
-    if (evt.key === 'Enter' && evt.currentTarget.name === 'priceUp') {
+    if (evt.key === ENTER_KEY && evt.currentTarget.name === InputPriceName.PriceUp) {
       handleMaxPriceBlur();
     }
   };
 
   const handleCategoryChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    if(evt.currentTarget.name === 'photocamera') {
+    if(evt.currentTarget.name === CameraCategory.Photocamera) {
       dispatch(setFilters({
         ...filters,
         category: {...filters?.category, photoCamera: !filters?.category.photoCamera},
       }));
     }
-    if(evt.currentTarget.name === 'videocamera') {
+    if(evt.currentTarget.name === CameraCategory.Videocamera) {
       setIsVideoCamera(!isVideoCamera);
       dispatch(setFilters({
         ...filters,
@@ -95,24 +95,24 @@ export default function Filters(): JSX.Element {
 
   const handleTypeChange = (evt: SyntheticEvent<HTMLFieldSetElement>) => {
     switch((evt.target as HTMLInputElement).name) {
-      case 'digital':
+      case CameraType.Digital:
         dispatch(setFilters({
           ...filters,
           type: {...filters?.type, digital: !filters?.type.digital},
         }));
         break;
-      case 'film':
+      case CameraType.Film:
         dispatch(setFilters({
           ...filters,
           type: {...filters?.type, film: !filters?.type.film},
         }));
         break;
-      case 'snapshot':
+      case CameraType.Snapshot:
         dispatch(setFilters({...filters,
           type: {...filters?.type, snapshot: !filters?.type.snapshot},
         }));
         break;
-      case 'collection':
+      case CameraType.Collection:
         dispatch(setFilters({...filters,
           type: {...filters?.type, collection: !filters?.type.collection},
         }));
@@ -122,18 +122,18 @@ export default function Filters(): JSX.Element {
 
   const handleLevelChange = (evt: SyntheticEvent<HTMLFieldSetElement>) => {
     switch((evt.target as HTMLInputElement).name) {
-      case 'zero':
+      case CameraLevel.Zero:
         dispatch(setFilters({
           ...filters,
           level: {...filters?.level, zero: !filters?.level.zero},
         }));
         break;
-      case 'non-professional':
+      case CameraLevel.NonProfessional:
         dispatch(setFilters({...filters,
           level: {...filters?.level, amateur: !filters?.level.amateur},
         }));
         break;
-      case 'professional':
+      case CameraLevel.Professional:
         dispatch(setFilters({...filters,
           level: {...filters?.level, professional: !filters?.level.professional},
         }));
@@ -142,7 +142,7 @@ export default function Filters(): JSX.Element {
   };
 
   const handleClearFilterClick = () => {
-    dispatch(setFilters(DEFAULT_FILTERS));
+    dispatch(setFilters(DefaultFiters));
     setMinPriceValue('');
     setMaxPriceValue('');
     setIsVideoCamera(false);

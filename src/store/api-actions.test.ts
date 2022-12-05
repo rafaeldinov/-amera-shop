@@ -4,7 +4,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { createAPI } from '../services/api';
 import { fetchCameraAction, fetchPageCamerasAction, fetchReviewsAction, sendProductReviewAction, fetchPromoAction, fetchSimilarAction, fetchCamerasAction, } from './api-action';
-import { APIRoute, DEFAULT_FILTERS, ITEMS_PER_PAGE_COUNT } from '../const';
+import { APIRoute, DefaultFiters, ITEMS_PER_PAGE_COUNT } from '../const';
 import { State } from '../types/state';
 import { CAMERAS_COUNT, makeFakeCamera, makeFakeCameras, makeFakeReviews, makeFakeSendReview, REVIEWS_COUNT } from '../mock';
 
@@ -66,7 +66,7 @@ describe('Async actions', () => {
 
     const store = mockStore({
       camera: {
-        filters: DEFAULT_FILTERS,
+        filters: DefaultFiters,
         sorting: {
           sortType: '',
           sortOrder: '',

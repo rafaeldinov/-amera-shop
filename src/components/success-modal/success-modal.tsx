@@ -1,3 +1,4 @@
+import { ESCAPE_KEY } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setIsActiveSuccessReviewModal } from '../../store/camera-reducer/camera-reducer';
 import { getIsActiveSuccessReviewModal } from '../../store/camera-reducer/selectors';
@@ -15,7 +16,7 @@ export default function SuccessModal(): JSX.Element {
   };
 
   const handleModalEscKeydown = (evt: KeyboardEvent) => {
-    if (evt.key === 'Escape') {
+    if (evt.key === ESCAPE_KEY) {
       evt.preventDefault();
       closeSuccessModal();
     }
