@@ -9,8 +9,8 @@ type Props = {
 
 export default function SearchItem({camera, onResetSearch}: Props): JSX.Element {
   return (
-    <Link onClick={onResetSearch} to={`/camera/${camera.id}/${CameraTabs.Review}`}>
-      <li className="form-search__select-item" tabIndex={0}>{camera.name}</li>
+    <Link onClick={onResetSearch} to={`/camera/${camera.id}/${CameraTabs.Review}`} tabIndex={0}>
+      <li className="form-search__select-item">{camera.name}</li>
     </Link>
   );
 }

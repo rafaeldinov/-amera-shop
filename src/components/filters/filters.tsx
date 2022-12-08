@@ -3,7 +3,7 @@ import { CameraCategory, CameraLevel, CameraType, DefaultFiters, ENTER_KEY, Inpu
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchFilteredCamerasAction } from '../../store/api-action';
 import { setFilters } from '../../store/camera-reducer/camera-reducer';
-import { getCameras, getFilters } from '../../store/camera-reducer/selectors';
+import { getCameras, getFilteredCameras, getFilters } from '../../store/camera-reducer/selectors';
 
 export default function Filters(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -16,8 +16,12 @@ export default function Filters(): JSX.Element {
   const [isVideoCamera, setIsVideoCamera] = useState(false);
 
   const filters = useAppSelector(getFilters);
-  const cameras = useAppSelector(getCameras);
+  const allCameras = useAppSelector(getCameras);
+  const cameras = useAppSelector(getFilteredCameras);
   const cameraPrices = cameras.map((item) => item.price);
+  const allCameraPrices = allCameras.map((item) => item.price);
+  const allCamerasMinPrice = Math.min(...allCameraPrices);
+  const allCamerasMaxPrice = Math.max(...allCameraPrices);
   const minPrice = Math.min(...cameraPrices);
   const maxPrice = Math.max(...cameraPrices);
 
@@ -25,13 +29,27 @@ export default function Filters(): JSX.Element {
     dispatch(fetchFilteredCamerasAction());
   }, [dispatch, filters, minPriceValue, maxPriceValue]);
 
-  const handleMinPriceChange = (evt: ChangeEvent<HTMLInputElement>) => setMinPriceValue(evt.currentTarget.value);
-  const handleMaxPriceChange = (evt: ChangeEvent<HTMLInputElement>) => setMaxPriceValue(evt.currentTarget.value);
+  const handleMinPriceChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    if(!evt.currentTarget.value) {
+      setMinPriceValue('');
+      dispatch(setFilters({...filters, minPrice: allCamerasMinPrice}));
+    }else {
+      setMinPriceValue(evt.currentTarget.value);
+    }
+  };
+  const handleMaxPriceChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    if(!evt.currentTarget.value) {
+      setMaxPriceValue('');
+      dispatch(setFilters({...filters, maxPrice: allCamerasMaxPrice}));
+    }else {
+      setMaxPriceValue(evt.currentTarget.value);
+    }
+  };
 
   const handleMinPriceBlur = () => {
     if(!minPriceValue || Number(minPriceValue) < minPrice || Number(minPriceValue) > maxPrice) {
-      setMinPriceValue(minPrice.toString());
-      return dispatch(setFilters({...filters, minPrice}));
+      setMinPriceValue(allCamerasMinPrice.toString());
+      return dispatch(setFilters({...filters, minPrice: allCamerasMinPrice}));
     }
     if(cameras.some((item) => item.price === Number(minPriceValue))) {
       setMinPriceValue(minPriceValue);
@@ -46,8 +64,8 @@ export default function Filters(): JSX.Element {
 
   const handleMaxPriceBlur = () => {
     if(!maxPriceValue || Number(maxPriceValue) > maxPrice || Number(maxPriceValue) < minPrice) {
-      setMaxPriceValue(maxPrice.toString());
-      return dispatch(setFilters({...filters, maxPrice}));
+      setMaxPriceValue(allCamerasMaxPrice.toString());
+      return dispatch(setFilters({...filters, maxPrice: allCamerasMaxPrice}));
     }
     if(cameras.some((item) => item.price === Number(maxPriceValue))) {
       setMaxPriceValue(maxPriceValue);
@@ -181,14 +199,14 @@ export default function Filters(): JSX.Element {
           <legend className="title title--h5">Категория</legend>
           <div className="custom-checkbox catalog-filter__item">
             <label>
-              <input onChange={handleCategoryChange} type="checkbox" name="photocamera" defaultChecked={filters?.category.photoCamera} />
+              <input onChange={handleCategoryChange} type="checkbox" name="photocamera" checked={filters?.category.photoCamera} />
               <span className="custom-checkbox__icon"></span>
               <span className="custom-checkbox__label">Фотокамера</span>
             </label>
           </div>
           <div className="custom-checkbox catalog-filter__item">
             <label>
-              <input onChange={handleCategoryChange} type="checkbox" name="videocamera" defaultChecked={filters?.category.videoCamera} />
+              <input onChange={handleCategoryChange} type="checkbox" name="videocamera" checked={filters?.category.videoCamera} />
               <span className="custom-checkbox__icon"></span>
               <span className="custom-checkbox__label">Видеокамера</span>
             </label>
@@ -198,28 +216,28 @@ export default function Filters(): JSX.Element {
           <legend className="title title--h5">Тип камеры</legend>
           <div className="custom-checkbox catalog-filter__item">
             <label>
-              <input type="checkbox" name="digital" defaultChecked={filters?.type.digital} />
+              <input type="checkbox" name="digital" checked={filters?.type.digital} readOnly />
               <span className="custom-checkbox__icon"></span>
               <span className="custom-checkbox__label">Цифровая</span>
             </label>
           </div>
           <div className="custom-checkbox catalog-filter__item">
             <label>
-              <input ref={filmRef} type="checkbox" name="film" defaultChecked={filters?.type.film} disabled={filters?.category.videoCamera} />
+              <input ref={filmRef} type="checkbox" name="film" checked={filters?.type.film && !filters?.category.videoCamera} disabled={filters?.category.videoCamera} readOnly />
               <span className="custom-checkbox__icon"></span>
               <span className="custom-checkbox__label">Плёночная</span>
             </label>
           </div>
           <div className="custom-checkbox catalog-filter__item">
             <label>
-              <input ref={snapshotRef} type="checkbox" name="snapshot" defaultChecked={filters?.type.snapshot} disabled={filters?.category.videoCamera} />
+              <input ref={snapshotRef} type="checkbox" name="snapshot" checked={filters?.type.snapshot && !filters?.category.videoCamera} disabled={filters?.category.videoCamera} readOnly />
               <span className="custom-checkbox__icon"></span>
               <span className="custom-checkbox__label">Моментальная</span>
             </label>
           </div>
           <div className="custom-checkbox catalog-filter__item">
             <label>
-              <input type="checkbox" name="collection" defaultChecked={filters?.type.collection} />
+              <input type="checkbox" name="collection" checked={filters?.type.collection} readOnly />
               <span className="custom-checkbox__icon"></span>
               <span className="custom-checkbox__label">Коллекционная</span>
             </label>

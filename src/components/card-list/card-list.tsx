@@ -22,7 +22,6 @@ export default function CardList(): JSX.Element {
     if(page > Math.ceil(filteredCameras.length / ITEMS_PER_PAGE_COUNT)) {
       dispatch(setCurrentPage(1));
     }
-    console.log(camerasPerPage);
   });
 
   useEffect(() => {
