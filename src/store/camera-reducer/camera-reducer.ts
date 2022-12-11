@@ -19,7 +19,7 @@ type InitialState = {
   promoOffer: Promo | undefined;
   isActiveReviewModal: boolean;
   isActiveSuccessReviewModal: boolean;
-  filters?: Filters;
+  filters: Filters;
   sorting?: {
     sortType: string;
     sortOrder: string;

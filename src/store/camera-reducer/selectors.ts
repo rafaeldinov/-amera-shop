@@ -19,7 +19,7 @@ export const getIsActiveSuccessReviewModal = (state: State): boolean => state['c
 export const getPageCameras = (state: State): Camera[] => state['camera'].pageCameras;
 export const getIsfilteredCamerasLoading = (state: State): boolean => state['camera'].filteredCamerasLoading;
 export const getSorting = (state: State): Sort | undefined => state['camera'].sorting;
-export const getFilters = (state: State): Filters | undefined => state['camera'].filters;
+export const getFilters = (state: State): Filters => state['camera'].filters;
 
 export const getSortedReviews = createSelector(
   getReviews,

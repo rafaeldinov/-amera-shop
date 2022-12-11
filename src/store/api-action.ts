@@ -12,11 +12,20 @@ import { getFilters, getSorting } from './camera-reducer/selectors';
 import { getQueryFilters, getQuerySort } from '../util';
 
 export const fetchCamerasAction = createAsyncThunk<Camera[], undefined, {
+  state: State,
   extra: AxiosInstance
 }>(
   'camera/fetchCameras',
-  async (_arg, {extra: api}) => {
-    const {data} = await api.get<Camera[]>(APIRoute.Cameras);
+  async (_arg, {getState, extra: api}) => {
+    const state = getState();
+    const sort = getSorting(state);
+    const filters = getFilters(state);
+
+    const {data} = await api.get<Camera[]>(`${APIRoute.Cameras}?${getQueryFilters({
+      ...filters,
+      minPrice: undefined,
+      maxPrice: undefined,
+    })}&_${getQuerySort(sort)}`);
     return data;
   },
 );

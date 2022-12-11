@@ -1,9 +1,9 @@
 import { ChangeEvent, KeyboardEvent, SyntheticEvent, useState, useEffect, useRef } from 'react';
 import { CameraCategory, CameraLevel, CameraType, DefaultFiters, ENTER_KEY, InputPriceName } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchFilteredCamerasAction } from '../../store/api-action';
+import { fetchCamerasAction, fetchFilteredCamerasAction } from '../../store/api-action';
 import { setFilters } from '../../store/camera-reducer/camera-reducer';
-import { getCameras, getFilteredCameras, getFilters } from '../../store/camera-reducer/selectors';
+import { getCameras, getFilters } from '../../store/camera-reducer/selectors';
 
 export default function Filters(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -17,65 +17,48 @@ export default function Filters(): JSX.Element {
 
   const filters = useAppSelector(getFilters);
   const allCameras = useAppSelector(getCameras);
-  const cameras = useAppSelector(getFilteredCameras);
-  const cameraPrices = cameras.map((item) => item.price);
-  const allCameraPrices = allCameras.map((item) => item.price);
-  const allCamerasMinPrice = Math.min(...allCameraPrices);
-  const allCamerasMaxPrice = Math.max(...allCameraPrices);
+  const cameraPrices = allCameras.map((item) => item.price);
+  const orderedMinPrices = [...cameraPrices].sort((a, b) => b - a);
+  const orderedMaxPrices = [...cameraPrices].sort((a, b) => a - b);
   const minPrice = Math.min(...cameraPrices);
   const maxPrice = Math.max(...cameraPrices);
 
   useEffect(() => {
     dispatch(fetchFilteredCamerasAction());
-  }, [dispatch, filters, minPriceValue, maxPriceValue]);
+    dispatch(fetchCamerasAction());
+  }, [dispatch, minPrice, filters]);
 
-  const handleMinPriceChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    if(!evt.currentTarget.value) {
-      setMinPriceValue('');
-      dispatch(setFilters({...filters, minPrice: allCamerasMinPrice}));
-    }else {
-      setMinPriceValue(evt.currentTarget.value);
-    }
-  };
-  const handleMaxPriceChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    if(!evt.currentTarget.value) {
-      setMaxPriceValue('');
-      dispatch(setFilters({...filters, maxPrice: allCamerasMaxPrice}));
-    }else {
-      setMaxPriceValue(evt.currentTarget.value);
-    }
-  };
+  const handleMinPriceChange = (evt: ChangeEvent<HTMLInputElement>) => setMinPriceValue(evt.currentTarget.value);
+
+  const handleMaxPriceChange = (evt: ChangeEvent<HTMLInputElement>) => setMaxPriceValue(evt.currentTarget.value);
 
   const handleMinPriceBlur = () => {
-    if(!minPriceValue || Number(minPriceValue) < minPrice || Number(minPriceValue) > maxPrice) {
-      setMinPriceValue(allCamerasMinPrice.toString());
-      return dispatch(setFilters({...filters, minPrice: allCamerasMinPrice}));
+    if(allCameras.length === 0) {
+      setMinPriceValue('');
+      return;
     }
-    if(cameras.some((item) => item.price === Number(minPriceValue))) {
-      setMinPriceValue(minPriceValue);
-      dispatch(setFilters({...filters, minPrice: minPriceValue}));
-    }else {
-      const minPrices = [...cameras].filter((item) => item.price < Number(minPriceValue));
-      const closestCamera = [...minPrices].reduce((prev, curr) => (Math.abs(curr.price - Number(minPriceValue)) < Math.abs(prev.price - Number(minPriceValue)) ? curr : prev));
-      setMinPriceValue(closestCamera.price.toString());
-      dispatch(setFilters({...filters, minPrice: closestCamera.price}));
+    if(Number(minPriceValue) > maxPrice) {
+      dispatch(setFilters({...filters, minPrice: minPrice}));
+      return setMinPriceValue(minPrice.toString());
     }
+    const closestMinPrice = orderedMinPrices.find((item) => item <= Number(minPriceValue));
+    setMinPriceValue((closestMinPrice) ? closestMinPrice.toString() : minPrice.toString());
+    dispatch(setFilters({...filters, minPrice: (closestMinPrice) ? closestMinPrice.toString() : undefined}));
   };
 
   const handleMaxPriceBlur = () => {
-    if(!maxPriceValue || Number(maxPriceValue) > maxPrice || Number(maxPriceValue) < minPrice) {
-      setMaxPriceValue(allCamerasMaxPrice.toString());
-      return dispatch(setFilters({...filters, maxPrice: allCamerasMaxPrice}));
+    if(allCameras.length === 0) {
+      setMaxPriceValue('');
+      return;
     }
-    if(cameras.some((item) => item.price === Number(maxPriceValue))) {
-      setMaxPriceValue(maxPriceValue);
-      dispatch(setFilters({...filters, maxPrice: maxPriceValue}));
-    }else {
-      const maxPrices = [...cameras].filter((item) => item.price > Number(maxPriceValue));
-      const closestCamera = [...maxPrices].reduce((prev, curr) => (Math.abs(curr.price - Number(maxPriceValue)) < Math.abs(prev.price - Number(maxPriceValue)) ? curr : prev));
-      setMaxPriceValue(closestCamera.price.toString());
-      dispatch(setFilters({...filters, maxPrice: closestCamera.price}));
+    if(Number(maxPriceValue) > maxPrice || Number(maxPriceValue) < Number(minPriceValue)) {
+      dispatch(setFilters({...filters, maxPrice: maxPrice}));
+      return setMaxPriceValue(maxPrice.toString());
     }
+    const closestMaxPrice = orderedMaxPrices.find((item) => item >= Number(maxPriceValue));
+    setMaxPriceValue((closestMaxPrice) ? closestMaxPrice.toString() : '');
+    dispatch(setFilters({...filters, maxPrice: (closestMaxPrice) ? closestMaxPrice.toString() : undefined}));
+    console.log(closestMaxPrice);
   };
 
   const handlePriceKeyDown = (evt: KeyboardEvent<HTMLInputElement>) => {
