@@ -26,6 +26,9 @@ describe('Reducer: cameraSlice', () => {
     promoOffer: undefined,
     isActiveReviewModal: false,
     isActiveSuccessReviewModal: false,
+    isActiveAddItemModal: false,
+    isActiveSuccessAddItemModal: false,
+    addedItems: [],
     filters: {
       minPrice: undefined,
       maxPrice: undefined,

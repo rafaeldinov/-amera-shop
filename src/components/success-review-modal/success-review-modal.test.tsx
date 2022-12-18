@@ -2,9 +2,9 @@ import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import HistoryRouter from '../../components/history-route/history-route';
+import HistoryRouter from '../history-route/history-route';
 import { AppRoute } from '../../const';
-import SuccessModal from './success-modal';
+import SuccessModal from './success-review-modal';
 
 const mockStore = configureMockStore();
 const history = createMemoryHistory();

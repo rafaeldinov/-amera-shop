@@ -1,11 +1,21 @@
-import { FormEvent, useRef } from 'react';
+import { FormEvent, useEffect, useRef } from 'react';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import BasketItem from '../../components/basket-item/basket-item';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getBasketItems } from '../../store/camera-reducer/selectors';
+import { getBasket } from '../../util';
+import { setBasketItems } from '../../store/camera-reducer/camera-reducer';
 
 export default function BasketPage(): JSX.Element {
+  const dispatch = useAppDispatch();
   const promoRef = useRef<HTMLInputElement | null>(null);
+  const basketItems = useAppSelector(getBasketItems);
+
+  useEffect(() => {
+    dispatch(setBasketItems(getBasket()));
+  }, [dispatch]);
 
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -21,7 +31,7 @@ export default function BasketPage(): JSX.Element {
             <div className="container">
               <h1 className="title title--h2">Корзина</h1>
               <ul className="basket__list">
-                <BasketItem />
+                {basketItems?.map((item) => <BasketItem key={item.id} camera={item} />)}
               </ul>
               <div className="basket__summary">
                 <div className="basket__promo">

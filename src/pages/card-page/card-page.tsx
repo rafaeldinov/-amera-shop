@@ -6,13 +6,15 @@ import Header from '../../components/header/header';
 import RatingStars from '../../components/rating-stars/rating-stars';
 import Reviews from '../../components/reviews/reviews';
 import ReviewModal from '../../components/review-modal/review-modal';
-import SuccessModal from '../../components/success-modal/success-modal';
+import SuccessModal from '../../components/success-review-modal/success-review-modal';
 import Preloader from '../../components/preloader/preloader';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { fetchCameraAction, fetchSimilarAction } from '../../store/api-action';
-import { getCamera, getSimilarCameras, getIsActiveReviewModal, getIsActiveSuccessReviewModal } from '../../store/camera-reducer/selectors';
+import { getCamera, getSimilarCameras, getIsActiveReviewModal, getIsActiveSuccessReviewModal, getIsActiveAddItemModal, getIsActiveSuccessAddItemModal } from '../../store/camera-reducer/selectors';
 import { CameraTabs } from '../../const';
 import SimilarItems from '../../components/similar-items/similar-items';
+import AddItemModal from '../../components/add-item-modal/add-item-modal';
+import SuccessAddItemModal from '../../components/success-add-item-modal/success-add-item-modal';
 
 export default function CardPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -23,6 +25,8 @@ export default function CardPage(): JSX.Element {
   const similarCameras = useAppSelector(getSimilarCameras);
   const isActiveReviewModal = useAppSelector(getIsActiveReviewModal);
   const isActiveSuccessReviewModal = useAppSelector(getIsActiveSuccessReviewModal);
+  const isActiveAddItem = useAppSelector(getIsActiveAddItemModal);
+  const isActiveSuccessAddItem = useAppSelector(getIsActiveSuccessAddItemModal);
 
   const [activeTab, setActiveTab] = useState<string>(CameraTabs.Info);
 
@@ -124,6 +128,8 @@ export default function CardPage(): JSX.Element {
         {isActiveSuccessReviewModal && <SuccessModal />}
       </main>
       <Footer />
+      {isActiveAddItem && <AddItemModal />}
+      {isActiveSuccessAddItem && <SuccessAddItemModal />}
     </>
   );
 }
