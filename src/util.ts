@@ -1,3 +1,4 @@
+import { Camera } from './types/camera';
 import { Filters } from './types/filters';
 import { Sort } from './types/sort';
 
@@ -39,3 +40,16 @@ export const getQueryFilters = (filters?: Filters) => {
   `${filters?.maxPrice ? `&price_lte=${filters?.maxPrice}` : ''}`;
   return queryFilters;
 };
+
+export const getBasket = (): Camera[] => {
+  const items = localStorage.getItem('basket');
+  return items ? JSON.parse(items) : [];
+};
+
+export const saveToBasket = (item: Camera) => {
+  const items = getBasket();
+  items.push(item);
+  localStorage.setItem('basket', JSON.stringify(items));
+};
+
+export const deleteFromBasket = (item: Camera): void => localStorage.removeItem(`${item.id}`);

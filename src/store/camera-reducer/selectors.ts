@@ -16,10 +16,14 @@ export const getCurrentPage = (state: State): number => state['camera'].currentP
 export const getPromoOffer = (state: State): Promo | undefined => state['camera'].promoOffer;
 export const getIsActiveReviewModal = (state: State): boolean => state['camera'].isActiveReviewModal;
 export const getIsActiveSuccessReviewModal = (state: State): boolean => state['camera'].isActiveSuccessReviewModal;
+export const getIsActiveAddItemModal = (state: State): boolean => state['camera'].isActiveAddItemModal;
+export const getIsActiveSuccessAddItemModal = (state: State): boolean => state['camera'].isActiveSuccessAddItemModal;
 export const getPageCameras = (state: State): Camera[] => state['camera'].pageCameras;
 export const getIsfilteredCamerasLoading = (state: State): boolean => state['camera'].filteredCamerasLoading;
 export const getSorting = (state: State): Sort | undefined => state['camera'].sorting;
 export const getFilters = (state: State): Filters => state['camera'].filters;
+export const getItemToBuy = (state: State): Camera | undefined => state['camera'].itemToBuy;
+export const getBasketItems = (state: State): Camera[] | undefined => state['camera'].basketItems;
 
 export const getSortedReviews = createSelector(
   getReviews,

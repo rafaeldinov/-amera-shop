@@ -5,20 +5,25 @@ import { Promo } from '../../types/promo';
 import { Review } from '../../types/review';
 import { DefaultFiters, START_PAGE_COUNT } from '../../const';
 import { Filters } from '../../types/filters';
+import { getBasket } from '../../util';
 
 type InitialState = {
   cameras: Camera[];
   filteredCameras: Camera[];
   allCamerasCount: number;
-  camera: Camera | undefined;
+  camera?: Camera;
   similarCameras: Camera[];
   pageCameras: Camera[];
   filteredCamerasLoading: boolean;
   reviews: Review[];
   currentPage: number;
-  promoOffer: Promo | undefined;
+  promoOffer?: Promo;
   isActiveReviewModal: boolean;
   isActiveSuccessReviewModal: boolean;
+  isActiveAddItemModal: boolean;
+  isActiveSuccessAddItemModal: boolean;
+  itemToBuy?: Camera;
+  basketItems?: Camera[];
   filters: Filters;
   sorting?: {
     sortType: string;
@@ -39,6 +44,10 @@ const initialState: InitialState = {
   promoOffer: undefined,
   isActiveReviewModal: false,
   isActiveSuccessReviewModal: false,
+  isActiveAddItemModal: false,
+  isActiveSuccessAddItemModal: false,
+  itemToBuy: undefined,
+  basketItems: getBasket(),
   filters: DefaultFiters,
   sorting: {
     sortType: '',
@@ -59,11 +68,23 @@ export const cameraSlice = createSlice({
     setIsActiveSuccessReviewModal(state, action) {
       state.isActiveSuccessReviewModal = action.payload;
     },
+    setIsActiveAddItemModal(state, action) {
+      state.isActiveAddItemModal = action.payload;
+    },
+    setIsActiveSuccessAddItemModal(state, action) {
+      state.isActiveSuccessAddItemModal = action.payload;
+    },
     setSorting(state, action) {
       state.sorting = action.payload;
     },
     setFilters(state, action) {
       state.filters = action.payload;
+    },
+    setItemToBuy(state, action) {
+      state.itemToBuy = action.payload;
+    },
+    setBasketItems(state, action) {
+      state.basketItems = action.payload;
     },
     setAllCamerasCount(state, action) {
       state.allCamerasCount = action.payload;
@@ -105,4 +126,4 @@ export const cameraSlice = createSlice({
   }
 });
 
-export const { setIsActiveReviewModal, setIsActiveSuccessReviewModal, setSorting, setFilters, setCurrentPage, setAllCamerasCount } = cameraSlice.actions;
+export const { setIsActiveReviewModal, setItemToBuy, setBasketItems, setIsActiveSuccessReviewModal, setSorting, setFilters, setCurrentPage, setIsActiveAddItemModal, setIsActiveSuccessAddItemModal, setAllCamerasCount } = cameraSlice.actions;
