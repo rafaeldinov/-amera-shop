@@ -5,6 +5,7 @@ import { State } from '../../types/state';
 import { createSelector } from 'reselect';
 import { Sort } from '../../types/sort';
 import { Filters } from '../../types/filters';
+import { CartItem } from '../../types/cart-item';
 
 export const getCameras = (state: State): Camera[] => state['camera'].cameras;
 export const getFilteredCameras = (state: State): Camera[] => state['camera'].filteredCameras;
@@ -23,7 +24,7 @@ export const getIsfilteredCamerasLoading = (state: State): boolean => state['cam
 export const getSorting = (state: State): Sort | undefined => state['camera'].sorting;
 export const getFilters = (state: State): Filters => state['camera'].filters;
 export const getItemToBuy = (state: State): Camera | undefined => state['camera'].itemToBuy;
-export const getBasketItems = (state: State): Camera[] | undefined => state['camera'].basketItems;
+export const getBasketItems = (state: State): CartItem[] | undefined => state['camera'].basketItems;
 
 export const getSortedReviews = createSelector(
   getReviews,

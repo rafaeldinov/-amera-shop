@@ -31,7 +31,7 @@ export default function BasketPage(): JSX.Element {
             <div className="container">
               <h1 className="title title--h2">Корзина</h1>
               <ul className="basket__list">
-                {basketItems?.map((item) => <BasketItem key={item.id} camera={item} />)}
+                {basketItems?.map((item) => <BasketItem key={item.id} item={item} />)}
               </ul>
               <div className="basket__summary">
                 <div className="basket__promo">

@@ -6,6 +6,7 @@ import { Review } from '../../types/review';
 import { DefaultFiters, START_PAGE_COUNT } from '../../const';
 import { Filters } from '../../types/filters';
 import { getBasket } from '../../util';
+import { CartItem } from '../../types/cart-item';
 
 type InitialState = {
   cameras: Camera[];
@@ -23,7 +24,7 @@ type InitialState = {
   isActiveAddItemModal: boolean;
   isActiveSuccessAddItemModal: boolean;
   itemToBuy?: Camera;
-  basketItems?: Camera[];
+  basketItems?: CartItem[];
   filters: Filters;
   sorting?: {
     sortType: string;

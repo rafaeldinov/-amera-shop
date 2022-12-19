@@ -1,4 +1,4 @@
-export type Camera = {
+export type CartItem = {
   id: number;
   name: string;
   vendorCode: string;
@@ -13,4 +13,5 @@ export type Camera = {
   previewImgWebp: string;
   previewImgWebp2x: string;
   reviewCount: number;
+  quantity: number;
 }

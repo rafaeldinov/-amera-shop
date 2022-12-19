@@ -18,7 +18,7 @@ describe('Component: BasketItem', () => {
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <Basket camera={makeFakeCamera()} />
+          <Basket item={{...makeFakeCamera(), quantity: 0}} />
         </HistoryRouter>,
       </Provider>,
     );
