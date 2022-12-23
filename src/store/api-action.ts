@@ -10,6 +10,8 @@ import { ReviewPost } from '../types/review-post';
 import { redirectToRoute } from './action';
 import { getFilters, getSorting } from './camera-reducer/selectors';
 import { getQueryFilters, getQuerySort } from '../util';
+import { OrderPost } from '../types/order-post.js';
+// import { setIsActiveSuccessOrderModal } from './camera-reducer/camera-reducer';
 
 export const fetchCamerasAction = createAsyncThunk<Camera[], undefined, {
   state: State,
@@ -112,6 +114,31 @@ export const sendProductReviewAction = createAsyncThunk<Review, ReviewPost, {
   'camera/sendProductReview',
   async ({cameraId, userName, advantage, disadvantage, review, rating}, {extra: api}) => {
     const {data} = await api.post<Review>(APIRoute.ReviewPost, {cameraId, userName, advantage, disadvantage, review, rating});
+    return data;
+  },
+);
+
+export const sendOrderAction = createAsyncThunk<void, OrderPost, {
+  dispatch: AppDispatch,
+  extra: AxiosInstance
+}>(
+  'camera/sendOrderAction',
+  async ({camerasIds, coupon}, {dispatch, extra: api}) => {
+    try {
+      await api.post(APIRoute.Orders, {camerasIds, coupon});
+      // dispatch(setIsActiveSuccessOrderModal(true));
+    }catch {
+      dispatch(redirectToRoute(AppRoute.NotFound));
+    }
+  },
+);
+
+export const sendCouponAction = createAsyncThunk<undefined, string, {
+  extra: AxiosInstance
+}>(
+  'camera/sendCouponAction',
+  async (coupon, {extra: api}) => {
+    const {data} = await api.post(APIRoute.Coupons, {coupon});
     return data;
   },
 );

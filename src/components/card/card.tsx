@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, CameraTabs, ESCAPE_KEY } from '../../const';
 import { useAppDispatch } from '../../hooks';
-import { setIsActiveAddItemModal, setItemToBuy } from '../../store/camera-reducer/camera-reducer';
+import { showAddItemModal, setItemToBuy } from '../../store/camera-reducer/camera-reducer';
 import { Camera } from '../../types/camera';
 import RatingStars from '../rating-stars/rating-stars';
 
@@ -23,13 +23,13 @@ export default function Card({camera, basketItems, isActive}: Prop): JSX.Element
 
   const openAddItemModalClick = () => {
     dispatch(setItemToBuy(camera));
-    dispatch(setIsActiveAddItemModal(true));
+    dispatch(showAddItemModal(true));
     document.addEventListener('keydown', handleModalEscKeydown);
     document.body.classList.add('scroll-lock');
   };
 
   const closeModal = () => {
-    dispatch(setIsActiveAddItemModal(false));
+    dispatch(showAddItemModal(false));
     document.body.classList.remove('scroll-lock');
     document.removeEventListener('keydown', handleModalEscKeydown);
   };

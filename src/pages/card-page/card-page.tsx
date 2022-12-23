@@ -15,7 +15,7 @@ import { CameraTabs, ESCAPE_KEY } from '../../const';
 import SimilarItems from '../../components/similar-items/similar-items';
 import AddItemModal from '../../components/add-item-modal/add-item-modal';
 import SuccessAddItemModal from '../../components/success-add-item-modal/success-add-item-modal';
-import { setItemToBuy, setIsActiveAddItemModal } from '../../store/camera-reducer/camera-reducer';
+import { setItemToBuy, showAddItemModal } from '../../store/camera-reducer/camera-reducer';
 
 export default function CardPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -60,13 +60,13 @@ export default function CardPage(): JSX.Element {
 
   const openAddItemModalClick = () => {
     dispatch(setItemToBuy(camera));
-    dispatch(setIsActiveAddItemModal(true));
+    dispatch(showAddItemModal(true));
     document.addEventListener('keydown', handleModalEscKeydown);
     document.body.classList.add('scroll-lock');
   };
 
   const closeModal = () => {
-    dispatch(setIsActiveAddItemModal(false));
+    dispatch(showAddItemModal(false));
     document.body.classList.remove('scroll-lock');
     document.removeEventListener('keydown', handleModalEscKeydown);
   };

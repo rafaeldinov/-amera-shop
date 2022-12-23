@@ -47,17 +47,26 @@ export const getBasket = (): CartItem[] => {
   return items ? JSON.parse(items) : [];
 };
 
-export const saveToBasket = (camera: Camera) => {
+export const saveToBasket = (camera: Camera | CartItem, quantity?: number) => {
   const basketItems = getBasket();
   const index = (basketItems?.findIndex((item) => item.id === camera.id));
 
   if(index === -1) {
     basketItems.push({...camera, quantity: 1});
-  }else {
+  }
+  if(index !== -1 && !quantity) {
     basketItems[index] = {...basketItems[index], quantity: basketItems[index].quantity + 1};
+  }
+  if(quantity) {
+    basketItems[index] = {...basketItems[index], quantity};
   }
 
   localStorage.setItem('basket', JSON.stringify(basketItems));
 };
 
-export const deleteFromBasket = (item: Camera): void => localStorage.removeItem(`${item.id}`);
+export const deleteFromBasket = (camera: CartItem) => {
+  const basketItems = getBasket();
+  const index = (basketItems?.findIndex((item) => item.id === camera.id));
+  basketItems.splice(index, 1);
+  localStorage.setItem('basket', JSON.stringify(basketItems));
+};

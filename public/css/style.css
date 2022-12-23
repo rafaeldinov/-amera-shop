@@ -1298,7 +1298,7 @@ button,
   font-size: 14px;
   line-height: 18px;
   color: #ed6041;
-  opacity: 0;
+  opacity: 1;
   -webkit-transition: opacity 0.3s ease;
   -o-transition: opacity 0.3s ease;
   transition: opacity 0.3s ease;
@@ -1314,7 +1314,7 @@ button,
   font-size: 14px;
   line-height: 18px;
   color: #65cd54;
-  opacity: 0;
+  opacity: 1;
   -webkit-transition: opacity 0.3s ease;
   -o-transition: opacity 0.3s ease;
   transition: opacity 0.3s ease;
