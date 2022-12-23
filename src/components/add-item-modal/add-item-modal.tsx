@@ -1,9 +1,9 @@
 import FocusTrap from 'focus-trap-react';
 import { ESCAPE_KEY } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setIsActiveAddItemModal, setIsActiveSuccessAddItemModal } from '../../store/camera-reducer/camera-reducer';
+import { setBasketItems, setIsActiveAddItemModal, setIsActiveSuccessAddItemModal, setItemToBuy } from '../../store/camera-reducer/camera-reducer';
 import { getItemToBuy } from '../../store/camera-reducer/selectors';
-import { saveToBasket } from '../../util';
+import { getBasket, saveToBasket } from '../../util';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 
 export default function AddItemModal(): JSX.Element {
@@ -28,6 +28,8 @@ export default function AddItemModal(): JSX.Element {
     if(itemToBuy) {
       saveToBasket(itemToBuy);
     }
+    dispatch(setBasketItems(getBasket()));
+    dispatch(setItemToBuy(undefined));
     document.addEventListener('keydown', handleModalEscKeydown);
     dispatch(setIsActiveAddItemModal(false));
     dispatch(setIsActiveSuccessAddItemModal(true));

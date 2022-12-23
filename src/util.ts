@@ -1,3 +1,4 @@
+import { CartItem } from './types/cart-item';
 import { Camera } from './types/camera';
 import { Filters } from './types/filters';
 import { Sort } from './types/sort';
@@ -41,15 +42,22 @@ export const getQueryFilters = (filters?: Filters) => {
   return queryFilters;
 };
 
-export const getBasket = (): Camera[] => {
+export const getBasket = (): CartItem[] => {
   const items = localStorage.getItem('basket');
   return items ? JSON.parse(items) : [];
 };
 
-export const saveToBasket = (item: Camera) => {
-  const items = getBasket();
-  items.push(item);
-  localStorage.setItem('basket', JSON.stringify(items));
+export const saveToBasket = (camera: Camera) => {
+  const basketItems = getBasket();
+  const index = (basketItems?.findIndex((item) => item.id === camera.id));
+
+  if(index === -1) {
+    basketItems.push({...camera, quantity: 1});
+  }else {
+    basketItems[index] = {...basketItems[index], quantity: basketItems[index].quantity + 1};
+  }
+
+  localStorage.setItem('basket', JSON.stringify(basketItems));
 };
 
 export const deleteFromBasket = (item: Camera): void => localStorage.removeItem(`${item.id}`);

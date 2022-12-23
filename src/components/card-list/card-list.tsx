@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { fetchPageCamerasAction } from '../../store/api-action';
-import { getAllCamerasCount, getCurrentPage, getFilteredCameras, getFilters, getPageCameras, getSorting } from '../../store/camera-reducer/selectors';
+import { getAllCamerasCount, getBasketItems, getCurrentPage, getFilteredCameras, getFilters, getPageCameras, getSorting } from '../../store/camera-reducer/selectors';
 import Card from '../../components/card/card';
 import { AppRoute, ITEMS_PER_PAGE_COUNT } from '../../const';
 import { useNavigate } from 'react-router-dom';
@@ -11,12 +11,14 @@ import { setCurrentPage } from '../../store/camera-reducer/camera-reducer';
 export default function CardList(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
   const camerasPerPage = useAppSelector(getPageCameras);
   const filteredCameras = useAppSelector(getFilteredCameras);
   const camerasCount = useAppSelector(getAllCamerasCount);
   const page = useAppSelector(getCurrentPage);
   const sorting = useAppSelector(getSorting);
   const filters = useAppSelector(getFilters);
+  const basketItems = useAppSelector(getBasketItems);
 
   useEffect(() => {
     if(page > Math.ceil(filteredCameras.length / ITEMS_PER_PAGE_COUNT)) {
@@ -35,7 +37,7 @@ export default function CardList(): JSX.Element {
   return (
     <div className="cards catalog__cards">
       {camerasPerPage?.map((item) => (
-        <Card key={item.id} camera={item} />
+        <Card key={item.id} camera={item} basketItems={basketItems ? basketItems : undefined}/>
       ))}
     </div>
   );

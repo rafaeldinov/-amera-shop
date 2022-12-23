@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { CameraTabs, ESCAPE_KEY } from '../../const';
+import { AppRoute, CameraTabs, ESCAPE_KEY } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import { setIsActiveAddItemModal, setItemToBuy } from '../../store/camera-reducer/camera-reducer';
 import { Camera } from '../../types/camera';
@@ -7,10 +7,11 @@ import RatingStars from '../rating-stars/rating-stars';
 
 type Prop = {
   camera: Camera;
+  basketItems?: Camera[];
   isActive?: boolean;
 }
 
-export default function Card({camera, isActive}: Prop): JSX.Element {
+export default function Card({camera, basketItems, isActive}: Prop): JSX.Element {
   const dispatch = useAppDispatch();
 
   const handleModalEscKeydown = (evt: KeyboardEvent) => {
@@ -52,7 +53,13 @@ export default function Card({camera, isActive}: Prop): JSX.Element {
         </p>
       </div>
       <div className="product-card__buttons">
-        <button onClick={openAddItemModalClick} className="btn btn--purple product-card__btn" type="button">Купить</button>
+        {basketItems?.some((item) => item.id === camera.id) ?
+          <Link className="btn btn--purple-border product-card__btn product-card__btn--in-cart" to={AppRoute.Basket}>
+            <img src="/img/sprite/icon-basket.svg" width="16" height="16" alt="icon basket" />
+            В корзине
+          </Link>
+          :
+          <button onClick={openAddItemModalClick} className="btn btn--purple product-card__btn" type="button">Купить</button>}
         <Link className="btn btn--transparent" to={`/camera/${camera.id}${CameraTabs.Info}`}>Подробнее</Link>
       </div>
     </div>
