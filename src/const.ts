@@ -83,6 +83,10 @@ export const DateFormat = {
   Date: 'date',
 };
 
+export const PROMO_CODES = ['camera-333', 'camera-444', 'camera-555'];
+
+export const MIN_QUANTITY = 1;
+export const MAX_QUANTITY = 99;
 export const positiveIntegers = /^[0-9\b]+$/;
 export const ITEMS_PER_PAGE_COUNT = 9;
 export const REVIEWS_PER_STEP = 3;

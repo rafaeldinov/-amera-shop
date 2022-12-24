@@ -1,7 +1,7 @@
 import FocusTrap from 'focus-trap-react';
 import { ESCAPE_KEY } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setBasketItems, setIsActiveAddItemModal, setIsActiveSuccessAddItemModal, setItemToBuy } from '../../store/camera-reducer/camera-reducer';
+import { setBasketItems, showAddItemModal, setIsActiveSuccessAddItemModal, setItemToBuy } from '../../store/camera-reducer/camera-reducer';
 import { getItemToBuy } from '../../store/camera-reducer/selectors';
 import { getBasket, saveToBasket } from '../../util';
 import ModalOverlay from '../modal-overlay/modal-overlay';
@@ -20,7 +20,7 @@ export default function AddItemModal(): JSX.Element {
   const closeModalClick = () => {
     document.body.classList.remove('scroll-lock');
     document.removeEventListener('keydown', handleModalEscKeydown);
-    dispatch(setIsActiveAddItemModal(false));
+    dispatch(showAddItemModal(false));
     dispatch(setIsActiveSuccessAddItemModal(false));
   };
 
@@ -28,10 +28,10 @@ export default function AddItemModal(): JSX.Element {
     if(itemToBuy) {
       saveToBasket(itemToBuy);
     }
+    document.addEventListener('keydown', handleModalEscKeydown);
     dispatch(setBasketItems(getBasket()));
     dispatch(setItemToBuy(undefined));
-    document.addEventListener('keydown', handleModalEscKeydown);
-    dispatch(setIsActiveAddItemModal(false));
+    dispatch(showAddItemModal(false));
     dispatch(setIsActiveSuccessAddItemModal(true));
   };
 

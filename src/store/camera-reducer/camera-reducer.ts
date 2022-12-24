@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchPageCamerasAction, fetchCameraAction, fetchCamerasAction, fetchPromoAction, fetchSimilarAction, fetchReviewsAction, sendProductReviewAction, fetchFilteredCamerasAction } from '../api-action';
+import { fetchPageCamerasAction, fetchCameraAction, fetchCamerasAction, fetchPromoAction, fetchSimilarAction, fetchReviewsAction, sendProductReviewAction, fetchFilteredCamerasAction, sendCouponAction } from '../api-action';
 import { Camera } from '../../types/camera';
 import { Promo } from '../../types/promo';
 import { Review } from '../../types/review';
@@ -23,7 +23,11 @@ type InitialState = {
   isActiveSuccessReviewModal: boolean;
   isActiveAddItemModal: boolean;
   isActiveSuccessAddItemModal: boolean;
+  isActiveRemoveItemModal: boolean;
+  isActiveSuccessOrderModal: boolean;
+  removableItem?: CartItem;
   itemToBuy?: Camera;
+  discount?: string;
   basketItems?: CartItem[];
   filters: Filters;
   sorting?: {
@@ -47,7 +51,11 @@ const initialState: InitialState = {
   isActiveSuccessReviewModal: false,
   isActiveAddItemModal: false,
   isActiveSuccessAddItemModal: false,
+  isActiveRemoveItemModal: false,
+  isActiveSuccessOrderModal: false,
+  removableItem: undefined,
   itemToBuy: undefined,
+  discount: undefined,
   basketItems: getBasket(),
   filters: DefaultFiters,
   sorting: {
@@ -69,11 +77,17 @@ export const cameraSlice = createSlice({
     setIsActiveSuccessReviewModal(state, action) {
       state.isActiveSuccessReviewModal = action.payload;
     },
-    setIsActiveAddItemModal(state, action) {
+    showAddItemModal(state, action) {
       state.isActiveAddItemModal = action.payload;
     },
     setIsActiveSuccessAddItemModal(state, action) {
       state.isActiveSuccessAddItemModal = action.payload;
+    },
+    setIsActiveRemoveItemModal(state, action) {
+      state.isActiveRemoveItemModal = action.payload;
+    },
+    setIsActiveSuccessOrderModal(state, action) {
+      state.isActiveSuccessOrderModal = action.payload;
     },
     setSorting(state, action) {
       state.sorting = action.payload;
@@ -83,6 +97,9 @@ export const cameraSlice = createSlice({
     },
     setItemToBuy(state, action) {
       state.itemToBuy = action.payload;
+    },
+    setRemovableItem(state, action) {
+      state.removableItem = action.payload;
     },
     setBasketItems(state, action) {
       state.basketItems = action.payload;
@@ -120,6 +137,9 @@ export const cameraSlice = createSlice({
       .addCase(fetchReviewsAction.fulfilled, (state, action) => {
         state.reviews = action.payload;
       })
+      .addCase(sendCouponAction.fulfilled, (state, action) => {
+        state.discount = action.payload;
+      })
       .addCase(sendProductReviewAction.fulfilled, (state, action) => {
         state.isActiveSuccessReviewModal = true;
         state.reviews.unshift(action.payload);
@@ -127,4 +147,4 @@ export const cameraSlice = createSlice({
   }
 });
 
-export const { setIsActiveReviewModal, setItemToBuy, setBasketItems, setIsActiveSuccessReviewModal, setSorting, setFilters, setCurrentPage, setIsActiveAddItemModal, setIsActiveSuccessAddItemModal, setAllCamerasCount } = cameraSlice.actions;
+export const { setIsActiveReviewModal, setItemToBuy, setRemovableItem, setBasketItems, setIsActiveSuccessOrderModal, setIsActiveRemoveItemModal, setIsActiveSuccessReviewModal, setSorting, setFilters, setCurrentPage, showAddItemModal, setIsActiveSuccessAddItemModal, setAllCamerasCount } = cameraSlice.actions;

@@ -1,5 +1,5 @@
 import { useAppSelector } from '../../hooks';
-import { getFilteredCameras, getIsActiveAddItemModal, getIsActiveSuccessAddItemModal, getIsfilteredCamerasLoading } from '../../store/camera-reducer/selectors';
+import { getFilteredCameras, getIsActiveAddItemModal, getIsActiveSuccessAddItemModal, getIsFilteredCamerasLoading } from '../../store/camera-reducer/selectors';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import Banner from '../../components/banner/banner';
@@ -15,7 +15,7 @@ import SuccessAddItemModal from '../../components/success-add-item-modal/success
 
 export default function CatalogPage(): JSX.Element {
   const cameras = useAppSelector(getFilteredCameras);
-  const isFilteredCamerasLoading = useAppSelector(getIsfilteredCamerasLoading);
+  const isFilteredCamerasLoading = useAppSelector(getIsFilteredCamerasLoading);
   const isActiveAddItem = useAppSelector(getIsActiveAddItemModal);
   const isActiveSuccessAddItem = useAppSelector(getIsActiveSuccessAddItemModal);
 

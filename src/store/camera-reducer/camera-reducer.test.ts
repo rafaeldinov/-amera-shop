@@ -1,7 +1,8 @@
 import { cameraSlice, setIsActiveReviewModal, setIsActiveSuccessReviewModal } from './camera-reducer';
 import { fetchFilteredCamerasAction, fetchCameraAction, fetchPageCamerasAction, fetchReviewsAction, fetchPromoAction, fetchSimilarAction, } from '../api-action';
 import { CAMERAS_COUNT, makeFakeCamera, makeFakeCameras, makeFakePromo, makeFakeReviews, REVIEWS_COUNT, SIMILARS_ITEMS_COUNT } from '../../mock';
-import { ITEMS_PER_PAGE_COUNT } from '../../const';
+import { DefaultFiters, ITEMS_PER_PAGE_COUNT, START_PAGE_COUNT } from '../../const';
+import { getBasket } from '../../util';
 
 describe('Reducer: cameraSlice', () => {
   const reducer = cameraSlice.reducer;
@@ -22,36 +23,23 @@ describe('Reducer: cameraSlice', () => {
     pageCameras: [],
     filteredCamerasLoading: false,
     reviews: [],
-    currentPage: 1,
+    currentPage: START_PAGE_COUNT,
     promoOffer: undefined,
     isActiveReviewModal: false,
     isActiveSuccessReviewModal: false,
     isActiveAddItemModal: false,
     isActiveSuccessAddItemModal: false,
-    addedItems: [],
-    filters: {
-      minPrice: undefined,
-      maxPrice: undefined,
-      type: {
-        digital: false,
-        film: false,
-        snapshot: false,
-        collection: false,
-      },
-      category: {
-        photoCamera: false,
-        videoCamera: false,
-      },
-      level: {
-        zero: false,
-        amateur: false,
-        professional: false,
-      },
-    },
+    isActiveRemoveItemModal: false,
+    isActiveSuccessOrderModal: false,
+    removableItem: undefined,
+    itemToBuy: undefined,
+    discount: undefined,
+    basketItems: getBasket(),
+    filters: DefaultFiters,
     sorting: {
       sortType: '',
       sortOrder: '',
-    },
+    }
   };
 
   it('should be update cameras when fetch type fulfilled', () => {
