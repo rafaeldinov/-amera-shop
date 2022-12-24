@@ -3,33 +3,25 @@ import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import HistoryRouter from '../../components/history-route/history-route';
-import { AppRoute, ITEMS_PER_PAGE_COUNT } from '../../const';
+import { AppRoute } from '../../const';
 import ModalOverlay from './modal-overlay';
-import { makeFakeCameras, CAMERAS_COUNT, makeFakeCamera, SIMILARS_ITEMS_COUNT, makeFakeReviews, REVIEWS_COUNT, makeFakePromo } from '../../mock';
+// import { makeFakeCameras, CAMERAS_COUNT, makeFakeCamera, SIMILARS_ITEMS_COUNT, makeFakeReviews, REVIEWS_COUNT, makeFakePromo } from '../../mock';
 
 const mockStore = configureMockStore();
 const history = createMemoryHistory();
 history.push(AppRoute.Root);
 
-const fakeCameras = makeFakeCameras(CAMERAS_COUNT);
-const fakeCamera = makeFakeCamera();
-const fakeSimilarCameras = makeFakeCameras(SIMILARS_ITEMS_COUNT);
-const fakePageCameras = makeFakeCameras(ITEMS_PER_PAGE_COUNT);
-const fakeReviews = makeFakeReviews(REVIEWS_COUNT);
-const fakePromoOffer = makeFakePromo();
+// const fakeCameras = makeFakeCameras(CAMERAS_COUNT);
+// const fakeCamera = makeFakeCamera();
+// const fakeSimilarCameras = makeFakeCameras(SIMILARS_ITEMS_COUNT);
+// const fakePageCameras = makeFakeCameras(ITEMS_PER_PAGE_COUNT);
+// const fakeReviews = makeFakeReviews(REVIEWS_COUNT);
+// const fakePromoOffer = makeFakePromo();
 
 const store = mockStore({
-  camera: {
-    cameras: fakeCameras,
-    camera: fakeCamera,
-    similarCameras: fakeSimilarCameras,
-    pageCameras: fakePageCameras,
-    reviews: fakeReviews,
-    paginationPage: 1,
-    promoOffer: fakePromoOffer,
-    isActiveReviewModal: true,
+  modal: {
     isActiveSuccessReviewModal: true
-  }
+  },
 });
 
 const mockDispatch = jest.fn();

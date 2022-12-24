@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, CameraTabs, ESCAPE_KEY } from '../../const';
 import { useAppDispatch } from '../../hooks';
-import { showAddItemModal, setItemToBuy } from '../../store/camera-reducer/camera-reducer';
+import { setItemToBuy } from '../../store/cart-reducer/cart-reducer';
+import { showAddItemModal } from '../../store/modal-reducer/modal-reducer';
 import { Camera } from '../../types/camera';
 import RatingStars from '../rating-stars/rating-stars';
 

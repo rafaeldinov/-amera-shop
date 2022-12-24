@@ -8,10 +8,9 @@ import { Promo } from '../types/promo';
 import { Review } from '../types/review';
 import { ReviewPost } from '../types/review-post';
 import { redirectToRoute } from './action';
-import { getFilters, getSorting } from './camera-reducer/selectors';
+import { getFilters, getSorting } from './filters-sorting-reducer/selectors';
 import { getQueryFilters, getQuerySort } from '../util';
 import { OrderPost } from '../types/order-post.js';
-// import { setIsActiveSuccessOrderModal } from './camera-reducer/camera-reducer';
 
 export const fetchCamerasAction = createAsyncThunk<Camera[], undefined, {
   state: State,
@@ -126,7 +125,6 @@ export const sendOrderAction = createAsyncThunk<void, OrderPost, {
   async ({camerasIds, coupon}, {dispatch, extra: api}) => {
     try {
       await api.post(APIRoute.Orders, {camerasIds, coupon});
-      // dispatch(setIsActiveSuccessOrderModal(true));
     }catch {
       dispatch(redirectToRoute(AppRoute.NotFound));
     }

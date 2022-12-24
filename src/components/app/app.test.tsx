@@ -5,7 +5,8 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import HistoryRouter from '../history-route/history-route';
 import App from './app';
 // import { AppRoute } from '../../const';
-import { CAMERAS_COUNT, makeFakeCamera, makeFakeCameras, makeFakeReviews, REVIEWS_COUNT, SIMILARS_ITEMS_COUNT } from '../../mock';
+import { CAMERAS_COUNT, makeFakeCamera, makeFakeCameras, makeFakeCartItems, makeFakeReviews, MAX_CART_ITEM_COUNT, REVIEWS_COUNT, SIMILARS_ITEMS_COUNT } from '../../mock';
+import { PROMO_CODES, START_PAGE_COUNT } from '../../const';
 
 const mockStore = configureMockStore();
 
@@ -16,11 +17,22 @@ const fakeReviews = makeFakeReviews(REVIEWS_COUNT);
 
 const store = mockStore({
   camera: {
-    filteredCameras: CAMERAS_COUNT,
     cameras: fakeCameras,
     camera: fakeCamera,
     similarCameras: fakeSimilarCameras,
     reviews: fakeReviews,
+    allCamerasCount: CAMERAS_COUNT,
+    currentPage: START_PAGE_COUNT,
+  },
+  filtersSorting: {
+    filteredCameras: fakeCameras,
+  },
+  modal: {
+    isActiveAddItemModal: false
+  },
+  cart: {
+    basketItems: makeFakeCartItems(MAX_CART_ITEM_COUNT),
+    discount: PROMO_CODES[0]
   }
 });
 

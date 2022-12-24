@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { showAddItemModal, setIsActiveRemoveItemModal, setIsActiveReviewModal, setIsActiveSuccessAddItemModal, setIsActiveSuccessOrderModal, setIsActiveSuccessReviewModal } from '../../store/camera-reducer/camera-reducer';
-import { getIsActiveAddItemModal, getIsActiveRemoveItemModal, getIsActiveReviewModal, getIsActiveSuccessAddItemModal, getIsActiveSuccessOrderModal, getIsActiveSuccessReviewModal } from '../../store/camera-reducer/selectors';
+import { showAddItemModal, setIsActiveRemoveItemModal, setIsActiveReviewModal, setIsActiveSuccessAddItemModal, setIsActiveSuccessOrderModal, setIsActiveSuccessReviewModal } from '../../store/modal-reducer/modal-reducer';
+import { getIsActiveAddItemModal, getIsActiveRemoveItemModal, getIsActiveReviewModal, getIsActiveSuccessAddItemModal, getIsActiveSuccessOrderModal, getIsActiveSuccessReviewModal } from '../../store/modal-reducer/selectors';
 
 export default function ModalOverlay(): JSX.Element {
   const dispatch = useAppDispatch();

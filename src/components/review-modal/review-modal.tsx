@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, SyntheticEvent, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
-import { setIsActiveReviewModal } from '../../store/camera-reducer/camera-reducer';
+import { setIsActiveReviewModal } from '../../store/modal-reducer/modal-reducer';
 import { sendProductReviewAction } from '../../store/api-action';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import FocusTrap from 'focus-trap-react';

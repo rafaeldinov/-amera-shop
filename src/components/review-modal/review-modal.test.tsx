@@ -11,7 +11,7 @@ const history = createMemoryHistory();
 history.push(AppRoute.Root);
 
 const store = mockStore({
-  camera: {
+  modal: {
     isActiveReviewModal: true,
   }
 });

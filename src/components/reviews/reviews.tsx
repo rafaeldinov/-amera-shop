@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { ESCAPE_KEY, REVIEWS_PER_STEP } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchReviewsAction } from '../../store/api-action';
-import { setIsActiveReviewModal } from '../../store/camera-reducer/camera-reducer';
+import { setIsActiveReviewModal } from '../../store/modal-reducer/modal-reducer';
 import { getSortedReviews } from '../../store/camera-reducer/selectors';
 import ReviewItem from '../review-item/review-item';
 

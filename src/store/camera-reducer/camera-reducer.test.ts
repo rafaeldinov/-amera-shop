@@ -1,8 +1,7 @@
-import { cameraSlice, setIsActiveReviewModal, setIsActiveSuccessReviewModal } from './camera-reducer';
-import { fetchFilteredCamerasAction, fetchCameraAction, fetchPageCamerasAction, fetchReviewsAction, fetchPromoAction, fetchSimilarAction, } from '../api-action';
+import { cameraSlice } from './camera-reducer';
+import { fetchCameraAction, fetchPageCamerasAction, fetchReviewsAction, fetchPromoAction, fetchSimilarAction, fetchCamerasAction, } from '../api-action';
 import { CAMERAS_COUNT, makeFakeCamera, makeFakeCameras, makeFakePromo, makeFakeReviews, REVIEWS_COUNT, SIMILARS_ITEMS_COUNT } from '../../mock';
-import { DefaultFiters, ITEMS_PER_PAGE_COUNT, START_PAGE_COUNT } from '../../const';
-import { getBasket } from '../../util';
+import { ITEMS_PER_PAGE_COUNT, START_PAGE_COUNT } from '../../const';
 
 describe('Reducer: cameraSlice', () => {
   const reducer = cameraSlice.reducer;
@@ -16,42 +15,25 @@ describe('Reducer: cameraSlice', () => {
 
   const initialState = {
     cameras: [],
-    filteredCameras: [],
     allCamerasCount: 0,
     camera: undefined,
     similarCameras: [],
     pageCameras: [],
-    filteredCamerasLoading: false,
     reviews: [],
     currentPage: START_PAGE_COUNT,
     promoOffer: undefined,
-    isActiveReviewModal: false,
-    isActiveSuccessReviewModal: false,
-    isActiveAddItemModal: false,
-    isActiveSuccessAddItemModal: false,
-    isActiveRemoveItemModal: false,
-    isActiveSuccessOrderModal: false,
-    removableItem: undefined,
-    itemToBuy: undefined,
-    discount: undefined,
-    basketItems: getBasket(),
-    filters: DefaultFiters,
-    sorting: {
-      sortType: '',
-      sortOrder: '',
-    }
   };
 
   it('should be update cameras when fetch type fulfilled', () => {
     const action = {
-      type: fetchFilteredCamerasAction.fulfilled.type,
+      type: fetchCamerasAction.fulfilled.type,
       payload: fakeCameras,
     };
     const state = reducer(initialState, action);
     expect(state)
       .toEqual({
         ...initialState,
-        filteredCameras: fakeCameras,
+        cameras: fakeCameras,
       });
   });
   it('should be update camera when fetch type fulfilled', () => {
@@ -118,20 +100,7 @@ describe('Reducer: cameraSlice', () => {
         promoOffer: fakePromoOffer,
       });
   });
-  it('should update setIsActiveReviewModal with boolean flag', () => {
-    expect(reducer(initialState, setIsActiveReviewModal(true)))
-      .toEqual({
-        ...initialState,
-        isActiveReviewModal: true,
-      });
-  });
-  it('should update setIsActiveSuccessReviewModal with boolean flag', () => {
-    expect(reducer(initialState, setIsActiveSuccessReviewModal(true)))
-      .toEqual({
-        ...initialState,
-        isActiveSuccessReviewModal: true,
-      });
-  });
+
   it('without additional parameters should return initial state', () => {
     expect(reducer(undefined, { type: 'UNKNOWN_ACTION' }))
       .toEqual(initialState);

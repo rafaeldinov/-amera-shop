@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { fetchPageCamerasAction } from '../../store/api-action';
-import { getAllCamerasCount, getBasketItems, getCurrentPage, getFilteredCameras, getFilters, getPageCameras, getSorting } from '../../store/camera-reducer/selectors';
+import { getAllCamerasCount, getCurrentPage, getPageCameras } from '../../store/camera-reducer/selectors';
+import { getFilteredCameras, getFilters, getSorting } from '../../store/filters-sorting-reducer/selectors';
+import { getBasketItems } from '../../store/cart-reducer/selectors';
 import Card from '../../components/card/card';
 import { AppRoute, ITEMS_PER_PAGE_COUNT } from '../../const';
 import { useNavigate } from 'react-router-dom';

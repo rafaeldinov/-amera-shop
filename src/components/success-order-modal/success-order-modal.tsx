@@ -1,6 +1,6 @@
 import FocusTrap from 'focus-trap-react';
 import { useAppDispatch } from '../../hooks';
-import { setIsActiveSuccessOrderModal } from '../../store/camera-reducer/camera-reducer';
+import { setIsActiveSuccessOrderModal } from '../../store/modal-reducer/modal-reducer';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 
 export default function SuccessOrderModal(): JSX.Element {
@@ -13,7 +13,7 @@ export default function SuccessOrderModal(): JSX.Element {
 
   return (
     <FocusTrap focusTrapOptions={{
-      fallbackFocus: '#stars-rate'
+      fallbackFocus: '#close-popup'
     }}
     >
       <div className="modal is-active modal--narrow">
@@ -21,14 +21,12 @@ export default function SuccessOrderModal(): JSX.Element {
           <ModalOverlay />
           <div className="modal__content">
             <p className="title title--h4">Спасибо за покупку</p>
-            <svg className="modal__icon" width="80" height="78" aria-hidden="true">
-              <use xlinkHref="#icon-review-success"></use>
-            </svg>
+            <img className="modal__icon" src="/img/sprite/icon-review-success.svg" alt="icon success" width="80" height="78" aria-hidden="true"/>
             <div className="modal__buttons">
-              <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button">Вернуться к покупкам
+              <button onClick={closeModalClick} className="btn btn--purple modal__btn modal__btn--fit-width" type="button">Вернуться к покупкам
               </button>
             </div>
-            <button onClick={closeModalClick} className="cross-btn" type="button" aria-label="Закрыть попап">
+            <button onClick={closeModalClick} className="cross-btn" type="button" aria-label="Закрыть попап" id="close-popup">
               <img src="/img/sprite/icon-close.svg" alt="icon close pop-up" width="10" height="10" aria-hidden="true"/>
             </button>
           </div>

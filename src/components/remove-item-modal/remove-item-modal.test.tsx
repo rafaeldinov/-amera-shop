@@ -4,7 +4,8 @@ import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import HistoryRouter from '../../components/history-route/history-route';
 import { AppRoute } from '../../const';
-import AddItemModal from '../success-add-item-modal/success-add-item-modal';
+import RemoveItemModal from './remove-item-modal';
+import { makeFakeCartItem } from '../../mock';
 
 const mockStore = configureMockStore();
 const history = createMemoryHistory();
@@ -12,7 +13,10 @@ history.push(AppRoute.Root);
 
 const store = mockStore({
   modal: {
-    isActiveAddItemModal: true,
+    isActiveRemoveItemModal: true,
+  },
+  cart: {
+    removableItem: makeFakeCartItem()
   }
 });
 
@@ -22,18 +26,18 @@ jest.mock('react-redux', () => ({
   useDispatch: () => mockDispatch,
 }));
 
-jest.mock('../../store/modal-reducer/modal-reducer');
+jest.mock('../../store/camera-reducer/camera-reducer');
 
-describe('Component: AddItemModal', () => {
+describe('Component: RemoveItemModal', () => {
   it('should render correctly', () => {
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <AddItemModal />
+          <RemoveItemModal />
         </HistoryRouter>,
       </Provider>,
     );
 
-    expect(screen.getByText('Добавить товар в корзину')).toBeInTheDocument();
+    expect(screen.getByText('Удалить этот товар?')).toBeInTheDocument();
   });
 });

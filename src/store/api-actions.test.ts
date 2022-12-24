@@ -3,10 +3,10 @@ import thunk, { ThunkDispatch } from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { createAPI } from '../services/api';
-import { fetchCameraAction, fetchPageCamerasAction, fetchReviewsAction, sendProductReviewAction, fetchPromoAction, fetchSimilarAction } from './api-action';
+import { fetchCameraAction, fetchPageCamerasAction, fetchReviewsAction, sendProductReviewAction, fetchPromoAction, fetchSimilarAction, sendCouponAction } from './api-action';
 import { APIRoute, DefaultFiters, ITEMS_PER_PAGE_COUNT } from '../const';
 import { State } from '../types/state';
-import { CAMERAS_COUNT, makeFakeCamera, makeFakeCameras, makeFakeReviews, makeFakeSendReview, REVIEWS_COUNT } from '../mock';
+import { CAMERAS_COUNT, FAKE_COUPON, FAKE_DISCOUNT, makeFakeCamera, makeFakeCameras, makeFakeReviews, makeFakeSendReview, REVIEWS_COUNT } from '../mock';
 
 const fakeCameras = makeFakeCameras(CAMERAS_COUNT);
 const fakeCamera = makeFakeCamera();
@@ -53,7 +53,7 @@ describe('Async actions', () => {
       );
 
     const store = mockStore({
-      camera: {
+      filtersSorting: {
         filters: DefaultFiters,
         sorting: {
           sortType: '',
@@ -108,7 +108,7 @@ describe('Async actions', () => {
     expect(actions).not.toContain(fetchReviewsAction.rejected.type);
   });
 
-  it('should send  new review when POST /reviews', async () => {
+  it('should send new review when POST /reviews', async () => {
     mockAPI
       .onPost(APIRoute.ReviewPost)
       .reply(200, fakeReviews);
@@ -117,5 +117,16 @@ describe('Async actions', () => {
     const actions = store.getActions().map(({ type }) => type);
     expect(actions).toContain(sendProductReviewAction.fulfilled.type);
     expect(actions).not.toContain(sendProductReviewAction.rejected.type);
+  });
+
+  it('should send Coupon when POST /coupons', async () => {
+    mockAPI
+      .onPost(APIRoute.Coupons)
+      .reply(200, FAKE_DISCOUNT);
+    const store = mockStore();
+    await store.dispatch(sendCouponAction(FAKE_COUPON));
+    const actions = store.getActions().map(({ type }) => type);
+    expect(actions).toContain(sendCouponAction.fulfilled.type);
+    expect(actions).not.toContain(sendCouponAction.rejected.type);
   });
 });

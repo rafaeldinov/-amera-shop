@@ -1,8 +1,9 @@
 import FocusTrap from 'focus-trap-react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setBasketItems, setIsActiveRemoveItemModal, setRemovableItem } from '../../store/camera-reducer/camera-reducer';
-import { getRemovableItem } from '../../store/camera-reducer/selectors';
+import { setBasketItems, setRemovableItem } from '../../store/cart-reducer/cart-reducer';
+import { setIsActiveRemoveItemModal } from '../../store/modal-reducer/modal-reducer';
+import { getRemovableItem } from '../../store/cart-reducer/selectors';
 import { deleteFromBasket, getBasket } from '../../util';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 
@@ -26,7 +27,7 @@ export default function RemoveItemModal(): JSX.Element {
 
   return (
     <FocusTrap focusTrapOptions={{
-      fallbackFocus: '#stars-rate'
+      fallbackFocus: '#close-popup'
     }}
     >
       <div className="modal is-active">
@@ -56,7 +57,7 @@ export default function RemoveItemModal(): JSX.Element {
               </button>
               <Link onClick={closeModalClick} className="btn btn--transparent modal__btn" to="#">Продолжить покупки</Link>
             </div>
-            <button onClick={closeModalClick} className="cross-btn" type="button" aria-label="Закрыть попап">
+            <button onClick={closeModalClick} className="cross-btn" type="button" aria-label="Закрыть попап" id="close-popup">
               <img src="/img/sprite/icon-close.svg" alt="icon close pop-up" width="10" height="10" aria-hidden="true"/>
             </button>
           </div>
