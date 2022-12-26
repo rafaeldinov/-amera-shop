@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import HistoryRouter from '../../components/history-route/history-route';
 import { AppRoute } from '../../const';
-import AddItemModal from '../success-add-item-modal/success-add-item-modal';
+import SuccessOrderModal from './success-order-modal';
 
 const mockStore = configureMockStore();
 const history = createMemoryHistory();
@@ -12,7 +12,7 @@ history.push(AppRoute.Root);
 
 const store = mockStore({
   modal: {
-    isActiveAddItemModal: true,
+    isActiveSuccessOrderModal: true,
   }
 });
 
@@ -22,18 +22,18 @@ jest.mock('react-redux', () => ({
   useDispatch: () => mockDispatch,
 }));
 
-jest.mock('../../store/modal-reducer/modal-reducer');
+jest.mock('../../store/camera-reducer/camera-reducer');
 
-describe('Component: AddItemModal', () => {
+describe('Component: SuccessOrderModal', () => {
   it('should render correctly', () => {
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <AddItemModal />
+          <SuccessOrderModal />
         </HistoryRouter>,
       </Provider>,
     );
 
-    expect(screen.getByText('Добавить товар в корзину')).toBeInTheDocument();
+    expect(screen.getByText('Спасибо за покупку')).toBeInTheDocument();
   });
 });

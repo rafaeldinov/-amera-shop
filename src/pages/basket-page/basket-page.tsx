@@ -4,9 +4,10 @@ import Footer from '../../components/footer/footer';
 import BasketItem from '../../components/basket-item/basket-item';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getBasketItems, getDiscount, getIsActiveRemoveItemModal, getIsActiveSuccessOrderModal } from '../../store/camera-reducer/selectors';
+import { getBasketItems, getDiscount } from '../../store/cart-reducer/selectors';
+import { getIsActiveRemoveItemModal, getIsActiveSuccessOrderModal } from '../../store/modal-reducer/selectors';
 import { getBasket } from '../../util';
-import { setBasketItems } from '../../store/camera-reducer/camera-reducer';
+import { setBasketItems } from '../../store/cart-reducer/cart-reducer';
 import { sendCouponAction, sendOrderAction } from '../../store/api-action';
 import RemoveItemModal from '../../components/remove-item-modal/remove-item-modal';
 import { PROMO_CODES } from '../../const';
@@ -23,12 +24,13 @@ export default function BasketPage(): JSX.Element {
   const [discountValue, setDiscountValue] = useState<number>();
 
   const discount = useAppSelector(getDiscount);
+  console.log(discount);
   const basketItems = useAppSelector(getBasketItems);
   const isActiveRemoveItemModal = useAppSelector(getIsActiveRemoveItemModal);
   const isActiveSuccessOrderModal = useAppSelector(getIsActiveSuccessOrderModal);
 
   const summaryValue = (basketItems && basketItems.length > 0) ?
-    basketItems?.map((item) => item.price * item.quantity).reduce((prev, curr) => prev + curr)
+    basketItems?.reduce((prev, curr) => prev + curr.price * curr.quantity, 0)
     :
     0;
 

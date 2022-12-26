@@ -2,7 +2,7 @@ import FocusTrap from 'focus-trap-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppDispatch } from '../../hooks';
-import { setIsActiveSuccessAddItemModal } from '../../store/camera-reducer/camera-reducer';
+import { setIsActiveSuccessAddItemModal } from '../../store/modal-reducer/modal-reducer';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 
 export default function SuccessAddItemModal(): JSX.Element {
@@ -16,7 +16,7 @@ export default function SuccessAddItemModal(): JSX.Element {
 
   return (
     <FocusTrap focusTrapOptions={{
-      fallbackFocus: '#stars-rate'
+      fallbackFocus: '#close-popup'
     }}
     >
       <div className="modal is-active modal--narrow">
@@ -35,7 +35,7 @@ export default function SuccessAddItemModal(): JSX.Element {
                 Перейти в корзину
               </button>
             </div>
-            <button onClick={closeModalClick} className="cross-btn" type="button" aria-label="Закрыть попап">
+            <button onClick={closeModalClick} className="cross-btn" type="button" aria-label="Закрыть попап" id="close-popup">
               <img src="/img/sprite/icon-close.svg" alt="icon close pop-up" width="10" height="10" aria-hidden="true"/>
             </button>
           </div>

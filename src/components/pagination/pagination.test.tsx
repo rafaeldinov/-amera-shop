@@ -18,7 +18,7 @@ const store = mockStore({
     cameras: fakeCameras,
     allCamerasCount: CAMERAS_COUNT,
     currentPage: START_PAGE_COUNT,
-  }
+  },
 });
 
 const mockDispatch = jest.fn();

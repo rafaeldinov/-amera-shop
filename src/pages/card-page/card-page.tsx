@@ -10,12 +10,14 @@ import SuccessModal from '../../components/success-review-modal/success-review-m
 import Preloader from '../../components/preloader/preloader';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { fetchCameraAction, fetchSimilarAction } from '../../store/api-action';
-import { getCamera, getSimilarCameras, getIsActiveReviewModal, getIsActiveSuccessReviewModal, getIsActiveAddItemModal, getIsActiveSuccessAddItemModal } from '../../store/camera-reducer/selectors';
+import { getCamera, getSimilarCameras } from '../../store/camera-reducer/selectors';
+import { getIsActiveReviewModal, getIsActiveSuccessReviewModal, getIsActiveAddItemModal, getIsActiveSuccessAddItemModal } from '../../store/modal-reducer/selectors';
 import { CameraTabs, ESCAPE_KEY } from '../../const';
 import SimilarItems from '../../components/similar-items/similar-items';
 import AddItemModal from '../../components/add-item-modal/add-item-modal';
 import SuccessAddItemModal from '../../components/success-add-item-modal/success-add-item-modal';
-import { setItemToBuy, showAddItemModal } from '../../store/camera-reducer/camera-reducer';
+import { setItemToBuy } from '../../store/cart-reducer/cart-reducer';
+import { showAddItemModal } from '../../store/modal-reducer/modal-reducer';
 
 export default function CardPage(): JSX.Element {
   const dispatch = useAppDispatch();

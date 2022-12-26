@@ -4,7 +4,7 @@ import { createMemoryHistory } from 'history';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import HistoryRouter from '../../components/history-route/history-route';
 import CardPage from './card-page';
-import { makeFakeCamera, makeFakeCameras, makeFakeReviews, REVIEWS_COUNT, SIMILARS_ITEMS_COUNT } from '../../mock';
+import { makeFakeCamera, makeFakeCameras, makeFakeCartItem, makeFakeCartItems, makeFakeReviews, MAX_CART_ITEM_COUNT, REVIEWS_COUNT, SIMILARS_ITEMS_COUNT } from '../../mock';
 
 const mockStore = configureMockStore();
 const history = createMemoryHistory();
@@ -18,6 +18,13 @@ const store = mockStore({
     camera: fakeCamera,
     similarCameras: fakeSimilarCameras,
     reviews: fakeReviews,
+  },
+  modal: {
+    isActiveReviewModal: false
+  },
+  cart: {
+    basketItems: makeFakeCartItems(MAX_CART_ITEM_COUNT),
+    removableItem: makeFakeCartItem()
   }
 });
 

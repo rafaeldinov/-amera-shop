@@ -1,6 +1,6 @@
 import { ESCAPE_KEY } from '../../const';
 import { useAppDispatch } from '../../hooks';
-import { setIsActiveSuccessReviewModal } from '../../store/camera-reducer/camera-reducer';
+import { setIsActiveSuccessReviewModal } from '../../store/modal-reducer/modal-reducer';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 
 export default function SuccessReviewModal(): JSX.Element {

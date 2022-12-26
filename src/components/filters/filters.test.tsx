@@ -15,8 +15,10 @@ const fakeCameras = makeFakeCameras(CAMERAS_COUNT);
 
 const store = mockStore({
   camera: {
-    filteredCameras: fakeCameras,
     cameras: fakeCameras,
+  },
+  filtersSorting: {
+    filteredCameras: fakeCameras,
     filters: {
       category: {
         photoCamera: false,
@@ -36,7 +38,7 @@ const store = mockStore({
       minPrice: 1000,
       maxPrice: 1,
     },
-  }
+  },
 });
 
 const mockDispatch = jest.fn();

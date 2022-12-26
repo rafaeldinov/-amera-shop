@@ -2,8 +2,9 @@ import { ChangeEvent, KeyboardEvent, SyntheticEvent, useState, useEffect, useRef
 import { CameraCategory, CameraLevel, CameraType, DefaultFiters, ENTER_KEY, InputPriceName } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCamerasAction, fetchFilteredCamerasAction } from '../../store/api-action';
-import { setFilters } from '../../store/camera-reducer/camera-reducer';
-import { getCameras, getFilters } from '../../store/camera-reducer/selectors';
+import { setFilters } from '../../store/filters-sorting-reducer/filters-sorting-reducer';
+import { getCameras } from '../../store/camera-reducer/selectors';
+import { getFilters } from '../../store/filters-sorting-reducer/selectors';
 
 export default function Filters(): JSX.Element {
   const dispatch = useAppDispatch();

@@ -1,7 +1,8 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { ESCAPE_KEY, MAX_QUANTITY, MIN_QUANTITY } from '../../const';
 import { useAppDispatch } from '../../hooks';
-import { setBasketItems, setIsActiveRemoveItemModal, setRemovableItem } from '../../store/camera-reducer/camera-reducer';
+import { setBasketItems, setRemovableItem } from '../../store/cart-reducer/cart-reducer';
+import { setIsActiveRemoveItemModal } from '../../store/modal-reducer/modal-reducer';
 import { CartItem } from '../../types/cart-item';
 import { getBasket, saveToBasket } from '../../util';
 

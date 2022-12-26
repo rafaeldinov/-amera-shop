@@ -1,5 +1,6 @@
 import { useAppSelector } from '../../hooks';
-import { getFilteredCameras, getIsActiveAddItemModal, getIsActiveSuccessAddItemModal, getIsFilteredCamerasLoading } from '../../store/camera-reducer/selectors';
+import { getFilteredCameras, getIsFilteredCamerasLoading } from '../../store/filters-sorting-reducer/selectors';
+import { getIsActiveAddItemModal, getIsActiveSuccessAddItemModal } from '../../store/modal-reducer/selectors';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import Banner from '../../components/banner/banner';

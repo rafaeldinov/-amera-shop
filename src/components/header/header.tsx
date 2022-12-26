@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks';
-import { getBasketItems } from '../../store/camera-reducer/selectors';
+import { getBasketItems } from '../../store/cart-reducer/selectors';
 import Search from '../search/search';
 
 export default function Header(): JSX.Element {
   const basketItems = useAppSelector(getBasketItems);
+  const basketItemsCount = basketItems?.reduce((prev, curr) => prev + curr.quantity, 0);
 
   return (
     <header className="header" id="header" data-testid="header">
@@ -28,7 +29,7 @@ export default function Header(): JSX.Element {
         <Search />
         <Link className="header__basket-link" to={AppRoute.Basket}>
           <img src="/img/sprite/icon-basket.svg" alt="icon basket" width="16" height="16" aria-hidden="true"/>
-          {basketItems?.length !== 0 && <span className="header__basket-count">{basketItems?.length}</span>}
+          {basketItems?.length !== 0 && <span className="header__basket-count">{basketItemsCount}</span>}
         </Link>
       </div>
     </header>

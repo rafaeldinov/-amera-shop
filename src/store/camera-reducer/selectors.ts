@@ -3,32 +3,15 @@ import { Promo } from '../../types/promo';
 import { Review } from '../../types/review';
 import { State } from '../../types/state';
 import { createSelector } from 'reselect';
-import { Sort } from '../../types/sort';
-import { Filters } from '../../types/filters';
-import { CartItem } from '../../types/cart-item';
 
 export const getCameras = (state: State): Camera[] => state['camera'].cameras;
-export const getFilteredCameras = (state: State): Camera[] => state['camera'].filteredCameras;
 export const getAllCamerasCount = (state: State): number => state['camera'].allCamerasCount;
 export const getCamera = (state: State): Camera | undefined => state['camera'].camera;
 export const getSimilarCameras = (state: State): Camera[] => state['camera'].similarCameras;
 export const getReviews = (state: State): Review[] => state['camera'].reviews;
 export const getCurrentPage = (state: State): number => state['camera'].currentPage;
 export const getPromoOffer = (state: State): Promo | undefined => state['camera'].promoOffer;
-export const getIsActiveReviewModal = (state: State): boolean => state['camera'].isActiveReviewModal;
-export const getIsActiveSuccessReviewModal = (state: State): boolean => state['camera'].isActiveSuccessReviewModal;
-export const getIsActiveAddItemModal = (state: State): boolean => state['camera'].isActiveAddItemModal;
-export const getIsActiveSuccessAddItemModal = (state: State): boolean => state['camera'].isActiveSuccessAddItemModal;
-export const getIsActiveSuccessOrderModal = (state: State): boolean => state['camera'].isActiveSuccessOrderModal;
-export const getIsActiveRemoveItemModal = (state: State): boolean => state['camera'].isActiveRemoveItemModal;
 export const getPageCameras = (state: State): Camera[] => state['camera'].pageCameras;
-export const getIsFilteredCamerasLoading = (state: State): boolean => state['camera'].filteredCamerasLoading;
-export const getSorting = (state: State): Sort | undefined => state['camera'].sorting;
-export const getFilters = (state: State): Filters => state['camera'].filters;
-export const getItemToBuy = (state: State): Camera | undefined => state['camera'].itemToBuy;
-export const getBasketItems = (state: State): CartItem[] | undefined => state['camera'].basketItems;
-export const getDiscount = (state: State): string | undefined => state['camera'].discount;
-export const getRemovableItem = (state: State): CartItem | undefined => state['camera'].removableItem;
 
 export const getSortedReviews = createSelector(
   getReviews,

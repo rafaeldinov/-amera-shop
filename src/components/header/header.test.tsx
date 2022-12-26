@@ -5,7 +5,7 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import HistoryRouter from '../../components/history-route/history-route';
 import { AppRoute } from '../../const';
 import Header from './header';
-import { makeFakeCameras, CAMERAS_COUNT } from '../../mock';
+import { makeFakeCameras, CAMERAS_COUNT, makeFakeCartItems, MAX_CART_ITEM_COUNT } from '../../mock';
 
 const mockStore = configureMockStore();
 const history = createMemoryHistory();
@@ -16,6 +16,9 @@ const fakeCameras = makeFakeCameras(CAMERAS_COUNT);
 const store = mockStore({
   camera: {
     cameras: fakeCameras,
+  },
+  cart: {
+    basketItems: makeFakeCartItems(MAX_CART_ITEM_COUNT)
   }
 });
 

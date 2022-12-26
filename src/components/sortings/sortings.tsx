@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
-import { setSorting } from '../../store/camera-reducer/camera-reducer';
+import { setSorting } from '../../store/filters-sorting-reducer/filters-sorting-reducer';
 import { SortOrder, SortType } from '../../const';
 
 export default function Sortings(): JSX.Element {
