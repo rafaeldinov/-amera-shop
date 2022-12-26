@@ -26,8 +26,6 @@ jest.mock('react-redux', () => ({
   useDispatch: () => mockDispatch,
 }));
 
-jest.mock('../../store/camera-reducer/camera-reducer');
-
 describe('Component: RemoveItemModal', () => {
   it('should render correctly', () => {
     render(

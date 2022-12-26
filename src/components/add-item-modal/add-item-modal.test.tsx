@@ -4,15 +4,22 @@ import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import HistoryRouter from '../../components/history-route/history-route';
 import { AppRoute } from '../../const';
-import AddItemModal from '../success-add-item-modal/success-add-item-modal';
+import AddItemModal from '../add-item-modal/add-item-modal';
+import { makeFakeCamera } from '../../mock';
 
 const mockStore = configureMockStore();
 const history = createMemoryHistory();
 history.push(AppRoute.Root);
 
+const fakeCamera = makeFakeCamera();
+
 const store = mockStore({
-  modal: {
+  cart: {
     isActiveAddItemModal: true,
+    itemToBuy: fakeCamera
+  },
+  modal: {
+    isActiveReviewModal: true
   }
 });
 
@@ -21,8 +28,6 @@ jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: () => mockDispatch,
 }));
-
-jest.mock('../../store/modal-reducer/modal-reducer');
 
 describe('Component: AddItemModal', () => {
   it('should render correctly', () => {

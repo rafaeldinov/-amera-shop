@@ -34,8 +34,6 @@ jest.mock('react-redux', () => ({
   useDispatch: () => mockDispatch,
 }));
 
-jest.mock('../../store/camera-reducer/camera-reducer');
-
 describe('Component: CardList', () => {
   it('should render correctly', async() => {
     render (

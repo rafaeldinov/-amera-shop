@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import HistoryRouter from '../history-route/history-route';
 import App from './app';
-// import { AppRoute } from '../../const';
 import { CAMERAS_COUNT, makeFakeCamera, makeFakeCameras, makeFakeCartItems, makeFakeReviews, MAX_CART_ITEM_COUNT, REVIEWS_COUNT, SIMILARS_ITEMS_COUNT } from '../../mock';
 import { PROMO_CODES, START_PAGE_COUNT } from '../../const';
 
@@ -43,8 +42,6 @@ jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: () => mockDispatch,
 }));
-
-jest.mock('../../store/camera-reducer/camera-reducer');
 
 const fakeApp = (
   <Provider store={store}>
