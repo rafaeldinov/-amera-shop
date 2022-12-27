@@ -41,8 +41,8 @@ export default function BasketItem({item}: Props): JSX.Element {
   };
 
   const handleQuantityChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    console.log(evt.currentTarget.value);
     if(Number(evt.currentTarget.value) < MIN_QUANTITY || Number(evt.currentTarget.value) > MAX_QUANTITY) {
+      saveToBasket(item, MIN_QUANTITY);
       return setQuantity('');
     }
     setQuantity(Number(evt.currentTarget.value));
