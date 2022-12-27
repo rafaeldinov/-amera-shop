@@ -56,6 +56,13 @@ export default function BasketItem({item}: Props): JSX.Element {
     }
   };
 
+  const handleQuantityBlur = () => {
+    if(quantity === '') {
+      saveToBasket(item, MIN_QUANTITY);
+      setQuantity(MIN_QUANTITY);
+    }
+  };
+
   const closeModalClick = () => {
     document.body.classList.remove('scroll-lock');
     document.removeEventListener('keydown', handleModalEscKeydown);
@@ -93,7 +100,12 @@ export default function BasketItem({item}: Props): JSX.Element {
           <img src="img/sprite/icon-arrow.svg" alt="icon arrow" width="7" height="12" aria-hidden="true"/>
         </button>
         <label className="visually-hidden" htmlFor="counter1"></label>
-        <input onChange={handleQuantityChange} onKeyDown={handleQuantityKeyDown} type="number" id="counter1" value={quantity} min="1" max="99" aria-label="количество товара" />
+        <input
+          onChange={handleQuantityChange}
+          onKeyDown={handleQuantityKeyDown}
+          onBlur={handleQuantityBlur}
+          type="number" id="counter1" value={quantity} min="1" max="99" aria-label="количество товара"
+        />
         <button onClick={handleIncreaseQuantityClick} className="btn-icon btn-icon--next" aria-label="увеличить количество товара" disabled={quantity >= MAX_QUANTITY}>
           <img src="img/sprite/icon-arrow.svg" alt="icon arrow" width="7" height="12" aria-hidden="true" />
         </button>
