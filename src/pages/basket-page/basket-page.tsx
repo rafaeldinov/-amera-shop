@@ -24,7 +24,6 @@ export default function BasketPage(): JSX.Element {
   const [discountValue, setDiscountValue] = useState<number>();
 
   const discount = useAppSelector(getDiscount);
-  console.log(discount);
   const basketItems = useAppSelector(getBasketItems);
   const isActiveRemoveItemModal = useAppSelector(getIsActiveRemoveItemModal);
   const isActiveSuccessOrderModal = useAppSelector(getIsActiveSuccessOrderModal);

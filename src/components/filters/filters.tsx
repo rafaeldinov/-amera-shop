@@ -59,7 +59,6 @@ export default function Filters(): JSX.Element {
     const closestMaxPrice = orderedMaxPrices.find((item) => item >= Number(maxPriceValue));
     setMaxPriceValue((closestMaxPrice) ? closestMaxPrice.toString() : '');
     dispatch(setFilters({...filters, maxPrice: (closestMaxPrice) ? closestMaxPrice.toString() : undefined}));
-    console.log(closestMaxPrice);
   };
 
   const handlePriceKeyDown = (evt: KeyboardEvent<HTMLInputElement>) => {

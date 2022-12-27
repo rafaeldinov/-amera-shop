@@ -22,17 +22,20 @@ export default function CardList(): JSX.Element {
   const filters = useAppSelector(getFilters);
   const basketItems = useAppSelector(getBasketItems);
 
-  useEffect(() => {
-    if(page > Math.ceil(filteredCameras.length / ITEMS_PER_PAGE_COUNT)) {
-      dispatch(setCurrentPage(1));
-    }
-  });
+  // useEffect(() => {
+  //   if(page > Math.ceil(filteredCameras.length / ITEMS_PER_PAGE_COUNT)) {
+  //     dispatch(setCurrentPage(1));
+  //   }
+  // }, []);
 
   useEffect(() => {
     dispatch(fetchPageCamerasAction({start: page * ITEMS_PER_PAGE_COUNT - ITEMS_PER_PAGE_COUNT, end: page * ITEMS_PER_PAGE_COUNT}));
   }, [dispatch, page, sorting, filters, camerasCount]);
 
   useEffect(() => {
+    if(page > Math.ceil(filteredCameras.length / ITEMS_PER_PAGE_COUNT)) {
+      dispatch(setCurrentPage(1));
+    }
     navigate(`${AppRoute.Catalog}/#page=${page}${getQueryFilters(filters)}${getQuerySort(sorting)}`);
   }, [dispatch, navigate, sorting, filters, page, filteredCameras]);
 
