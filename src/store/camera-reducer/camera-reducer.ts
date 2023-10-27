@@ -13,7 +13,7 @@ type InitialState = {
   pageCameras: Camera[];
   reviews: Review[];
   currentPage: number;
-  promoOffer?: Promo;
+  promoOffer?: Promo[];
 }
 
 const initialState: InitialState = {

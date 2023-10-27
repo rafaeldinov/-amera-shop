@@ -10,7 +10,7 @@ export const getCamera = (state: State): Camera | undefined => state['camera'].c
 export const getSimilarCameras = (state: State): Camera[] => state['camera'].similarCameras;
 export const getReviews = (state: State): Review[] => state['camera'].reviews;
 export const getCurrentPage = (state: State): number => state['camera'].currentPage;
-export const getPromoOffer = (state: State): Promo | undefined => state['camera'].promoOffer;
+export const getPromoOffer = (state: State): Promo[] | undefined => state['camera'].promoOffer;
 export const getPageCameras = (state: State): Camera[] => state['camera'].pageCameras;
 
 export const getSortedReviews = createSelector(

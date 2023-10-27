@@ -77,12 +77,12 @@ export const fetchCameraAction = createAsyncThunk<Camera | undefined, string, {
   },
 );
 
-export const fetchPromoAction = createAsyncThunk<Promo, undefined, {
+export const fetchPromoAction = createAsyncThunk<Promo[], undefined, {
   extra: AxiosInstance
 }>(
   'camera/fetchPromo',
   async (_arg, {extra: api}) => {
-    const {data} = await api.get<Promo>(APIRoute.PromoOffer);
+    const {data} = await api.get<Promo[]>(APIRoute.PromoOffer);
     return data;
   },
 );
